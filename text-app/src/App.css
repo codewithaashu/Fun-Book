@@ -1,0 +1,168 @@
+#aboutHead
+{
+    text-align: center;
+}
+.whiteClr
+{
+    color:white;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+#container
+{
+    height: 100vh;
+    background: linear-gradient(
+        135deg,
+        #8052ec,
+        #d161ff
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#formBox
+{
+    background-color:#fff;
+    min-width: 50vw;
+    min-height: 65vh;
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    box-shadow: 0 15px 30px rgba(0, 0,0, 0.3);
+    border-radius: 25px;
+}
+#heading
+{
+    font-size: 45px;
+    font-weight: 500;
+    margin: 30px 0;
+}
+#name
+{
+    min-width: 18vw;
+    min-height: 2vw;
+    border-radius: 22px;
+    outline: none;
+    background-color:#d7d7d7;
+    font-size: 20px;
+    padding-left: 1.2rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-style: hidden;
+    margin-bottom: 17px;
+}
+#name:focus
+{
+    border: 2px solid #2874f0;
+}
+#email
+{
+    min-width: 18vw;
+    min-height: 2vw;
+    border-radius: 22px;
+    outline: none;
+    background-color:#d7d7d7;
+    font-size: 20px;
+    padding-left: 1.2rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-style: hidden;
+    margin-bottom: 17px;
+}
+#email:focus
+{
+    border: 2px solid #2874f0;
+}
+#phone
+{
+    min-width: 18vw;
+    min-height: 2vw;
+    border-radius: 22px;
+    outline: none;
+    background-color:#d7d7d7;
+    font-size: 20px;
+    padding-left: 1.2rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-style: hidden;
+    margin-bottom: 17px;
+
+}
+#phone:focus
+{
+    border: 2px solid #2874f0;
+}
+#msg
+{
+    min-width: 18vw;
+    min-height: 2vw;
+    border-radius: 22px;
+    outline: none;
+    background-color:#d7d7d7;
+    font-size: 20px;
+    padding-left: 1.2rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-style: none;
+    margin-bottom: 40px;
+}
+#msg:focus
+{
+    border: 2px solid #2874f0;
+}
+#btn
+{
+    background-color: #2780e3;
+    border-color: #2780e3;
+    padding:10px 26px;
+    border-radius: 25px;
+    line-height: 1.4rem;
+    color: white;
+    font-size: 20px;
+    outline: none;
+    border-style: hidden;
+    min-width: 9vw;
+    min-height: 5vh;
+    cursor: pointer;
+}
+#btn:hover
+{
+    background-color: #11c29b;
+}
+#success
+{
+    min-width: 20vw;
+    background-color: #008c00;
+    color: white;
+    font-size: 18px;
+    display: none;
+}
+#errorName
+{
+    margin-left:10px;
+    font-size: 18px;
+    color:red;
+    display: none;
+}
+#errorEmail
+{
+    margin-left:10px;
+    font-size: 18px;
+    color:red;
+    display: none;
+}
+#errorPhone
+{
+    margin-left:10px;
+    font-size: 18px;
+    color:red;
+    display: none;
+}
