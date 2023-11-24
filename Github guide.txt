@@ -1,0 +1,24 @@
+1. Firstly install git in your desktop from "https://gitforwindows.org/"
+2. Create a repo in github
+3. Copy https link from repo
+4. Run command in folder. Command : git clone "httpsURL"
+5. Work on this folder
+6. when you have to add changes run this code
+	-> git status
+	-> git add ""
+	-> git commit -m "msg"
+	-> git push
+ 	
+		
+	********* OR ******
+1. Open file in vs code
+2. Go to git extension
+3. Commit and give positive response
+
+
+	************ OR ********
+1. Download github desktop
+2. Sign in
+3. Create new Repo by File-> New Repository
+4. Commit
+5. Publish Repo

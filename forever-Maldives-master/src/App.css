@@ -1,0 +1,921 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&family=Roboto:ital,wght@0,900;1,100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
+/* ! Header */
+.headerContainer {
+  width: 100%;
+  height: 100vh;
+  background: url("./assests/Images/Untitled\ design\ \(9\)\ 2.png") no-repeat;
+  background-size: cover;
+  padding: 40px 70px 0px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.imgBox {
+  background-color: #fff;
+  padding: 5px 15px;
+  border-radius: 18px;
+  width: max-content;
+}
+.imgBox img {
+  width: 163px;
+  height: 45px;
+}
+.bottomBox {
+  padding-bottom: 5%;
+}
+.bottomBox .headingContent {
+  width: 50%;
+  color: #fff;
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 50px;
+  letter-spacing: 0px;
+}
+.bottomBox .navigationInfoBox {
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.bottomBox .infoBox {
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  padding: 4px 30px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: lighter !important;
+  line-height: normal;
+  height: max-content;
+  font-family: Helvetica;
+}
+.bottomBox .navigationBox {
+  border-radius: 40px;
+  background-color: #fff;
+  padding: 8px 30px;
+  cursor: pointer;
+  color: #2959a1;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: normal;
+}
+@media screen and (max-width: 480px) {
+  .headerContainer {
+    padding: 10px 15px;
+  }
+  .bottomBox .headingContent {
+    width: 90%;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0px;
+  }
+  .bottomBox .navigationInfoBox {
+    padding-top: 20px;
+  }
+  .bottomBox .infoBox {
+    font-size: 10px;
+    padding: 4px 15px;
+    width: max-content;
+  }
+  .bottomBox .navigationBox {
+    display: none;
+  }
+  .headerContainer .topBox {
+    align-self: center;
+  }
+  .imgBox img {
+    width: 90px;
+    height: 30px;
+  }
+}
+/* About */
+.aboutHeading {
+  color: #000;
+  font-family: Helvetica;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.287px;
+  width: 320px;
+}
+.maldivesStyle {
+  color: #2959a1;
+  font-family: Homemade Apple;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -1.287px;
+}
+.aboutNavigationBox {
+  display: flex;
+  gap: 20px;
+}
+.aboutBtnText {
+  font-family: Helvetica;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.PackagesBtn {
+  color: #fff;
+  border-radius: 90.447px;
+  background: #2959a1;
+  outline: none;
+  border: none;
+  padding: 7px 30px;
+}
+.ActivitiesBtn {
+  padding: 7px 30px;
+  color: #2959a1;
+  border: 1px solid #2959a1;
+  background: #fff;
+  border-radius: 90.447px;
+}
+.resortInfoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.resortInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.resortName {
+  color: #1e1e1e;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  min-height: 30px !important;
+}
+.resortRating {
+  color: #000;
+  font-family: Helvetica;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.537px;
+}
+.resortPriceRate {
+  color: #a0a0a0;
+  font-family: Helvetica;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.resortPrice {
+  color: #000;
+  font-family: Helvetica;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.352px;
+  border-top: 1px solid #a0a0a0;
+  border-bottom: 1px solid #a0a0a0;
+  padding: 4px 10px;
+}
+.inclusionBox {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 20px;
+}
+.inclusionTitle {
+  color: #2959a1;
+  font-family: Helvetica;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.237px;
+}
+.inclusionSubTitle {
+  color: #000;
+  font-family: Helvetica;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.inclusionImage {
+  width: 120px;
+  height: 120px;
+}
+.inclusionContentBox {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.inclusion {
+  display: flex;
+  align-items: center;
+}
+.inclusionImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 12.946px;
+  background: #2959a1;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+.inclusionItem {
+  position: relative;
+  border-radius: 4.624px;
+  background: #0dbdad;
+  padding: 5px 20px;
+  min-width: 220px !important;
+}
+.inclusionItemTitle {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.inclusionItemSubTitle {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.ltineraryContainer {
+  background: url("./assests/Images/Untitled\ design-3\ 1.png") no-repeat;
+  background-size: contain;
+  border-radius: 25px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0px 40px;
+}
+.ltineraryFormContainer {
+  border-radius: 5.854px;
+  background: rgba(0, 0, 0, 0.64);
+  width: max-content;
+  padding: 10px 20px;
+}
+.ltineraryFormContainer .heading {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.114px;
+  text-align: center;
+}
+.ltineraryFormContainer .SubHeading {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.488px;
+  text-align: center;
+}
+.tripForm label {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.488px;
+  margin: 0px !important;
+}
+.tripForm input {
+  outline: none !important;
+  border: none !important;
+  color: #a0a0a0;
+  font-size: 12px;
+  font-weight: 400;
+}
+.tripBtn {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  border-radius: 12.6px;
+  background: #2959a1;
+  box-shadow: 0px 4px 18px 0px rgba(255, 255, 255, 0.25);
+  outline: none;
+  border: none;
+  padding: 10px 15px;
+}
+@media screen and (max-width: 480px) {
+  .aboutCont {
+    padding-top: 0px !important;
+  }
+  .inclusionMainContainer {
+    order: 1;
+    margin: 0px 0px !important;
+  }
+  .aboutMainContainer {
+    order: 2;
+  }
+  .inclusionMainBox {
+    /* align-self: center; */
+    order: 2;
+    width: max-content;
+  }
+  .ltineraryContainer {
+    order: 1;
+  }
+  .ltineraryContainer {
+    padding: 0px;
+    padding: 10px;
+  }
+}
+
+/* Upcoming Trips */
+.upcomingTripsContainer {
+  background: url("./assests/Images/Group\ 59435.png") no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 393px;
+}
+@media screen and (max-width: 480px) {
+  .upcomingTripsContainer {
+    height: 214px;
+  }
+}
+
+/* Featured */
+.featuredImageStyle {
+  width: 260px;
+  aspect-ratio: 1;
+}
+.featuredTextStyle {
+  color: #2959a1;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.newsImageStyle {
+  width: 60%;
+}
+.foundersImg1Style {
+  width: 320px;
+  height: 280px;
+}
+@media screen and (max-width: 480px) {
+  .featuredImageStyle {
+    height: 160px;
+    width: 160px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Client Say */
+.clientSayContainer {
+  background: url(./assests/Images/client\ say\ bg.svg) no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: max-content;
+  padding-bottom: 25px;
+}
+.clientSayContainer .heading {
+  font-size: 32px;
+  font-family: Helvetica;
+  font-weight: 500;
+  font-style: italic;
+  color: #fff;
+}
+.clientSayContainer .heading span {
+  font-style: normal;
+  font-weight: 600;
+  color: rgb(41, 89, 161);
+}
+.clientBoxContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 15px;
+  justify-content: space-around;
+}
+.clientBox {
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.33);
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.clientBox img {
+  width: 25% !important;
+}
+.clientBoxContent {
+  color: #fff;
+  font-family: Sansation;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.dataBoxContainer {
+  gap: 20px;
+}
+.dataBox {
+  border-radius: 21.216px;
+  background: #2959a1;
+  width: 156px;
+  padding: 40px 0px;
+}
+.dataBox .heading {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.72px;
+}
+.dataBox .title {
+  color: #fff;
+  font-family: Helvetica;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.4px;
+}
+.exploreBtn {
+  border-radius: 30px;
+  background: #fff;
+  color: #3c3c3c;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 5px 17px;
+  border: none;
+}
+@media screen and (max-width: 480px) {
+  .clientSayContainer {
+    background: none;
+  }
+  .clientSayContainer .hm {
+    color: #000;
+  }
+  .clientBox {
+    width: 40%;
+    margin-bottom: 10px;
+  }
+  .clientSayBtn {
+    border-radius: 20px !important;
+    background: #0dbdad !important;
+    color: #fff !important;
+  }
+}
+
+/* Social Media */
+.socialMediaContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.socialMediaBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.heading1 {
+  color: #000;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.heading1 span {
+  color: #2959a1;
+  font-family: Homemade Apple;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.heading2 {
+  color: #000;
+  text-align: center;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.travelChartImage {
+  border-radius: 13.141px;
+  border: 0.876px solid #e5e5e5;
+  background: #fff;
+  height: 420px;
+}
+@media screen and (max-width: 480px) {
+  .headingBox {
+    justify-content: center !important;
+  }
+  .heading1 {
+    text-align: center;
+  }
+  .heading2 {
+    display: none;
+  }
+}
+/* Founders Note */
+.foundersNoteContainer {
+  border-radius: 50px;
+  background: #2959a1;
+  padding: 10px 30px;
+}
+.foundersNoteContainer .leftContainer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.foundersImg1Style {
+  position: absolute;
+  top: -60px;
+  z-index: 100;
+  width: 280px;
+  height: 280px;
+}
+.foundersNoteContainer .rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.foundersNoteContainer .rightContainer .title {
+  color: #fff;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.foundersNoteContainer .rightContainer .content {
+  color: #fff;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Sansation;
+  font-size: 15px;
+  line-height: 18px;
+  font-style: normal;
+  font-weight: 400;
+  width: 80%;
+}
+
+@media screen and (max-width: 480px) {
+  .foundersNoteContainer {
+    border-radius: 12px;
+    margin: 0px 1px;
+    height: 490px;
+  }
+  .foundersNoteContainer .leftContainer {
+    justify-content: center;
+  }
+  .foundersImg1Style {
+    width: 170px;
+    height: 230px;
+  }
+  .foundersImg2Style {
+    width: 200px !important;
+    height: 230px;
+    position: relative;
+    top: 20px;
+  }
+  .foundersNoteContainer .rightContainer {
+    left: 0px;
+    top: 170px;
+  }
+}
+
+/* HoneyMoon */
+.honeymonTitle {
+  color: #2959a1;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.287px;
+  background: url("./assests/Images/ForeverMaldives.png") no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 56px;
+}
+.honeymoonContentBox {
+  display: grid;
+  justify-content: space-around;
+  grid-template-columns: max-content max-content;
+  gap: 10px;
+}
+.honeyMoonContentCont {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+.honeymoonContent {
+  color: #2959a1;
+  font-family: Helvetica;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: -0.941px;
+}
+.honeymoonCont1 .heading {
+  color: #2959a1;
+  text-align: center;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600 !important;
+  line-height: normal;
+}
+.honeymoonCont1 .subHeading {
+  font-size: 20px;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 400 !important;
+  color: #2959a1;
+  text-align: center;
+}
+.iconStyle {
+  height: 24px;
+}
+.honeymoonImageStyle {
+  height: 380px;
+}
+@media screen and (max-width: 480px) {
+  .honeymoonContentBox {
+    justify-content: center;
+    grid-template-columns: auto;
+    text-align: center;
+    gap: 10px;
+  }
+}
+/* Networthy */
+.networthyContainer {
+  background: #c4dcff;
+}
+.networthyContainer .headingBox {
+  padding: 30px 0px;
+}
+.networthyContainer .heading {
+  color: #023f76;
+  font-family: Helvetica;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 32px;
+}
+.networthyContainer .subHeading {
+  color: #023f76;
+  font-family: Helvetica;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19px;
+}
+.boxContainer {
+  justify-content: center;
+}
+.box {
+  width: max-content;
+  min-width: 20%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.networthyImageStyle {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+}
+.boxText {
+  color: #fff;
+  font-family: Sansation;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  bottom: 8px;
+}
+@media screen and (max-width: 480px) {
+  .boxContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 25px;
+  }
+}
+
+/* Gallery */
+.galleryMainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.galleryBox {
+  display: flex;
+  justify-content: flex-start;
+}
+.img1Style {
+  width: 250px;
+  height: 210px;
+  border-radius: 10px;
+}
+.img2Style,
+.img5Style,
+.img4Style {
+  width: 120px;
+  height: 120px;
+}
+.img3Style {
+  width: 120px;
+  height: 210px;
+}
+
+/* Book Tour Container */
+.bookTourContainer {
+  background: url("./assests/Images/Rectangle.png") no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.bookTourContainer .headingBox {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.bookTourContainer .heading {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 34px;
+  color: #fff;
+  font-weight: 700;
+}
+.bookTourContainer .subHeading {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500 !important;
+  line-height: 18px;
+}
+.footerBoxContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.fbox .title {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Helvetica;
+}
+.fbox .value {
+  font-size: 13px;
+  font-family: Helvetica;
+  font-weight: 600;
+  font-style: normal;
+}
+@media screen and (max-width: 480px) {
+  .ltineraryFormContainer .heading {
+    color: white !important;
+  }
+  .bookTourContainer .heading {
+    color: #000;
+  }
+  .bookTourContainer .headingBox {
+    align-items: center;
+  }
+  .bookTourContainer .subHeading {
+    color: #000;
+    font-size: small;
+  }
+  .bookTourContainer {
+    justify-content: center;
+  }
+  .ltBookTour {
+    background: rgba(0, 0, 0, 0.58);
+  }
+}
+
+/* Activities Gallery */
+.activitiesGalleryHeading {
+  color: #2959a1;
+  font-size: 35px;
+  font-family: Sansation;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.galleryMainBox {
+  display: grid;
+  grid-template-columns: 25% 25% 25%;
+  gap: 10px;
+  justify-content: center;
+}
+.galleryBox {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.galleryImageLarge {
+  width: 100%;
+  border-radius: 6px;
+}
+.galleryImageMedium {
+  width: 100%;
+  border-radius: 6px;
+}
+.galleryImageSmall {
+  width: 100%;
+  border-radius: 6px;
+}
+.poolContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.poolBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.poolHeading {
+  color: #000;
+  font-size: 20px;
+  font-weight: 400 !important;
+  line-height: normal;
+  border-radius: 16px;
+  border: 2px solid #2959a1;
+  background: #fff;
+}
+.poolImage {
+  height: 330px;
+  border-radius: 16px;
+}
+
+/* Collaboration */
+.collabCont {
+  display: flex;
+  justify-content: center;
+}
+.collabLogoTitle {
+  color: #99792e;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-left: 25px;
+}
+.collabLogoBox {
+  display: flex;
+  justify-content: space-between;
+}
+.collabLogo {
+  height: 60px;
+}
+.collabLogoContent {
+  font-size: 12px;
+  font-family: "Poppins", sans-serif !important;
+  font-weight: 500;
+}
+.collabRightCont {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0px 40px;
+}
+.collabBgImage {
+  height: 360px;
+}
