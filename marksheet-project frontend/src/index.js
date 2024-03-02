@@ -9,6 +9,8 @@ import StudentRegistration from "./Pages/StudentRegistration";
 import Results from "./Pages/Results";
 import DeclareResult from "./Pages/DeclareResult";
 import ChangePassword from "./Pages/ChangePassword";
+import Admins from "./Pages/Admins";
+import CreateAdmin from "./Pages/CreateAdmin";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -17,8 +19,16 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/admin",
+    path: "/users",
     element: <StudentsList />,
+  },
+  {
+    path: "/admins",
+    element: <Admins />,
+  },
+  {
+    path: "/createAdmin",
+    element: <CreateAdmin />,
   },
   {
     path: "/studentRegistration",

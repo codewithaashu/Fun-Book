@@ -18,7 +18,7 @@ const ChangePasswordBox = () => {
   return (
     <div className="p-5 flex flex-col gap-5">
       <h1 className="text-lg font-semibold text-gray-600">Change Password</h1>
-      <div className="bg-white p-5 md:p-7 rounded-md flex flex-col gap-4  shadow-md mb-3 mt-3">
+      <div className="bg-white p-5 md:p-7 rounded-md flex flex-col gap-4  shadow-md mb-3 mt-3 w-1/2 self-center ">
         <InputComponent
           label={"Current Password"}
           placeholder={"Type Current Password Here ..."}
