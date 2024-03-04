@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ sideBar, setSideBar }) => {
+  const navigate = useNavigate();
+  const username = localStorage.getItem("username");
+  const userType = localStorage.getItem("userType");
+  const handleLogout = () => {
+    navigate("/");
+    localStorage.clear();
+  };
   return (
     <div className="navbar bg-white shadow-md sticky top-0">
       <div className="navbar-start">
@@ -48,15 +55,16 @@ const Header = ({ sideBar, setSideBar }) => {
             className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link className="justify-between" to="/admins">
-                Profile
-              </Link>
+              <h1>
+                Hello,
+                <span className="text-base font-semibold black">{`${username}`}</span>
+              </h1>
             </li>
             <li>
               <Link to="/changePassword">Change Password</Link>
             </li>
             <li>
-              <a>Logout</a>
+              <a onClick={handleLogout}>Logout</a>
             </li>
           </ul>
         </div>

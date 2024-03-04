@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import SelectComponent from "../Components/SelectComponent";
 import InputComponent from "../Components/InputComponent";
 import { useNavigate } from "react-router-dom";
+import CheckEmptyField from "../utility/CheckEmptyField";
+import WarningToast from "../utility/WarningToast";
+import axios from "axios";
+import SuccessToast from "../utility/SuccesToast";
+import ErrorToast from "../utility/ErrorToast";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,14 +15,40 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const handleLogin = () => {
-    console.log(formData);
-    setFormData({
-      userType: "",
-      username: "",
-      password: "",
-    });
-    navigate("/admins");
+  const loginUser = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/login`,
+        formData
+      );
+      return data;
+    } catch (err) {
+      const { data } = err.response;
+      return data;
+    }
+  };
+  const handleLogin = async () => {
+    const { emptyField, isAllFieldFilled } = CheckEmptyField(formData);
+    if (!isAllFieldFilled) {
+      WarningToast(`${emptyField} is required field.`);
+      return;
+    }
+    const resp = await loginUser();
+    console.log(resp);
+    if (resp.success) {
+      SuccessToast(resp.message ?? "Successfull");
+      setFormData({
+        userType: "",
+        username: "",
+        password: "",
+      });
+      localStorage.setItem("username", resp.data.username);
+      localStorage.setItem("id", resp.data._id);
+      localStorage.setItem("userType", resp.data.userType);
+      navigate("/admins");
+    } else {
+      ErrorToast(resp.message ?? "Server Error. Try Again");
+    }
   };
   return (
     <div className="flex flex-row justify-center items-center h-screen">

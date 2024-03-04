@@ -7,10 +7,14 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ViewIcon from "@mui/icons-material/RemoveRedEye";
-import EditModalContainer from "./EditModalContainer";
 import ResultModalContainer from "./ResultModalContainer";
+import ErrorToast from "../utility/ErrorToast";
+import axios from "axios";
+import SuccessToast from "../utility/SuccesToast";
+import AdminModalContainer from "./AdminModalContainer";
+import StudentModalContainer from "./StudentModalContainer";
 
-const TableContainer = ({ data, cols, isResult }) => {
+const TableContainer = ({ data, cols, isResult, field, setData }) => {
   const columns = useMemo(() => cols, [cols]);
   const [formData, setFormData] = useState({
     imgSrc: "",
@@ -29,51 +33,58 @@ const TableContainer = ({ data, cols, isResult }) => {
     option4: "",
     option5: "",
   });
-  const handleEditBtn = () => {
+  const [rowData, setRowData] = useState(null);
+  const handleEditBtn = (row) => {
+    console.log(formData);
     document.getElementById("my_modal_4").showModal();
-    if (isResult) {
-      setFormData({
-        regNo: "SE2023478",
-        name: "Ashish Raj",
-        fatherName: "Birendra Singh",
-        rollNo: "2587",
-        subject1Marks: 78,
-        subject2Marks: 97,
-        subject3Marks: 45,
-        subject4Marks: 78,
-        subject5Marks: 45,
-        subject6Marks: 78,
-        subject7Marks: 98,
-      });
-      return;
+    if (field === "result") {
+      setFormData(row.result);
+      setRowData(row);
+    } else {
+      setFormData(row);
     }
-    setFormData({
-      imgSrc: "",
-      name: "Ashish Ranjan",
-      dob: "2001-08-16",
-      fatherName: "Birendra Singh",
-      motherName: "Sima Singh",
-      year: "2019",
-      course: "SR. Secondary Examination(12th Class)",
-      stream: "Commerce",
-      firstLanguage: "HINDI",
-      secondLanguage: "ENGLISH",
-      option1: "ACCOUNTANCY",
-      option2: "ECONOMICS",
-      option3: "MATHEMATICS",
-      option4: "COMPUTER SCIENCE",
-      option5: "BUSINESS MATHS",
-    });
   };
-  const handleDeleteBtn = () => {
-    if (isResult) {
-      console.log("Result Delete Button working .....");
-      return;
+  const handleDeleteBtn = async ({ _id }) => {
+    try {
+      const { data } = await axios.delete(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/${field}/${_id}`
+      );
+      setData(data.data);
+      SuccessToast(data.message);
+    } catch (err) {
+      ErrorToast("Server Error. Try again later!");
     }
-    console.log("Student List Delete Button working .....");
   };
   const handleViewBtn = () => {
     console.log("Result View Button working .....");
+  };
+  const modalOpen = () => {
+    if (field === "admin") {
+      return (
+        <AdminModalContainer
+          formData={formData}
+          setFormData={setFormData}
+          setData={setData}
+        />
+      );
+    } else if (field === "result") {
+      return (
+        <ResultModalContainer
+          formData={formData}
+          setFormData={setFormData}
+          setData={setData}
+          rowData={rowData}
+        />
+      );
+    } else {
+      return (
+        <StudentModalContainer
+          formData={formData}
+          setFormData={setFormData}
+          setData={setData}
+        />
+      );
+    }
   };
   const table = useMaterialReactTable({
     columns,
@@ -110,26 +121,27 @@ const TableContainer = ({ data, cols, isResult }) => {
           </Tooltip>
         )}
         <Tooltip title="Edit">
-          <IconButton onClick={handleEditBtn}>
+          <IconButton onClick={() => handleEditBtn(row.original)}>
             <EditIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton color="error" onClick={handleDeleteBtn}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        {field === "student" || (
+          <Tooltip title="Delete">
+            <IconButton
+              color="error"
+              onClick={() => handleDeleteBtn(row.original)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </Box>
     ),
   });
   return (
     <>
       <MaterialReactTable table={table} />
-      {isResult ? (
-        <ResultModalContainer formData={formData} setFormData={setFormData} />
-      ) : (
-        <EditModalContainer formData={formData} setFormData={setFormData} />
-      )}
+      {modalOpen()}
     </>
   );
 };

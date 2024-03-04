@@ -9,10 +9,16 @@ const RegisterStudent = async (req, res) => {
     const regNo = `${
       course === "SR. Secondary Examination(12th Class)" ? "HS" : "SE"
     }${year}${random4Digits}`;
-    const data = await Students.create({ ...req.body, rollNo, regNo });
-    return res.status(200).json({ message: "Registered Successfully", data });
+    const data = await Students.create({
+      ...req.body,
+      rollNo,
+      regNo,
+    });
+    return res
+      .status(200)
+      .json({ success: true, message: "Registered Successfully", data });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ message: err.message, success: false });
   }
 };
 export default RegisterStudent;

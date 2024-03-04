@@ -4,7 +4,6 @@ import Select from "react-select";
 const LanguageComponent = ({ formData, setFormData }) => {
   const [options1, setOption1] = useState(Languages);
   const [options2, setOption2] = useState(Languages);
-  console.log(formData.firstLanguage);
   return (
     <>
       <h1 className="text-[16px] font-semibold -mt-1">Choose Subject : </h1>
@@ -13,11 +12,6 @@ const LanguageComponent = ({ formData, setFormData }) => {
           <h1 className="text-base font-medium text-gray-500">
             First Language
           </h1>
-          {console.log(
-            "hello",
-            formData.firstLanguage,
-            typeof formData.firstLanguage
-          )}
           <Select
             options={options1}
             defaultInputValue={formData.firstLanguage}

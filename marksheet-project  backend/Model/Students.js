@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const studentSchema = new mongoose.Schema({
   imgSrc: { type: String, required: true },
   name: { type: String, required: true },
-  dob: { type: Date, required: true },
+  dob: { type: String, required: true },
   fatherName: { type: String, required: true },
   motherName: { type: String, required: true },
   year: { type: Number, required: true },
@@ -17,6 +17,7 @@ const studentSchema = new mongoose.Schema({
   option5: { type: String, required: false },
   rollNo: { type: Number, unique: true, required: true },
   regNo: { type: String, unique: true, required: true },
+  result: { type: Object },
 });
 
 const Students = new mongoose.model("Students", studentSchema);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import InputComponent from "./InputComponent";
 import SelectComponent from "./SelectComponent";
 import years from "../DB/Years";
@@ -10,7 +10,18 @@ import {
   scienceSubjects,
   secondoryOptionalSubjects,
 } from "../DB/SubjectsDB";
-const EditModalContainer = ({ formData, setFormData }) => {
+import axios from "axios";
+import ErrorToast from "../utility/ErrorToast";
+import WarningToast from "../utility/WarningToast";
+import SuccessToast from "../utility/SuccesToast";
+import CheckEmptyField from "../utility/CheckEmptyField";
+const StudentModalContainer = ({ formData, setFormData, setData }) => {
+  const yearInputRef = useRef();
+  const dobInputRef = useRef();
+  useEffect(() => {
+    yearInputRef.current.value = formData.year;
+    dobInputRef.current.value = formData.dob;
+  }, [formData]);
   const seniorSecondary = () => {
     if (formData.stream === "Science") {
       return (
@@ -43,8 +54,38 @@ const EditModalContainer = ({ formData, setFormData }) => {
       />
     );
   };
-  const handleModalBtn = () => {
-    console.log(formData);
+  const updateDetails = async () => {
+    try {
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/student/${formData._id}`,
+        formData
+      );
+      console.log(data.data);
+      setData(data.data);
+      return data;
+    } catch (err) {
+      ErrorToast("Server Error. Try Again");
+    }
+  };
+  const handleModalBtn = async () => {
+    const { emptyField, isAllFieldFilled } = CheckEmptyField({
+      ...formData,
+      course: "optional",
+      stream: "optional",
+      option5: "optional",
+      __v: "optional",
+      _id: "optional",
+    });
+    if (!isAllFieldFilled) {
+      WarningToast(`${emptyField} is required field.`);
+      return;
+    }
+    const { success, message } = await updateDetails();
+    if (success) {
+      SuccessToast(message ?? "Successfull");
+    } else {
+      ErrorToast(message);
+    }
   };
 
   return (
@@ -62,7 +103,7 @@ const EditModalContainer = ({ formData, setFormData }) => {
               inputType="file"
               placeholder="Choose Image"
               field={"imgSrc"}
-              formData={formData}
+              formData={{ ...formData, imgSrc: "" }}
               setFormData={setFormData}
             />
             <InputComponent
@@ -73,14 +114,20 @@ const EditModalContainer = ({ formData, setFormData }) => {
               formData={formData}
               setFormData={setFormData}
             />
-            <InputComponent
-              label="Date of Birth"
-              inputType="date"
-              placeholder="Enter Date of Birth"
-              field={"dob"}
-              formData={formData}
-              setFormData={setFormData}
-            />
+            <div className="flex flex-col gap-1 ">
+              <h1 className="text-[15px] font-medium text-gray-600">
+                Date of Birth
+              </h1>
+              <input
+                type={"date"}
+                className={`file-input w-full  h-fit p-2 bg-white text-sm border-[1px] border-gray-400 text-gray-700 focus:outline-none placeholder:text-sm`}
+                placeholder="Enter Date of Birth"
+                onChange={(e) =>
+                  setFormData({ ...formData, dob: e.target.value })
+                }
+                ref={dobInputRef}
+              />
+            </div>
             <InputComponent
               label="Father Name"
               inputType="text"
@@ -105,6 +152,7 @@ const EditModalContainer = ({ formData, setFormData }) => {
               field={"year"}
               setFormData={setFormData}
               formData={formData}
+              yearInputRef={yearInputRef}
             />
             {formData.course === "SR. Secondary Examination(12th Class)" ? (
               <>
@@ -147,4 +195,4 @@ const EditModalContainer = ({ formData, setFormData }) => {
   );
 };
 
-export default EditModalContainer;
+export default StudentModalContainer;

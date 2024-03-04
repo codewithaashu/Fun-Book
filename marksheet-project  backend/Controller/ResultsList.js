@@ -1,10 +1,13 @@
-import Results from "../Model/Results.js";
+import Students from "../Model/Students.js";
 
 const ResultsList = async (req, res) => {
   try {
-    const results = await Results.find({});
-    if (!results || results.length === 0) throw new Error("No results found");
-    else return res.status(200).json(results);
+    const students = await Students.find({});
+    const data = students.filter((curr) => {
+      return curr.result;
+    });
+    console.log(data);
+    return res.status(200).json({ data });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }

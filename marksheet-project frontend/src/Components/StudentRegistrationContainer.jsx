@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import years from "../DB/Years";
 import {
-  Languages,
   artsSubjects,
   commerceSubjects,
   scienceSubjects,
@@ -15,6 +14,11 @@ import StreamComponent from "./StreamComponent";
 import streams from "../DB/StreamDB";
 import LanguageComponent from "./LanguageComponent";
 import OptionalSubjectComponent from "./OptionalSubjectComponent";
+import ErrorToast from "../utility/ErrorToast";
+import axios from "axios";
+import CheckEmptyField from "../utility/CheckEmptyField";
+import WarningToast from "../utility/WarningToast";
+import SuccessToast from "../utility/SuccesToast";
 
 const StudentRegistrationContainer = () => {
   const [course, setCourse] = useState(null);
@@ -39,6 +43,10 @@ const StudentRegistrationContainer = () => {
   useEffect(() => {
     seniorSecondary();
   }, [stream]);
+  const fileInputRef = useRef();
+  const yearInputRef = useRef();
+  const courseInputRef = useRef();
+  const streamInputRef = useRef();
   const seniorSecondary = () => {
     if (stream === "Science") {
       return (
@@ -71,27 +79,76 @@ const StudentRegistrationContainer = () => {
       />
     );
   };
-  const handleSubmit = () => {
-    setFormData({
-      imgSrc: "",
-      name: "",
-      dob: "",
-      fatherName: "",
-      motherName: "",
-      year: "",
-      course: "",
-      stream: "",
-      firstLanguage: "",
-      secondLanguage: "",
-      option1: "",
-      option2: "",
-      option3: "",
-      option4: "",
-      option5: "",
+  const registerStudent = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/student`,
+        formData
+      );
+      return data;
+    } catch (err) {
+      ErrorToast("Server error. Try again later.");
+    }
+  };
+  const handleSubmit = async () => {
+    const { emptyField, isAllFieldFilled } = CheckEmptyField({
+      ...formData,
+      option5: "optional",
+      stream: "optional",
     });
-    setCourse(null);
-    setStream(null);
-    console.log(formData);
+    if (!isAllFieldFilled) {
+      WarningToast(`${emptyField} is required field.`);
+      return;
+    }
+    const { message, success } = await registerStudent();
+    if (success) {
+      SuccessToast(message ?? "Successfull");
+      setFormData({
+        imgSrc: "",
+        name: "",
+        dob: "",
+        fatherName: "",
+        motherName: "",
+        year: "",
+        course: "",
+        stream: "",
+        firstLanguage: "",
+        secondLanguage: "",
+        option1: "",
+        option2: "",
+        option3: "",
+        option4: "",
+        option5: "",
+      });
+      fileInputRef.current.value = "";
+      yearInputRef.current.value = "";
+      courseInputRef.current.value = "";
+      if (course === "SR. Secondary Examination(12th Class)") {
+        streamInputRef.current.value = "";
+      }
+      setCourse(null);
+      setStream(null);
+    } else {
+      ErrorToast(message ?? "Server Error. Try Again");
+    }
+  };
+  const handleFileInput = async (file) => {
+    try {
+      if (!file) return;
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "shreyasingh");
+      const resp = await axios.post(
+        `${process.env.REACT_APP_CLOUDINARY_BASE_URL}/image/upload`,
+        data,
+        {
+          reportProgress: true,
+        }
+      );
+      setFormData({ ...formData, imgSrc: resp.data.url });
+    } catch (err) {
+      ErrorToast("File is not upload. Try again later.");
+    }
   };
   return (
     <>
@@ -100,14 +157,17 @@ const StudentRegistrationContainer = () => {
           Registration Form
         </h1>
         <div className=" bg-white p-5 md:p-7 rounded-md flex flex-col gap-4  shadow-md mb-3 mt-3 ">
-          <InputComponent
-            label="Student Photo"
-            inputType="file"
-            placeholder="Choose Image"
-            field={"imgSrc"}
-            formData={formData}
-            setFormData={setFormData}
-          />
+          <div className="flex flex-col gap-1 ">
+            <h1 className="text-[15px] font-medium text-gray-600">
+              Student Photo
+            </h1>
+            <input
+              type="file"
+              className={`file-input w-full h-fit p-2 bg-white text-sm border-[1px] border-gray-400 text-gray-700 focus:outline-none placeholder:text-sm`}
+              onChange={(e) => handleFileInput(e.target.files[0])}
+              ref={fileInputRef}
+            />
+          </div>
           <InputComponent
             label="Student Name"
             inputType="text"
@@ -148,6 +208,7 @@ const StudentRegistrationContainer = () => {
             field={"year"}
             setFormData={setFormData}
             formData={formData}
+            yearInputRef={yearInputRef}
           />
           <SelectCourse
             label="Courses"
@@ -157,6 +218,7 @@ const StudentRegistrationContainer = () => {
             field={"course"}
             setFormData={setFormData}
             formData={formData}
+            courseInputRef={courseInputRef}
           />
           {course ? (
             course === "SR. Secondary Examination(12th Class)" ? (
@@ -170,6 +232,7 @@ const StudentRegistrationContainer = () => {
                   field={"stream"}
                   setFormData={setFormData}
                   formData={formData}
+                  streamInputRef={streamInputRef}
                 />
                 {stream && (
                   <>

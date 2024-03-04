@@ -4,9 +4,8 @@ import WarningToast from "../utility/WarningToast";
 import CheckEmptyField from "../utility/CheckEmptyField";
 import ErrorToast from "../utility/ErrorToast";
 import axios from "axios";
-import SuccessToast from "../utility/SuccesToast";
 
-const ChangePasswordBox = () => {
+export const ChangePasswordBox = () => {
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -16,11 +15,11 @@ const ChangePasswordBox = () => {
     try {
       const id = localStorage.getItem("id");
       console.log(id);
-      const { data } = await axios.post(
+      const resp = await axios.post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/changePassword/${id}`,
         formData
       );
-      return data;
+      console.log(resp);
     } catch (err) {
       ErrorToast("Server error. Please try again later.");
     }
@@ -36,17 +35,14 @@ const ChangePasswordBox = () => {
       WarningToast("Password and Confirm Password are not same.");
       return;
     }
-    const { message, success } = await changePassword();
-    if (success) {
-      SuccessToast(message ?? "Successfull");
-      setFormData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
-    } else {
-      ErrorToast(message);
-    }
+    // const resp = await changePassword();
+    // console.log(resp);
+    // setFormData({
+    //   currentPassword: "",
+    //   newPassword: "",
+    //   confirmPassword: "",
+    // });
+    console.log(formData);
   };
   return (
     <div className="p-5 flex flex-col gap-5">
@@ -86,5 +82,3 @@ const ChangePasswordBox = () => {
     </div>
   );
 };
-
-export default ChangePasswordBox;

@@ -1,12 +1,21 @@
-import Results from "../Model/Results.js";
+import Students from "../Model/Students.js";
 
 const UpdateResult = async (req, res) => {
   try {
-    const resultId = req.params.id;
-    await Results.updateOne({ _id: resultId }, { $set: { ...req.body } });
-    return res.status(200).json({ message: "Update Successful" });
+    const studentID = req.params.id;
+    await Students.updateOne(
+      { _id: studentID },
+      { $set: { result: { ...req.body } } }
+    );
+    const students = await Students.find({});
+    const data = students.filter((curr) => {
+      return curr.result;
+    });
+    return res
+      .status(201)
+      .json({ message: "Result Updated Successfully", success: true, data });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message, success: false });
   }
 };
 export default UpdateResult;

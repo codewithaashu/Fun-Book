@@ -1,21 +1,29 @@
 import Results from "../Model/Results.js";
+import Students from "../Model/Students.js";
 
 const DeclareResult = async (req, res) => {
   try {
-    const { studentID } = req.body;
-    const result = await Results.find({ studentID });
-    if (result.length > 0) {
+    const studentID = req.params.id;
+    console.log(studentID);
+    const student = await Students.findOne({ _id: studentID });
+    console.log(student);
+    if (student.result) {
       return res
-        .status(409)
-        .json({ message: "Student has already declared the results" });
+        .status(201)
+        .json({ message: "Result already exist.", success: false });
     }
-    await Results.create(req.body);
-    return res.status(200).json({
-      messgae: "Result is successfully created",
+    await Students.updateOne(
+      { _id: studentID },
+      { $set: { result: req.body } }
+    );
+    return res.status(201).json({
+      message: "Result is successfully created",
+      success: true,
     });
   } catch (err) {
     return res.status(500).json({
-      error: err.message,
+      message: err.message,
+      success: false,
     });
   }
 };

@@ -8,10 +8,13 @@ const UpdateStudent = async (req, res) => {
     const studentID = req.params.id;
     await Students.updateOne({ _id: studentID }, { $set: req.body });
     const data = await Students.find({});
-    return res.status(200).json({ message: "Updated Successfully", data });
+    return res
+      .status(200)
+      .json({ message: "Updated Successfully", data, success: true });
   } catch (err) {
     return res.status(500).send({
-      error: err.message || "Error updating student",
+      message: err.message || "Error updating student",
+      success: false,
     });
   }
 };

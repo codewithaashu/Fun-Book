@@ -6,18 +6,24 @@ const Login = async (req, res) => {
     const user = await Admins.findOne({ username, userType });
     if (!user) {
       return res.status(400).json({
+        success: false,
         message: "Invalid crediantial details.",
       });
     }
     const comparePassword = await bcrypt.compare(password, user.password);
     if (!comparePassword) {
       return res.status(400).json({
+        success: false,
         message: "Invalid crediantial details.",
       });
     }
-    return res.status(200).json({ message: "Login sucessful", data: user });
+    return res.status(200).json({
+      success: true,
+      message: "Login sucessful",
+      data: { username, userType, _id: user._id },
+    });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ success: false, message: err.message });
   }
 };
 export default Login;

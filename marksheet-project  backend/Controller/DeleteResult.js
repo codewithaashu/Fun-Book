@@ -1,17 +1,18 @@
-import Results from "../Model/Results.js";
+import Students from "../Model/Students.js";
 
 const DeleteResult = async (req, res) => {
   try {
-    const resultID = req.params.id;
-    const result = await Results.findByIdAndDelete(resultID);
-    if (!result) {
-      return res.status(401).json({ message: "No user with that ID" });
-    } else {
-      const data = await Results.find({});
-      res.json({ message: "User Deleted", data });
-    }
+    const studentID = req.params.id;
+    await Students.updateOne({ _id: studentID }, { $set: { result: null } });
+    const students = await Students.find({});
+    const data = students.filter((curr) => {
+      return curr.result;
+    });
+    return res
+      .status(201)
+      .json({ message: "Result Deleted Successfully", success: true, data });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message, success: false });
   }
 };
 export default DeleteResult;

@@ -11,7 +11,9 @@ import DeclareResult from "./Pages/DeclareResult";
 import ChangePassword from "./Pages/ChangePassword";
 import Admins from "./Pages/Admins";
 import CreateAdmin from "./Pages/CreateAdmin";
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import PrintDocument from "./Pages/PrintDocument";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   {
@@ -43,6 +45,10 @@ const router = createBrowserRouter([
     element: <DeclareResult />,
   },
   {
+    path: "/printDocuments",
+    element: <PrintDocument />,
+  },
+  {
     path: "/changePassword",
     element: <ChangePassword />,
   },
@@ -50,6 +56,7 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <ToastContainer />
   </React.StrictMode>
 );
 

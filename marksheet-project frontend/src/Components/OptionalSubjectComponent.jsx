@@ -18,6 +18,7 @@ const OptionalSubjectComponent = ({
           <h1 className="text-base font-medium text-gray-500">
             Option1 Subject
           </h1>
+          {console.log(formData)}
           <Select
             options={options}
             menuPlacement="top"

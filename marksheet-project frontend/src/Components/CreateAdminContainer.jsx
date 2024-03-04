@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import InputComponent from "./InputComponent";
 import SelectComponent from "./SelectComponent";
+import axios from "axios";
+import SuccessToast from "../utility/SuccesToast";
+import ErrorToast from "../utility/ErrorToast";
+import WarningToast from "../utility/WarningToast";
+import CheckEmptyField from "../utility/CheckEmptyField";
 
 const CreateAdminContainer = () => {
   const [formData, setFormData] = useState({
@@ -10,15 +15,37 @@ const CreateAdminContainer = () => {
     email: "",
     password: "",
   });
-  const handleSubmit = () => {
-    console.log(formData);
-    setFormData({
-      userType: "",
-      username: "",
-      name: "",
-      email: "",
-      password: "",
-    });
+  const createAdmin = async () => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/admin`,
+        formData
+      );
+      return data;
+    } catch (err) {
+      const { data } = err.response;
+      return data;
+    }
+  };
+  const handleSubmit = async () => {
+    const { emptyField, isAllFieldFilled } = CheckEmptyField(formData);
+    if (!isAllFieldFilled) {
+      WarningToast(`${emptyField} is required field.`);
+      return;
+    }
+    const { success, message } = await createAdmin();
+    if (success) {
+      SuccessToast(message ?? "Successfull");
+      setFormData({
+        userType: "",
+        username: "",
+        name: "",
+        email: "",
+        password: "",
+      });
+    } else {
+      ErrorToast(message ?? "Server Error. Try Again");
+    }
   };
   return (
     <>
