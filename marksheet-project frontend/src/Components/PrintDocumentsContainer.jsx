@@ -6,6 +6,7 @@ import Select from "react-select";
 import Certificate from "../DB/Certificates";
 import SelectComponent from "./SelectComponent";
 import Certificates from "../DB/Certificates";
+import ReactPrint from "../utility/ReactPrint";
 const PrintDocumentsContainer = () => {
   const resultInputRef = useRef();
   const certificateInputRef = useRef();
@@ -14,17 +15,9 @@ const PrintDocumentsContainer = () => {
     course: "",
     studentID: "",
     certificateType: "",
+    issueDate: `${new Date().getFullYear()}-06-15`,
   });
-  const handlePrintDocument = async () => {
-    console.log(formData);
-    setFormData({
-      course: "",
-      studentID: "",
-      certificateType: "",
-    });
-    resultInputRef.current.value = "";
-    certificateInputRef.current.value = "";
-  };
+
   const handleSelectCourse = async (val) => {
     try {
       setFormData({ ...formData, course: val });
@@ -132,14 +125,29 @@ const PrintDocumentsContainer = () => {
                   })}
                 </select>
               </div>
+              <div className="flex flex-row items-center justify-between px-3 ">
+                <h1 className="text-base font-medium text-gray-600 px-5 w-fit">
+                  Issue Date
+                </h1>
+                <input
+                  type="date"
+                  value={formData.issueDate}
+                  className={`file-input w-10/12  h-fit p-2 bg-white text-sm border-[1px] border-gray-400 text-gray-700 focus:outline-none placeholder:text-sm`}
+                  placeholder="Enter issue date"
+                  onChange={(e) => {
+                    setFormData({ ...formData, issueDate: e.target.value });
+                  }}
+                />
+              </div>
             </>
           ))}
-        <button
-          className="px-10 py-2 text-white bg-blue w-fit self-center rounded-sm mt-5 text-base font-medium"
-          onClick={handlePrintDocument}
-        >
-          Print Document
-        </button>
+        <div className="self-center">
+          <ReactPrint
+            formData={formData}
+            setFormData={setFormData}
+            resultInputRef={resultInputRef}
+          />
+        </div>
       </div>
     </div>
   );

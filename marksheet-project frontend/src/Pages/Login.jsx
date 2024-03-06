@@ -45,7 +45,11 @@ const Login = () => {
       localStorage.setItem("username", resp.data.username);
       localStorage.setItem("id", resp.data._id);
       localStorage.setItem("userType", resp.data.userType);
-      navigate("/admins");
+      if (resp.data.userType === "Admin") {
+        navigate("/users");
+      } else {
+        navigate("/admins");
+      }
     } else {
       ErrorToast(resp.message ?? "Server Error. Try Again");
     }

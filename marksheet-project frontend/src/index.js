@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import PrintDocument from "./Pages/PrintDocument";
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const userType = localStorage.getItem("userType");
+console.log("userType", userType);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,35 +24,35 @@ const router = createBrowserRouter([
   },
   {
     path: "/users",
-    element: <StudentsList />,
+    element: userType ? <StudentsList /> : <App />,
   },
   {
     path: "/admins",
-    element: <Admins />,
+    element: userType ? <Admins /> : <App />,
   },
   {
     path: "/createAdmin",
-    element: <CreateAdmin />,
+    element: userType ? <CreateAdmin /> : <App />,
   },
   {
     path: "/studentRegistration",
-    element: <StudentRegistration />,
+    element: userType ? <StudentRegistration /> : <App />,
   },
   {
     path: "/results",
-    element: <Results />,
+    element: userType ? <Results /> : <App />,
   },
   {
     path: "/declareResult",
-    element: <DeclareResult />,
+    element: userType ? <DeclareResult /> : <App />,
   },
   {
     path: "/printDocuments",
-    element: <PrintDocument />,
+    element: userType ? <PrintDocument /> : <App />,
   },
   {
     path: "/changePassword",
-    element: <ChangePassword />,
+    element: userType ? <ChangePassword /> : <App />,
   },
 ]);
 root.render(
