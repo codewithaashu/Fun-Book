@@ -6,7 +6,7 @@ import Select from "react-select";
 import Certificate from "../DB/Certificates";
 import SelectComponent from "./SelectComponent";
 import Certificates from "../DB/Certificates";
-import ReactPrint from "../utility/ReactPrint";
+import ReactPrintDoc from "../utility/ReactPrintDoc";
 const PrintDocumentsContainer = () => {
   const resultInputRef = useRef();
   const certificateInputRef = useRef();
@@ -142,7 +142,7 @@ const PrintDocumentsContainer = () => {
             </>
           ))}
         <div className="self-center">
-          <ReactPrint
+          <ReactPrintDoc
             formData={formData}
             setFormData={setFormData}
             resultInputRef={resultInputRef}

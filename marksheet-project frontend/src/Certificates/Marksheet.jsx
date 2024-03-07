@@ -2,9 +2,16 @@ import React from "react";
 
 const Marksheet = React.forwardRef((props, ref) => {
   return (
-    <div ref={ref} className="w-full h-full pt-16 px-20">
+    <div ref={ref} className="w-full h-full pt-20 px-[90px]">
+      <style type="text/css" media="print">
+        {
+          "\
+ @page { size: portrait; }\
+"
+        }
+      </style>
       <h1 className="text-[16px] font-extrabold text-end">7168</h1>
-      <div className="pt-32">
+      <div className="pt-28">
         <div className="flex flex-row justify-end px-2">
           <img
             src="https://i.pinimg.com/236x/6b/7e/d6/6b7ed698713c09ad9e6afc7dcb996a09.jpg"
@@ -49,7 +56,7 @@ const Marksheet = React.forwardRef((props, ref) => {
               </div>
             </div>
             <div className="border-2 border-gray-500 mt-[6px] p-[2px]">
-              <div className="flex flex-row text-xs text-center gap-[3px] ">
+              <div className="flex flex-row text-xs text-center gap-[4px] ">
                 <div className="flex flex-col gap-[2px]">
                   <h1 className="h-[58px] flex flex-col justify-center px-2 border-2 border-gray-700">
                     <h1>S.No</h1>
@@ -67,7 +74,7 @@ const Marksheet = React.forwardRef((props, ref) => {
                   <h1 className="h-[58px] flex flex-col justify-center px-2 border-2 border-gray-700">
                     Subject
                   </h1>
-                  <div className="border-2 border-gray-700 flex flex-col gap-2 px-4">
+                  <div className="border-2 border-gray-700 flex flex-col gap-2 px-1">
                     <h1>HINDI</h1>
                     <h1>ENGLISH</h1>
                     <h1>ACCOUNTANCY</h1>
@@ -137,7 +144,7 @@ const Marksheet = React.forwardRef((props, ref) => {
                         <h1 className="h-[36px] flex flex-col justify-center px-2 border-2 border-gray-700">
                           Total in Words
                         </h1>
-                        <div className="border-2 border-gray-700 flex flex-col gap-2 px-3">
+                        <div className="border-2 border-gray-700 flex flex-col gap-2 px-2">
                           <h1>sixty-three</h1>
                           <h1>seventy-four</h1>
                           <h1>seventy-one</h1>
@@ -155,20 +162,20 @@ const Marksheet = React.forwardRef((props, ref) => {
                   </h1>
                   <div
                     className="border-2 
-                  h-[140px] border-gray-700 justify-center flex flex-col px-2"
+                  h-[140px] border-gray-700 justify-center flex flex-col px-5"
                   >
                     <h1>A</h1>
                   </div>
                 </div>
               </div>
               <div className="flex flex-row w-full text-xs font-semibold mt-[3px] gap-[3px]">
-                <h1 className="py-1 border-2 border-gray-700 w-[48%] text-center">
+                <h1 className="py-1 border-2 border-gray-700 w-[46%] text-center">
                   Grand Total: 417
                 </h1>
-                <h1 className="py-1 border-2 border-gray-700 w-[24%] text-center">
+                <h1 className="py-1 border-2 border-gray-700 w-[25%] text-center">
                   Status: PASS
                 </h1>
-                <h1 className="py-1 border-2 border-gray-700 flex-1 text-center">
+                <h1 className="py-1 border-2 border-gray-700 flex-1 text-center w-[20%]">
                   Percentage(%): 69.50
                 </h1>
               </div>
@@ -185,7 +192,7 @@ const Marksheet = React.forwardRef((props, ref) => {
               <h1>*** AB: ABSENT IN THE SUBJECT</h1>
               <h1>WWW.CSSE.CO.IN</h1>
             </div>
-            <h1 className="text-[16px] font-extrabold pt-12 px-40">
+            <h1 className="text-[16px] font-extrabold pt-24 px-28">
               16 Jun 2014
             </h1>
           </div>

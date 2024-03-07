@@ -3,8 +3,11 @@ import { useReactToPrint } from "react-to-print";
 import Marksheet from "../Certificates/Marksheet";
 import CheckEmptyField from "./CheckEmptyField";
 import WarningToast from "./WarningToast";
-
-const ReactPrint = ({ formData, setFormData, resultInputRef }) => {
+import AdmitCard from "../Certificates/AdmitCard";
+import Certificate from "../Certificates/Certificate";
+import Migration from "../Certificates/Migration";
+import Registration from "../Certificates/Registration";
+const ReactPrintDoc = ({ formData, setFormData, resultInputRef }) => {
   const componentRef = useRef();
   const afterPrintFunc = () => {
     setFormData({
@@ -15,7 +18,7 @@ const ReactPrint = ({ formData, setFormData, resultInputRef }) => {
     });
     resultInputRef.current.value = "";
   };
-  const handlePrint = useReactToPrint({
+  const handlePrintDocument = useReactToPrint({
     documentTitle: formData.certificateType ?? "Certificate",
     content: () => componentRef.current,
     onAfterPrint: () => afterPrintFunc(),
@@ -25,10 +28,15 @@ const ReactPrint = ({ formData, setFormData, resultInputRef }) => {
     <div>
       <div style={{ display: "none" }}>
         <Marksheet ref={componentRef} />
+
+        {/* <AdmitCard ref={componentRef} /> */}
+        {/* <Certificate ref={componentRef} /> */}
+        {/* <Migration ref={componentRef} /> */}
+        {/* <Registration ref={componentRef} /> */}
       </div>
       <button
         className="px-10 py-2 text-white bg-blue w-fit self-center rounded-sm mt-5 text-base font-medium disabled:bg-gray-600"
-        onClick={handlePrint}
+        onClick={handlePrintDocument}
         // disabled={!CheckEmptyField(formData).isAllFieldFilled}
       >
         Print Document
@@ -36,4 +44,4 @@ const ReactPrint = ({ formData, setFormData, resultInputRef }) => {
     </div>
   );
 };
-export default ReactPrint;
+export default ReactPrintDoc;
