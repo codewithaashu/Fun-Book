@@ -14,7 +14,6 @@ const AdminModalContainer = ({ formData, setFormData, setData }) => {
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/admin/${formData._id}`,
         formData
       );
-      console.log(data.data);
       setData(data.data);
       return data;
     } catch (err) {
@@ -42,7 +41,7 @@ const AdminModalContainer = ({ formData, setFormData, setData }) => {
           </button>
         </form>
         <div className=" bg-white p-5 md:p-7 rounded-md flex flex-col gap-4 shadow-md mb-3 mt-7 ">
-          <div className="grid grid-cols-2 justify-between w-full">
+          <div className="flex flex-row justify-between w-full">
             <h1 className="col-span-1 text-base font-semibold text-gray-700">
               Username :
               <span className="px-2 font-medium text-gray-600">
@@ -58,14 +57,6 @@ const AdminModalContainer = ({ formData, setFormData, setData }) => {
           </div>
           <hr />
           <div className="w-full flex flex-col gap-5 ">
-            <SelectComponent
-              label={"User Type"}
-              data={["Admin", "Super Admin"]}
-              defaultValue={"Select User Type"}
-              field={"userType"}
-              formData={formData}
-              setFormData={setFormData}
-            />
             <InputComponent
               label={"Name"}
               inputType={"text"}
@@ -82,18 +73,14 @@ const AdminModalContainer = ({ formData, setFormData, setData }) => {
               setFormData={setFormData}
               placeholder={"Enter Email Here..."}
             />
-            <div className="flex flex-col gap-1 ">
-              <h1 className="text-[15px] font-medium text-gray-600">
-                Change Password
-              </h1>
-              <input
-                type="password"
-                value={password}
-                className={`w-full  h-fit p-2 bg-white text-sm border-[1px] border-gray-400 text-gray-700 focus:outline-none placeholder:text-sm`}
-                placeholder="Enter Password Here..."
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <InputComponent
+              label={"Change Password"}
+              inputType={"password"}
+              field={"password"}
+              formData={formData}
+              setFormData={setFormData}
+              placeholder={"Enter Password Here..."}
+            />
           </div>
         </div>
         <div className="modal-action">

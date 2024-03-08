@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InputComponent from "./InputComponent";
 import SelectComponent from "./SelectComponent";
 import years from "../DB/Years";
@@ -18,9 +18,12 @@ import CheckEmptyField from "../utility/CheckEmptyField";
 const StudentModalContainer = ({ formData, setFormData, setData }) => {
   const yearInputRef = useRef();
   const dobInputRef = useRef();
+  const fileInputRef = useRef();
+  const [userType, setUserType] = useState(null);
   useEffect(() => {
     yearInputRef.current.value = formData.year;
     dobInputRef.current.value = formData.dob;
+    setUserType(localStorage.getItem("userType"));
   }, [formData]);
   const seniorSecondary = () => {
     if (formData.stream === "Science") {
@@ -31,6 +34,7 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
           secondoryOptionalSubjects={scienceSubjects}
           seniorSecondary={true}
           stream={formData.stream}
+          isModal={true}
         />
       );
     } else if (formData.stream === "Commerce") {
@@ -41,6 +45,7 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
           secondoryOptionalSubjects={commerceSubjects}
           seniorSecondary={true}
           stream={formData.stream}
+          isModal={true}
         />
       );
     }
@@ -51,16 +56,20 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
         secondoryOptionalSubjects={artsSubjects}
         seniorSecondary={true}
         stream={formData.stream}
+        isModal={true}
       />
     );
   };
   const updateDetails = async () => {
     try {
       const { data } = await axios.put(
-        `${process.env.REACT_APP_SERVER_BASE_URL}/api/student/${formData._id}`,
+        `${process.env.REACT_APP_SERVER_BASE_URL}/api/student/${formData._id}${
+          userType === "Admin"
+            ? `?username=${localStorage.getItem("username")}`
+            : ""
+        }`,
         formData
       );
-      console.log(data.data);
       setData(data.data);
       return data;
     } catch (err) {
@@ -69,12 +78,12 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
   };
   const handleModalBtn = async () => {
     const { emptyField, isAllFieldFilled } = CheckEmptyField({
-      ...formData,
-      course: "optional",
-      stream: "optional",
-      option5: "optional",
-      __v: "optional",
-      _id: "optional",
+      imgSrc: formData.imgSrc,
+      name: formData.name,
+      dob: formData.dob,
+      fatherName: formData.fatherName,
+      motherName: formData.motherName,
+      year: formData.year,
     });
     if (!isAllFieldFilled) {
       WarningToast(`${emptyField} is required field.`);
@@ -82,9 +91,30 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
     }
     const { success, message } = await updateDetails();
     if (success) {
+      fileInputRef.current.value = "";
       SuccessToast(message ?? "Successfull");
     } else {
       ErrorToast(message);
+    }
+  };
+
+  const handleFileInput = async (file) => {
+    try {
+      if (!file) return;
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "shreyasingh");
+      const resp = await axios.post(
+        `${process.env.REACT_APP_CLOUDINARY_BASE_URL}/image/upload`,
+        data,
+        {
+          reportProgress: true,
+        }
+      );
+
+      setFormData({ ...formData, imgSrc: resp.data.url });
+    } catch (err) {
+      ErrorToast("File is not upload. Try again later.");
     }
   };
 
@@ -98,14 +128,17 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
             </button>
           </form>
           <div className=" bg-white p-5 md:p-7 rounded-md flex flex-col gap-4  shadow-md mb-3 mt-7 ">
-            <InputComponent
-              label="Student Photo"
-              inputType="file"
-              placeholder="Choose Image"
-              field={"imgSrc"}
-              formData={{ ...formData, imgSrc: "" }}
-              setFormData={setFormData}
-            />
+            <div className="flex flex-col gap-1 ">
+              <h1 className="text-[15px] font-medium text-gray-600">
+                Student Photo
+              </h1>
+              <input
+                type="file"
+                className={`file-input w-full h-fit p-2 bg-white text-sm border-[1px] border-gray-400 text-gray-700 focus:outline-none placeholder:text-sm`}
+                onChange={(e) => handleFileInput(e.target.files[0])}
+                ref={fileInputRef}
+              />
+            </div>
             <InputComponent
               label="Student Name"
               inputType="text"
@@ -154,29 +187,34 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
               formData={formData}
               yearInputRef={yearInputRef}
             />
-            {formData.course === "SR. Secondary Examination(12th Class)" ? (
-              <>
-                {console.log(formData)}
-                <LanguageComponent
-                  formData={formData}
-                  setFormData={setFormData}
-                />
-                {seniorSecondary()}
-              </>
-            ) : (
-              <>
-                <LanguageComponent
-                  formData={formData}
-                  setFormData={setFormData}
-                />
-                <OptionalSubjectComponent
-                  formData={formData}
-                  setFormData={setFormData}
-                  secondoryOptionalSubjects={secondoryOptionalSubjects}
-                  seniorSecondary={false}
-                />
-              </>
-            )}
+            {userType === "Super Admin" &&
+              (formData.course === "SR. Secondary Examination(12th Class)"
+                ? formData.result && (
+                    <>
+                      <LanguageComponent
+                        formData={formData}
+                        setFormData={setFormData}
+                        isModal={true}
+                      />
+                      {seniorSecondary()}
+                    </>
+                  )
+                : formData.result && (
+                    <>
+                      <LanguageComponent
+                        formData={formData}
+                        setFormData={setFormData}
+                        isModal={true}
+                      />
+                      <OptionalSubjectComponent
+                        formData={formData}
+                        setFormData={setFormData}
+                        secondoryOptionalSubjects={secondoryOptionalSubjects}
+                        seniorSecondary={false}
+                        isModal={true}
+                      />
+                    </>
+                  ))}
           </div>
 
           <div className="modal-action">

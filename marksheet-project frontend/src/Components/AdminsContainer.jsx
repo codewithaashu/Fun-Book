@@ -21,6 +21,11 @@ const AdminsContainer = () => {
       header: "Email",
       size: 200,
     },
+    {
+      accessorKey: "password",
+      header: "Password",
+      size: 200,
+    },
   ];
   useEffect(() => {
     getAdminsList();

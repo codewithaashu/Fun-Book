@@ -1,6 +1,23 @@
 import React, { useEffect } from "react";
 
-const Registration = React.forwardRef((props, ref) => {
+const Registration = React.forwardRef(({ data }, ref) => {
+  const {
+    imgSrc,
+    name,
+    fatherName,
+    dob,
+    regNo,
+    rollNo,
+    year,
+    course,
+    firstLanguage,
+    secondLanguage,
+    option1,
+    option2,
+    option3,
+    option4,
+    option5,
+  } = data;
   return (
     <div ref={ref} className="w-full h-full pt-[60px] px-32">
       <style type="text/css" media="print">
@@ -14,23 +31,23 @@ const Registration = React.forwardRef((props, ref) => {
       <div className="pt-80 ">
         <div className="text-sm font-semibold">
           Certify that
-          <span className="text-base font-bold uppercase px-[5px]">
-            Baburam Ralapuri
-          </span>
+          <span className="text-base font-bold uppercase px-[5px]">{name}</span>
           S/D/W of Shri
-          <span className="text-base font-bold uppercase px-[5px]">Apparo</span>
+          <span className="text-base font-bold uppercase px-[5px]">
+            {fatherName}
+          </span>
           has been Registered in Secondary CSSE under The Provision of Relevent
           Regulations,His/Her Registration No. is
           <span className="text-base font-bold uppercase px-[5px]">
-            SE20130625
+            {regNo}
           </span>
           <h1 className="py-3 text-base font-bold uppercase text-center">
             Subjects
           </h1>
-          <div className="border-2 border-gray-500  w-full pt-[2px] pb-[2px]">
+          <div className="border-2 border-gray-500  w-full p-[2px]">
             <div className="uppercase text-sm font-semibold  border-2 border-gray-700 text-center">
-              Kannada, English, Hindi, Mathematics, Science, Social Science,
-              Computer Science
+              {`${firstLanguage}, ${secondLanguage}, ${option1}, ${option2}, ${option3}, ${option4},
+              ${option5 ? option5 : ""}`}
             </div>
           </div>
         </div>

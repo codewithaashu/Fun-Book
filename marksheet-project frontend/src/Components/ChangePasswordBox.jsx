@@ -15,7 +15,6 @@ const ChangePasswordBox = () => {
   const changePassword = async () => {
     try {
       const id = localStorage.getItem("id");
-      console.log(id);
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/changePassword/${id}`,
         formData

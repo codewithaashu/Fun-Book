@@ -34,7 +34,6 @@ const Login = () => {
       return;
     }
     const resp = await loginUser();
-    console.log(resp);
     if (resp.success) {
       SuccessToast(resp.message ?? "Successfull");
       setFormData({
@@ -46,7 +45,7 @@ const Login = () => {
       localStorage.setItem("id", resp.data._id);
       localStorage.setItem("userType", resp.data.userType);
       if (resp.data.userType === "Admin") {
-        navigate("/users");
+        navigate("/users/10th Class");
       } else {
         navigate("/admins");
       }

@@ -1,17 +1,10 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 const AdminSchema = new mongoose.Schema({
-  userType: { type: String, required: true },
+  userType: { type: String, default: "Admin" },
   name: { type: String, required: true },
   username: { type: String, unique: true, required: true },
-  email: { type: String, required: true },
+  email: { type: String },
   password: { type: String, required: true },
-});
-AdminSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
 });
 AdminSchema.methods.generateToken = function () {
   const token = jwt.sign({ _id: this._id }, "mynameisashishranjan");

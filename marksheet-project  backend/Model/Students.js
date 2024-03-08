@@ -18,6 +18,8 @@ const studentSchema = new mongoose.Schema({
   rollNo: { type: Number, unique: true, required: true },
   regNo: { type: String, unique: true, required: true },
   result: { type: Object },
+  regDate: { type: String, default: new Date().toDateString(), required: true },
+  adminUsername: { type: String, required: true },
 });
 
 const Students = new mongoose.model("Students", studentSchema);

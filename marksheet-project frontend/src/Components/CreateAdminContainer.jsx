@@ -9,7 +9,6 @@ import CheckEmptyField from "../utility/CheckEmptyField";
 
 const CreateAdminContainer = () => {
   const [formData, setFormData] = useState({
-    userType: "",
     username: "",
     name: "",
     email: "",
@@ -28,7 +27,10 @@ const CreateAdminContainer = () => {
     }
   };
   const handleSubmit = async () => {
-    const { emptyField, isAllFieldFilled } = CheckEmptyField(formData);
+    const { emptyField, isAllFieldFilled } = CheckEmptyField({
+      ...formData,
+      email: "optioanl",
+    });
     if (!isAllFieldFilled) {
       WarningToast(`${emptyField} is required field.`);
       return;
@@ -37,7 +39,6 @@ const CreateAdminContainer = () => {
     if (success) {
       SuccessToast(message ?? "Successfull");
       setFormData({
-        userType: "",
         username: "",
         name: "",
         email: "",
@@ -52,14 +53,6 @@ const CreateAdminContainer = () => {
       <div className="p-5 flex flex-col gap-5 w-full h-screen">
         <h1 className="text-lg font-semibold text-gray-600">Create Admin</h1>
         <div className="bg-white p-5 md:p-7 rounded-md flex flex-col gap-4  shadow-md mb-3 mt-3 self-center w-1/2 ">
-          <SelectComponent
-            label={"User Type"}
-            data={["Admin", "Super Admin"]}
-            defaultValue={"Select User Type"}
-            field={"userType"}
-            formData={formData}
-            setFormData={setFormData}
-          />
           <InputComponent
             label={"Name"}
             placeholder={"Enter Name Here..."}

@@ -2,15 +2,26 @@ import Students from "../Model/Students.js";
 
 const UpdateStudent = async (req, res) => {
   try {
-    // const studentId = req.params.id;
-    // const  updatedStudent = await StudentModel.updateOne({_id:studentId},{$set:{...req.body} });
-
-    const studentID = req.params.id;
-    await Students.updateOne({ _id: studentID }, { $set: req.body });
-    const data = await Students.find({});
+    const studentId = req.params.id;
+    const updatedStudent = await Students.findByIdAndUpdate(
+      studentId,
+      req.body,
+      { new: true }
+    );
+    let students;
+    if (req.query.username) {
+      students = await Students.find({
+        course: updatedStudent.course,
+        adminUsername: req.query.username,
+      });
+    } else {
+      students = await Students.find({
+        course: updatedStudent.course,
+      });
+    }
     return res
       .status(200)
-      .json({ message: "Updated Successfully", data, success: true });
+      .json({ message: "Updated Successfully", data: students, success: true });
   } catch (err) {
     return res.status(500).send({
       message: err.message || "Error updating student",

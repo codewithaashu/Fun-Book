@@ -14,12 +14,11 @@ export const ChangePasswordBox = () => {
   const changePassword = async () => {
     try {
       const id = localStorage.getItem("id");
-      console.log(id);
+      id;
       const resp = await axios.post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/changePassword/${id}`,
         formData
       );
-      console.log(resp);
     } catch (err) {
       ErrorToast("Server error. Please try again later.");
     }
@@ -35,14 +34,6 @@ export const ChangePasswordBox = () => {
       WarningToast("Password and Confirm Password are not same.");
       return;
     }
-    // const resp = await changePassword();
-    // console.log(resp);
-    // setFormData({
-    //   currentPassword: "",
-    //   newPassword: "",
-    //   confirmPassword: "",
-    // });
-    console.log(formData);
   };
   return (
     <div className="p-5 flex flex-col gap-5">

@@ -4,9 +4,7 @@ import Students from "../Model/Students.js";
 const DeclareResult = async (req, res) => {
   try {
     const studentID = req.params.id;
-    console.log(studentID);
     const student = await Students.findOne({ _id: studentID });
-    console.log(student);
     if (student.result) {
       return res
         .status(201)

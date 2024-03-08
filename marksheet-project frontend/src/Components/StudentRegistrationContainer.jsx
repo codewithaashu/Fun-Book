@@ -39,6 +39,12 @@ const StudentRegistrationContainer = () => {
     option3: "",
     option4: "",
     option5: "",
+    lang1TheoryMarks: "",
+    lang2TheoryMarks: "",
+    opt1TheoryMarks: "",
+    opt2TheoryMarks: "",
+    opt3TheoryMarks: "",
+    opt4TheoryMarks: "",
   });
   useEffect(() => {
     seniorSecondary();
@@ -83,7 +89,7 @@ const StudentRegistrationContainer = () => {
     try {
       const { data } = await axios.post(
         `${process.env.REACT_APP_SERVER_BASE_URL}/api/student`,
-        formData
+        { ...formData, adminUsername: localStorage.getItem("username") }
       );
       return data;
     } catch (err) {

@@ -10,7 +10,7 @@ const Header = ({ sideBar, setSideBar }) => {
     localStorage.clear();
   };
   return (
-    <div className="navbar bg-white shadow-md sticky top-0">
+    <div className="navbar bg-white shadow-md sticky top-0 z-50">
       <div className="navbar-start">
         <div className="flex-none">
           <button

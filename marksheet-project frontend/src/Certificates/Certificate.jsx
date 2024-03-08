@@ -1,6 +1,21 @@
 import React from "react";
-
-const Certificate = React.forwardRef((props, ref) => {
+import dateFormat from "dateformat";
+const Certificate = React.forwardRef(({ data }, ref) => {
+  const {
+    name,
+    fatherName,
+    dob,
+    regNo,
+    rollNo,
+    year,
+    firstLanguage,
+    secondLanguage,
+    option1,
+    option2,
+    option3,
+    option4,
+    option5,
+  } = data;
   return (
     <div ref={ref} className="w-full h-full pt-20 px-[90px]">
       <style type="text/css" media="print">
@@ -16,36 +31,36 @@ const Certificate = React.forwardRef((props, ref) => {
           <div className="text-[15px] font-semibold">
             This is to certify that
             <span className="text-[16px] font-bold  uppercase px-2">
-              Baburam Ralapuri
+              {name}
             </span>
           </div>
           <div className="text-[15px] font-semibold">
             Roll No.
             <span className="text-[15px] font-bold uppercase px-[102px]">
-              2477
+              {rollNo}
             </span>
           </div>
           <div className="text-[15px] font-semibold">
             Registration No.
             <span className="text-[15px] font-bold uppercase px-10">
-              SE20130625
+              {regNo}
             </span>
           </div>
           <div className="text-[15px] font-semibold">
             Son/Daughter of Shri.
             <span className="text-[15px] font-bold uppercase px-2">
-              Apparao
+              {fatherName}
             </span>
           </div>
           <div className="text-[15px] font-semibold">
             Born on
             <span className="text-[15px] font-bold uppercase px-3">
-              15 May 1972
+              {dateFormat(dob, "dd mmm yyyy")}
             </span>
           </div>
           <div className="text-[15px] font-semibold">
             passed the Secondary School Examination of the Board held in
-            <span className="text-[15px] font-bold px-3">Jun 2013</span>
+            <span className="text-[15px] font-bold px-3">Jun {year}</span>
           </div>
           <div className="text-[15px] font-semibold">
             from
@@ -63,32 +78,36 @@ const Certificate = React.forwardRef((props, ref) => {
             style={{ gridTemplateColumns: "50% 20% 29%" }}
           >
             <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              Kannada
+              {firstLanguage}
             </h1>
             <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              English
+              {secondLanguage}
             </h1>
             <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              Hindi
+              {option1}
             </h1>
             <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              Mathematics
+              {option2}
             </h1>
             <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              Science
+              {option3}
             </h1>
             <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              Social Science
+              {option4}
             </h1>
-            <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
-              Computer Science
-            </h1>
-            <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center border-r-0">
-              &nbsp;
-            </h1>
-            <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center border-l-0">
-              &nbsp;
-            </h1>
+            {option5 && (
+              <>
+                <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center">
+                  Computer Science
+                </h1>
+                <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center border-r-0">
+                  &nbsp;
+                </h1>
+                <h1 className="uppercase text-[15px] font-bold  border-2 border-gray-700 text-center border-l-0">
+                  &nbsp;
+                </h1>
+              </>
+            )}
           </div>
         </div>
       </div>

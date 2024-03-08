@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Languages } from "../DB/SubjectsDB";
 import Select from "react-select";
-const LanguageComponent = ({ formData, setFormData }) => {
+import InputComponent from "./InputComponent";
+const LanguageComponent = ({ formData, setFormData, isModal = false }) => {
   const [options1, setOption1] = useState(Languages);
   const [options2, setOption2] = useState(Languages);
   return (
     <>
       <h1 className="text-[16px] font-semibold -mt-1">Choose Subject : </h1>
-      <div className="w-full flex flex-row justify-between">
-        <div className="flex flex-col gap-1 w-1/2">
+      <div className="grid grid-cols-3 items-center gap-5 mb-1">
+        <div className="flex flex-col gap-1">
           <h1 className="text-base font-medium text-gray-500">
             First Language
           </h1>
           <Select
             options={options1}
-            defaultInputValue={formData.firstLanguage}
+            defaultInputValue={formData?.firstLanguage}
             menuPlacement="top"
             onChange={(v1) => {
               setFormData({
@@ -35,13 +36,38 @@ const LanguageComponent = ({ formData, setFormData }) => {
             }}
           />
         </div>
-        <div className="flex flex-col gap-1 w-1/2 ">
+        {formData.result && (
+          <>
+            {" "}
+            <InputComponent
+              label="Theory Marks"
+              inputType="text"
+              placeholder="Enter Theory Marks"
+              field={"lang1TheoryMarks"}
+              formData={formData}
+              setFormData={setFormData}
+              isModal={true}
+            />
+            <InputComponent
+              label="Oral Marks"
+              inputType="text"
+              placeholder="Enter Oral Marks"
+              field={"lang1OralMarks"}
+              formData={formData}
+              setFormData={setFormData}
+              isModal={true}
+            />
+          </>
+        )}
+      </div>
+      <div className="grid grid-cols-3 items-center gap-3 w-full">
+        <div className="flex flex-col gap-1">
           <h1 className="text-base font-medium text-gray-500">
             Second Language
           </h1>
           <Select
             menuPlacement="top"
-            defaultInputValue={formData.secondLanguage}
+            defaultInputValue={formData?.secondLanguage}
             options={options2}
             onChange={(v2) => {
               setFormData({
@@ -62,6 +88,24 @@ const LanguageComponent = ({ formData, setFormData }) => {
             }}
           />
         </div>
+        <InputComponent
+          label="Theory Marks"
+          inputType="text"
+          placeholder="Enter Theory Marks"
+          field={"lang2TheoryMarks"}
+          formData={formData}
+          setFormData={setFormData}
+          isModal={true}
+        />
+        <InputComponent
+          label="Oral Marks"
+          inputType="text"
+          placeholder="Enter Oral Marks"
+          field={"lang2OralMarks"}
+          formData={formData}
+          setFormData={setFormData}
+          isModal={true}
+        />
       </div>
     </>
   );

@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import SideBar from "../Components/SideBar";
 import HomeContainer from "../Components/HomeContainer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const StudentsList = () => {
   const [sideBar, setSideBar] = useState(true);
   const { pathname } = useLocation();
+  const params = useParams();
   return (
     <>
       <div className="flex flex-row">
@@ -19,7 +20,7 @@ const StudentsList = () => {
         </div>
         <div className="flex-1">
           <Header sideBar={sideBar} setSideBar={setSideBar} />
-          <HomeContainer />
+          <HomeContainer course={params.id} />
         </div>
       </div>
     </>

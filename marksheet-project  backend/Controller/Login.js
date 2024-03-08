@@ -1,5 +1,4 @@
 import { Admins } from "../Model/Admins.js";
-import bcrypt from "bcrypt";
 const Login = async (req, res) => {
   try {
     const { username, password, userType } = req.body;
@@ -10,7 +9,7 @@ const Login = async (req, res) => {
         message: "Invalid crediantial details.",
       });
     }
-    const comparePassword = await bcrypt.compare(password, user.password);
+    const comparePassword = password === user.password;
     if (!comparePassword) {
       return res.status(400).json({
         success: false,

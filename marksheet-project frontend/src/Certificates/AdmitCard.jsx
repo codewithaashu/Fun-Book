@@ -1,6 +1,21 @@
 import React from "react";
-
-const AdmitCard = React.forwardRef((props, ref) => {
+import dateFormat from "dateformat";
+const AdmitCard = React.forwardRef(({ data }, ref) => {
+  const {
+    imgSrc,
+    name,
+    fatherName,
+    dob,
+    regNo,
+    rollNo,
+    firstLanguage,
+    secondLanguage,
+    option1,
+    option2,
+    option3,
+    option4,
+    option5,
+  } = data;
   return (
     <div ref={ref} className="w-full h-full pt-[66px] px-[90px]">
       <style type="text/css" media="print">
@@ -13,11 +28,7 @@ const AdmitCard = React.forwardRef((props, ref) => {
       <h1 className="text-[16px] font-extrabold text-end">7168</h1>
       <div className="pt-24">
         <div className="flex flex-row justify-end px-2">
-          <img
-            src="https://i.pinimg.com/236x/6b/7e/d6/6b7ed698713c09ad9e6afc7dcb996a09.jpg"
-            alt="Student"
-            className="w-[95px] h-[110px]"
-          />
+          <img src={imgSrc} alt="Student" className="w-[95px] h-[110px]" />
         </div>
         <div className="flex flex-col pt-[72px]  text-lg font-semibold font-[roboto-medium]">
           <div className="grid grid-cols-2 w-full gap-40">
@@ -26,13 +37,13 @@ const AdmitCard = React.forwardRef((props, ref) => {
                 Registration <br /> No.
               </h1>
               <h1 className="text-lg font-semibold font-[roboto-medium]">
-                SE20130625
+                {regNo}
               </h1>
             </div>
             <div className="flex flex-row items-center gap-8">
               <h1 className="text-base font-[roboto-medium]">Roll No.</h1>
               <h1 className="text-lg font-semibold font-[roboto-medium]">
-                2477
+                {rollNo}
               </h1>
             </div>
           </div>
@@ -46,16 +57,16 @@ const AdmitCard = React.forwardRef((props, ref) => {
             </div>
             <div className="flex flex-col gap-2">
               <h1 className="text-lg font-semibold font-[roboto-medium] uppercase">
-                Baburam Ralapuri
+                {name}
               </h1>
               <h1 className="text-lg font-semibold font-[roboto-medium] uppercase">
-                15 May 1972
+                {dateFormat(dob, "dd mmm yyyy")}
               </h1>
               <h1 className="text-lg font-semibold font-[roboto-medium] uppercase">
                 Male
               </h1>
               <h1 className="text-lg font-semibold font-[roboto-medium] uppercase">
-                Apparao
+                {fatherName}
               </h1>
               <h1 className="text-lg font-semibold font-[roboto-medium] ">
                 Navin Bharti Senior Secondary School
@@ -71,32 +82,36 @@ const AdmitCard = React.forwardRef((props, ref) => {
               style={{ gridTemplateColumns: "50% 20% 29.3%" }}
             >
               <h1 className="uppercase text-sm font-semibold font-[roboto-medium] border-2 border-gray-700 text-center">
-                Kannada
+                {firstLanguage}
               </h1>
               <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
-                English
+                {secondLanguage}
               </h1>
               <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
-                Hindi
+                {option1}
               </h1>
               <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
-                Mathematics
+                {option2}
+              </h1>
+              <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center ">
+                {option3}
               </h1>
               <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
-                Science
+                {option4}
               </h1>
-              <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
-                Social Science
-              </h1>
-              <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
-                Computer Science
-              </h1>
-              <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center border-r-0">
-                &nbsp;
-              </h1>
-              <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center border-l-0">
-                &nbsp;
-              </h1>
+              {option5 && (
+                <>
+                  <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center">
+                    {option5}
+                  </h1>
+                  <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center border-r-0">
+                    &nbsp;
+                  </h1>
+                  <h1 className="uppercase text-sm font-semibold font-[roboto-medium]  border-2 border-gray-700 text-center border-l-0">
+                    &nbsp;
+                  </h1>
+                </>
+              )}
             </div>
           </div>
         </div>

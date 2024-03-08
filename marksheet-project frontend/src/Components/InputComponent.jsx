@@ -8,21 +8,30 @@ const InputComponent = ({
   field,
   formData,
   setFormData,
+  isModal = false,
 }) => {
-  console.log(formData);
   return (
     <>
-      <div className="flex flex-col gap-1 ">
+      <div className="flex flex-col gap-1">
         <h1 className="text-[15px] font-medium text-gray-600">{label}</h1>
         <input
           type={inputType}
-          value={formData[field]}
+          value={
+            formData && (isModal ? formData?.result[field] : formData?.[field])
+          }
           className={`file-input ${
             isResult ? "w-full" : "w-full"
-          }  h-fit p-2 bg-white text-sm border-[1px] border-gray-400 text-gray-700 focus:outline-none placeholder:text-sm`}
+          }  h-fit p-2 bg-white text-sm border-[1px] border-gray-800 text-gray-700 focus:outline-none placeholder:text-sm py-3`}
           placeholder={placeholder}
           onChange={(e) => {
-            setFormData({ ...formData, [field]: e.target.value });
+            if (isModal) {
+              const { result } = formData;
+              result[field] = e.target.value;
+              const newResult = { ...result, [field]: e.target.value };
+              setFormData({ ...formData, result });
+            } else {
+              setFormData({ ...formData, [field]: e.target.value });
+            }
           }}
         />
       </div>
