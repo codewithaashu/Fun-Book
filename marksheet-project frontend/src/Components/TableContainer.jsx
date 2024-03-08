@@ -15,7 +15,6 @@ import AdminModalContainer from "./AdminModalContainer";
 import StudentModalContainer from "./StudentModalContainer";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import ReactPrintDoc from "../utility/ReactPrintDoc";
 import { useReactToPrint } from "react-to-print";
 import Marksheet from "../Certificates/Marksheet";
 import AdmitCard from "../Certificates/AdmitCard";
@@ -23,9 +22,8 @@ import Certificate from "../Certificates/Certificate";
 import Migration from "../Certificates/Migration";
 import Registration from "../Certificates/Registration";
 
-const TableContainer = ({ data, cols, isResult, field, setData }) => {
+const TableContainer = ({ data, cols, field, setData }) => {
   const columns = useMemo(() => cols, [cols]);
-  const [confirm, setConfirm] = useState(false);
   const [printData, setPrintData] = useState(null);
   const [documentName, setDocumentName] = useState("Marksheet");
   const [formData, setFormData] = useState({
@@ -112,9 +110,8 @@ const TableContainer = ({ data, cols, isResult, field, setData }) => {
         return certificateRef.current;
       } else if (documentName === "Migration") {
         return migrationRef.current;
-      } else {
-        return registrationRef.current;
       }
+      return registrationRef.current;
     },
     onAfterPrint: () => window.location.reload(),
   });

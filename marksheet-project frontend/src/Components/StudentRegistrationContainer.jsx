@@ -39,16 +39,11 @@ const StudentRegistrationContainer = () => {
     option3: "",
     option4: "",
     option5: "",
-    lang1TheoryMarks: "",
-    lang2TheoryMarks: "",
-    opt1TheoryMarks: "",
-    opt2TheoryMarks: "",
-    opt3TheoryMarks: "",
-    opt4TheoryMarks: "",
+    result: {},
   });
   useEffect(() => {
     seniorSecondary();
-  }, [stream]);
+  }, []);
   const fileInputRef = useRef();
   const yearInputRef = useRef();
   const courseInputRef = useRef();
@@ -62,6 +57,7 @@ const StudentRegistrationContainer = () => {
           secondoryOptionalSubjects={scienceSubjects}
           seniorSecondary={true}
           stream={stream}
+          isMarks={true}
         />
       );
     } else if (stream === "Commerce") {
@@ -72,6 +68,7 @@ const StudentRegistrationContainer = () => {
           secondoryOptionalSubjects={commerceSubjects}
           seniorSecondary={true}
           stream={stream}
+          isMarks={true}
         />
       );
     }
@@ -82,6 +79,7 @@ const StudentRegistrationContainer = () => {
         secondoryOptionalSubjects={artsSubjects}
         seniorSecondary={true}
         stream={stream}
+        isMarks={true}
       />
     );
   };
@@ -181,6 +179,7 @@ const StudentRegistrationContainer = () => {
             field={"name"}
             formData={formData}
             setFormData={setFormData}
+            isMarks={false}
           />
           <InputComponent
             label="Date of Birth"
@@ -189,6 +188,7 @@ const StudentRegistrationContainer = () => {
             field={"dob"}
             formData={formData}
             setFormData={setFormData}
+            isMarks={false}
           />
           <InputComponent
             label="Father Name"
@@ -197,6 +197,7 @@ const StudentRegistrationContainer = () => {
             field={"fatherName"}
             formData={formData}
             setFormData={setFormData}
+            isMarks={false}
           />
           <InputComponent
             label="Mother Name"
@@ -205,8 +206,8 @@ const StudentRegistrationContainer = () => {
             field={"motherName"}
             formData={formData}
             setFormData={setFormData}
+            isMarks={false}
           />
-
           <SelectComponent
             label="Year"
             data={years}
@@ -245,6 +246,7 @@ const StudentRegistrationContainer = () => {
                     <LanguageComponent
                       formData={formData}
                       setFormData={setFormData}
+                      isMarks={true}
                     />
                     {seniorSecondary()}
                   </>
@@ -255,17 +257,18 @@ const StudentRegistrationContainer = () => {
                 <LanguageComponent
                   formData={formData}
                   setFormData={setFormData}
+                  isMarks={true}
                 />
                 <OptionalSubjectComponent
                   formData={formData}
                   setFormData={setFormData}
                   secondoryOptionalSubjects={secondoryOptionalSubjects}
                   seniorSecondary={false}
+                  isMarks={true}
                 />
               </>
             )
           ) : null}
-
           <button
             className="btn btn-outline btn-primary px-7 py-1 w-fit self-center mt-3 "
             onClick={handleSubmit}

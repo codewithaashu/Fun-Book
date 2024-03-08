@@ -16,7 +16,10 @@ const SelectCourse = ({
       <select
         className="select  w-full max-w-xs h-fit p-2 bg-white text-base border-[1px] border-gray-400 outline-none rounded-sm text-gray-700 focus:outline-none"
         defaultValue={formData[field]}
-        onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
+        onChange={(e) => {
+          setFormData({ ...formData, [field]: e.target.value });
+          setCourse(e.target.value);
+        }}
         ref={courseInputRef}
       >
         <option disabled value={""}>
@@ -24,7 +27,7 @@ const SelectCourse = ({
         </option>
         {data.map((curr, index) => {
           return (
-            <option value={curr} key={index} onClick={() => setCourse(curr)}>
+            <option value={curr} key={index}>
               {curr}
             </option>
           );

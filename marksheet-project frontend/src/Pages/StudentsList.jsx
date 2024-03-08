@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../Components/Header";
 import SideBar from "../Components/SideBar";
 import HomeContainer from "../Components/HomeContainer";

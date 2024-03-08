@@ -34,7 +34,7 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
           secondoryOptionalSubjects={scienceSubjects}
           seniorSecondary={true}
           stream={formData.stream}
-          isModal={true}
+          isMarks={true}
         />
       );
     } else if (formData.stream === "Commerce") {
@@ -45,7 +45,7 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
           secondoryOptionalSubjects={commerceSubjects}
           seniorSecondary={true}
           stream={formData.stream}
-          isModal={true}
+          isMarks={true}
         />
       );
     }
@@ -56,7 +56,7 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
         secondoryOptionalSubjects={artsSubjects}
         seniorSecondary={true}
         stream={formData.stream}
-        isModal={true}
+        isMarks={true}
       />
     );
   };
@@ -189,29 +189,29 @@ const StudentModalContainer = ({ formData, setFormData, setData }) => {
             />
             {userType === "Super Admin" &&
               (formData.course === "SR. Secondary Examination(12th Class)"
-                ? formData.result && (
+                ? formData?.result && (
                     <>
                       <LanguageComponent
                         formData={formData}
                         setFormData={setFormData}
-                        isModal={true}
+                        isMarks={true}
                       />
                       {seniorSecondary()}
                     </>
                   )
-                : formData.result && (
+                : formData?.result && (
                     <>
                       <LanguageComponent
                         formData={formData}
                         setFormData={setFormData}
-                        isModal={true}
+                        isMarks={true}
                       />
                       <OptionalSubjectComponent
                         formData={formData}
                         setFormData={setFormData}
                         secondoryOptionalSubjects={secondoryOptionalSubjects}
                         seniorSecondary={false}
-                        isModal={true}
+                        isMarks={true}
                       />
                     </>
                   ))}

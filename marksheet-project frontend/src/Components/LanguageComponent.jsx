@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Languages } from "../DB/SubjectsDB";
 import Select from "react-select";
 import InputComponent from "./InputComponent";
-const LanguageComponent = ({ formData, setFormData, isModal = false }) => {
+const LanguageComponent = ({ formData, setFormData, isMarks }) => {
   const [options1, setOption1] = useState(Languages);
   const [options2, setOption2] = useState(Languages);
   return (
@@ -36,7 +36,7 @@ const LanguageComponent = ({ formData, setFormData, isModal = false }) => {
             }}
           />
         </div>
-        {formData.result && (
+        {formData?.result && (
           <>
             {" "}
             <InputComponent
@@ -46,7 +46,7 @@ const LanguageComponent = ({ formData, setFormData, isModal = false }) => {
               field={"lang1TheoryMarks"}
               formData={formData}
               setFormData={setFormData}
-              isModal={true}
+              isMarks={isMarks}
             />
             <InputComponent
               label="Oral Marks"
@@ -55,7 +55,7 @@ const LanguageComponent = ({ formData, setFormData, isModal = false }) => {
               field={"lang1OralMarks"}
               formData={formData}
               setFormData={setFormData}
-              isModal={true}
+              isMarks={isMarks}
             />
           </>
         )}
@@ -88,24 +88,28 @@ const LanguageComponent = ({ formData, setFormData, isModal = false }) => {
             }}
           />
         </div>
-        <InputComponent
-          label="Theory Marks"
-          inputType="text"
-          placeholder="Enter Theory Marks"
-          field={"lang2TheoryMarks"}
-          formData={formData}
-          setFormData={setFormData}
-          isModal={true}
-        />
-        <InputComponent
-          label="Oral Marks"
-          inputType="text"
-          placeholder="Enter Oral Marks"
-          field={"lang2OralMarks"}
-          formData={formData}
-          setFormData={setFormData}
-          isModal={true}
-        />
+        {formData?.result && (
+          <>
+            <InputComponent
+              label="Theory Marks"
+              inputType="text"
+              placeholder="Enter Theory Marks"
+              field={"lang2TheoryMarks"}
+              formData={formData}
+              setFormData={setFormData}
+              isMarks={isMarks}
+            />
+            <InputComponent
+              label="Oral Marks"
+              inputType="text"
+              placeholder="Enter Oral Marks"
+              field={"lang2OralMarks"}
+              formData={formData}
+              setFormData={setFormData}
+              isMarks={isMarks}
+            />
+          </>
+        )}
       </div>
     </>
   );

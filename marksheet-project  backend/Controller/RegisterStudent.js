@@ -19,20 +19,7 @@ const RegisterStudent = async (req, res) => {
       option4,
       option5,
       adminUsername,
-      lang1TheoryMarks,
-      lang2TheoryMarks,
-      opt1TheoryMarks,
-      opt2TheoryMarks,
-      opt3TheoryMarks,
-      opt4TheoryMarks,
-      opt5TheoryMarks,
-      lang1OralMarks,
-      lang2OralMarks,
-      opt1OralMarks,
-      opt2OralMarks,
-      opt3OralMarks,
-      opt4OralMarks,
-      opt5OralMarks,
+      result,
     } = req.body;
     const totalStudents = await Students.countDocuments();
     const rollNo = 5001 + totalStudents;
@@ -40,22 +27,29 @@ const RegisterStudent = async (req, res) => {
     const regNo = `${
       course === "SR. Secondary Examination(12th Class)" ? "HS" : "SE"
     }${year}${random4Digits}`;
-    const result = {
-      lang1TheoryMarks,
-      lang2TheoryMarks,
-      opt1TheoryMarks,
-      opt2TheoryMarks,
-      opt3TheoryMarks,
-      opt4TheoryMarks,
-      opt5TheoryMarks,
-      lang1OralMarks: lang1OralMarks ?? 0,
-      lang2OralMarks: lang2OralMarks ?? 0,
-      opt1OralMarks: opt1OralMarks ?? 0,
-      opt2OralMarks: opt2OralMarks ?? 0,
-      opt3OralMarks: opt3OralMarks ?? 0,
-      opt4OralMarks: opt4OralMarks ?? 0,
-      opt5OralMarks: opt5OralMarks ?? 0,
+    let newResult = {
+      lang1TheoryMarks: "",
+      lang1OralMarks: "",
+      lang2TheoryMarks: "",
+      lang2OralMarks: "",
+      opt1TheoryMarks: "",
+      opt1OralMarks: "",
+      opt2TheoryMarks: "",
+      opt2OralMarks: "",
+      opt3TheoryMarks: "",
+      opt3OralMarks: "",
+      opt4TheoryMarks: "",
+      opt4OralMarks: "",
     };
+    if (course === "Secondary Examination(10th Class)") {
+      newResult = { ...newResult, opt5TheoryMarks: "", opt5OralMarks: "" };
+    }
+    Object.keys(newResult).map((curr, index) => {
+      if (!result[curr]) {
+        result[curr] = 0;
+      }
+      return curr;
+    });
     const student = new Students({
       imgSrc,
       name,

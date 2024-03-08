@@ -8,7 +8,7 @@ const InputComponent = ({
   field,
   formData,
   setFormData,
-  isModal = false,
+  isMarks,
 }) => {
   return (
     <>
@@ -17,17 +17,16 @@ const InputComponent = ({
         <input
           type={inputType}
           value={
-            formData && (isModal ? formData?.result[field] : formData?.[field])
+            formData && (isMarks ? formData?.result[field] : formData?.[field])
           }
           className={`file-input ${
             isResult ? "w-full" : "w-full"
           }  h-fit p-2 bg-white text-sm border-[1px] border-gray-800 text-gray-700 focus:outline-none placeholder:text-sm py-3`}
           placeholder={placeholder}
           onChange={(e) => {
-            if (isModal) {
+            if (isMarks) {
               const { result } = formData;
               result[field] = e.target.value;
-              const newResult = { ...result, [field]: e.target.value };
               setFormData({ ...formData, result });
             } else {
               setFormData({ ...formData, [field]: e.target.value });

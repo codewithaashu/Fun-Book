@@ -7,7 +7,7 @@ const OptionalSubjectComponent = ({
   secondoryOptionalSubjects,
   seniorSecondary,
   stream,
-  isModal = false,
+  isMarks,
 }) => {
   const [options, setOptions] = useState(secondoryOptionalSubjects);
   useEffect(() => {
@@ -50,7 +50,7 @@ const OptionalSubjectComponent = ({
           field={"opt1TheoryMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
         <InputComponent
           label="Oral Marks"
@@ -59,7 +59,7 @@ const OptionalSubjectComponent = ({
           field={"opt1OralMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
       </div>
       <div className="grid grid-cols-3 gap-5 w-full justify-between">
@@ -97,7 +97,7 @@ const OptionalSubjectComponent = ({
           field={"opt2TheoryMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
         <InputComponent
           label="Oral Marks"
@@ -106,7 +106,7 @@ const OptionalSubjectComponent = ({
           field={"opt2OralMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
       </div>
 
@@ -145,7 +145,7 @@ const OptionalSubjectComponent = ({
           field={"opt3TheoryMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
         <InputComponent
           label="Oral Marks"
@@ -154,7 +154,7 @@ const OptionalSubjectComponent = ({
           field={"opt3OralMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
       </div>
       <div className="grid grid-cols-3 gap-5 w-full justify-between">
@@ -192,7 +192,7 @@ const OptionalSubjectComponent = ({
           field={"opt4TheoryMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
         <InputComponent
           label="Oral Marks"
@@ -201,7 +201,7 @@ const OptionalSubjectComponent = ({
           field={"opt4OralMarks"}
           formData={formData}
           setFormData={setFormData}
-          isModal={true}
+          isMarks={true}
         />
       </div>
       {!seniorSecondary && (
@@ -240,7 +240,7 @@ const OptionalSubjectComponent = ({
             field={"opt5TheoryMarks"}
             formData={formData}
             setFormData={setFormData}
-            isModal={true}
+            isMarks={true}
           />
           <InputComponent
             label="Oral Marks"
@@ -249,7 +249,7 @@ const OptionalSubjectComponent = ({
             field={"opt5OralMarks"}
             formData={formData}
             setFormData={setFormData}
-            isModal={true}
+            isMarks={true}
           />
         </div>
       )}
