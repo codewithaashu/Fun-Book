@@ -68,6 +68,7 @@ const HomeContainer = ({ course }) => {
         ];
   useEffect(() => {
     getStudentsList();
+    //eslint-disable-next-line
   }, [course]);
   const getStudentsList = async () => {
     try {

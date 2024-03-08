@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import SelectComponent from "./SelectComponent";
+import React from "react";
 import InputComponent from "./InputComponent";
 import WarningToast from "../utility/WarningToast";
 import SuccessToast from "../utility/SuccesToast";
@@ -7,7 +6,6 @@ import ErrorToast from "../utility/ErrorToast";
 import axios from "axios";
 
 const AdminModalContainer = ({ formData, setFormData, setData }) => {
-  const [password, setPassword] = useState("");
   const updateDetails = async () => {
     try {
       const { data } = await axios.put(

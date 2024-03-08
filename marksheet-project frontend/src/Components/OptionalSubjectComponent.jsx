@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import InputComponent from "./InputComponent";
 const OptionalSubjectComponent = ({
@@ -10,9 +10,6 @@ const OptionalSubjectComponent = ({
   isMarks,
 }) => {
   const [options, setOptions] = useState(secondoryOptionalSubjects);
-  useEffect(() => {
-    setOptions(secondoryOptionalSubjects);
-  }, [stream]);
   return (
     <>
       <div className="grid grid-cols-3 gap-5 w-full justify-between">

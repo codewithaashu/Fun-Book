@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 const SideBar = ({ pathname }) => {
   const naviagte = useNavigate();
   const [userType, setUserType] = useState(null);
-  const [studentListDropdown, setStudentListDropdown] = useState(false);
   const handleLogout = () => {
     naviagte("/");
     localStorage.clear();

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import years from "../DB/Years";
 import {
   artsSubjects,
@@ -41,9 +41,6 @@ const StudentRegistrationContainer = () => {
     option5: "",
     result: {},
   });
-  useEffect(() => {
-    seniorSecondary();
-  }, []);
   const fileInputRef = useRef();
   const yearInputRef = useRef();
   const courseInputRef = useRef();
@@ -227,6 +224,7 @@ const StudentRegistrationContainer = () => {
             formData={formData}
             courseInputRef={courseInputRef}
           />
+
           {course ? (
             course === "SR. Secondary Examination(12th Class)" ? (
               <>

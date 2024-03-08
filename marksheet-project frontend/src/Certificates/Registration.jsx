@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const Registration = React.forwardRef(({ data }, ref) => {
   const {
-    imgSrc,
     name,
     fatherName,
-    dob,
     regNo,
-    rollNo,
-    year,
-    course,
     firstLanguage,
     secondLanguage,
     option1,

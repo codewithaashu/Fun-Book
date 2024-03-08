@@ -66,6 +66,7 @@ const Marksheet = React.forwardRef(({ data }, ref) => {
     return () => {
       setTotalMarks(null);
     };
+    //eslint-disable-next-line
   }, []);
   const calculateTotalMarks = () => {
     return totalMarks?.reduce((accum, curr) => {
@@ -191,18 +192,18 @@ const Marksheet = React.forwardRef(({ data }, ref) => {
                         </div>
                         <div className="border-2 border-gray-700 flex flex-col gap-2">
                           <div>
-                            {lang1OralMarks == 0 ? "-" : lang1OralMarks}
+                            {lang1OralMarks === 0 ? "-" : lang1OralMarks}
                           </div>
                           <div>
-                            {lang2OralMarks == 0 ? "-" : lang2OralMarks}
+                            {lang2OralMarks === 0 ? "-" : lang2OralMarks}
                           </div>
-                          <div>{opt1OralMarks == 0 ? "-" : opt1OralMarks}</div>
-                          <div>{opt2OralMarks == 0 ? "-" : opt2OralMarks}</div>
-                          <div>{opt3OralMarks == 0 ? "-" : opt3OralMarks}</div>
-                          <div>{opt4OralMarks == 0 ? "-" : opt4OralMarks}</div>
+                          <div>{opt1OralMarks === 0 ? "-" : opt1OralMarks}</div>
+                          <div>{opt2OralMarks === 0 ? "-" : opt2OralMarks}</div>
+                          <div>{opt3OralMarks === 0 ? "-" : opt3OralMarks}</div>
+                          <div>{opt4OralMarks === 0 ? "-" : opt4OralMarks}</div>
                           {course === "Secondary Examination(10th Class)" && (
                             <div>
-                              {opt5OralMarks == 0 ? "-" : opt5OralMarks}
+                              {opt5OralMarks === 0 ? "-" : opt5OralMarks}
                             </div>
                           )}
                         </div>
