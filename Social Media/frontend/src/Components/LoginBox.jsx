@@ -10,7 +10,7 @@ const LoginBox = () => {
   };
   return (
     <>
-      <div className="px-5 md:px-8 py-20 bg-zinc-950 rounded-l-md shadow-md w-[320px] md:w-[360px]">
+      <div className="px-5 md:px-8 py-20 bg-zinc-900 rounded-l-md shadow-md w-[320px] md:w-[360px]">
         <Logo />
         <h1 className="text-base font-semibold py-2">Log in your account</h1>
         <div className="flex flex-col gap-3 pt-5">
@@ -30,12 +30,12 @@ const LoginBox = () => {
             formData={formData}
             setFormData={setFormData}
           />
-          <a
-            href="/forgotPassword"
+          <Link
+            to="/forgotPassword"
             className="text-xs font-semibold text-blue text-end -mt-1"
           >
             Forgot Password?
-          </a>
+          </Link>
         </div>
         <BtnComponent label={"Login"} handleBtn={handleLogin} />
         <div className="text-[13px] text-gray-400 font-semibold pt-3 text-center">

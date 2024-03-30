@@ -5,8 +5,8 @@ import ThemeSlice from "./ThemeSlice";
 
 //contain all the slice in a reducer
 const Reducer = combineReducers({
+  theme: ThemeSlice,
   user: UserSlice,
   post: PostSlice,
-  theme: ThemeSlice,
 });
 export default Reducer;

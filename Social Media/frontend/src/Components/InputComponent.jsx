@@ -15,7 +15,7 @@ const InputComponent = ({
         <input
           type={inputType}
           placeholder={placeholder}
-          className="text-sm font-medium outline-none p-2 rounded-md bg-zinc-700 placeholder:text-gray-400 text-gray-300 w-full"
+          className="text-sm font-medium outline-none p-2 py-3 rounded-md bg-zinc-700 placeholder:text-gray-400 text-gray-300 w-full"
           onChange={(e) =>
             setFormData({ ...formData, [field]: e.target.value })
           }

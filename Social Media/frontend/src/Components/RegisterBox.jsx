@@ -17,7 +17,7 @@ const RegisterBox = () => {
   };
   return (
     <>
-      <div className="px-5 md:px-8 py-20 bg-zinc-950 rounded-r-md shadow-md w-[320px] md:w-[360px]">
+      <div className="px-5 md:px-8 py-20 bg-zinc-900 rounded-r-md shadow-md w-[320px] md:w-[360px]">
         <Logo />
         <h1 className="text-base font-semibold py-2">Create your account</h1>
         <div className="flex flex-col gap-3 pt-5">

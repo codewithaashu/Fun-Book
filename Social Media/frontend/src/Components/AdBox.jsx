@@ -9,7 +9,7 @@ const AdBox = () => {
   const [path, setPath] = useState("/");
   useEffect(() => {
     setPath(location.pathname);
-  }, []);
+  }, [location.pathname]);
   console.log(location);
   return (
     <>
