@@ -10,7 +10,9 @@ const BtnComponent = ({ label, handleBtn }) => {
   return (
     <button
       className={`text-sm font-semibold bg-blue w-full p-2 rounded-md ${
-        path === "/forgotPassword" ? "mt-1" : "mt-7"
+        path === "/forgot-password" || path.includes("/reset-password/")
+          ? "mt-1"
+          : "mt-7"
       }`}
       onClick={handleBtn}
     >

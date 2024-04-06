@@ -8,6 +8,7 @@ import Register from "./Pages/Register";
 import ForgotPassword from "./Pages/ForgotPassword";
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
+import ResetPassword from "./Pages/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
@@ -24,8 +25,12 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/forgotPassword",
+    path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password/:email",
+    element: <ResetPassword />,
   },
 ]);
 root.render(

@@ -31,7 +31,7 @@ const LoginBox = () => {
             setFormData={setFormData}
           />
           <Link
-            to="/forgotPassword"
+            to="/forgot-password"
             className="text-xs font-semibold text-blue text-end -mt-1"
           >
             Forgot Password?

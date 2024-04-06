@@ -5,7 +5,6 @@ import express from "express";
 import dotenv from "dotenv"; //to use dotenv file
 import connectDB from "./config/dbConfig.js";
 import router from "./router/index.js";
-
 //create an instance of express function
 const app = express();
 
