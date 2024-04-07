@@ -6,6 +6,7 @@ import VerifyMail from "../controller/VerifyMail.js";
 import VerifiedAccount from "../controller/VerifiedAccount.js";
 import ForgotPassword from "../controller/ForgotPassword.js";
 import ResetPassword from "../controller/ResetPassword.js";
+import LogoutUser from "../controller/LogoutUser.js";
 
 //create an instance of AuthRouter
 const AuthRouter = express.Router();
@@ -22,4 +23,5 @@ AuthRouter.get("/verify/:id/:token", VerifyMail);
 AuthRouter.get("/verified", VerifiedAccount);
 AuthRouter.get("/forgot-password/:email", ForgotPassword);
 AuthRouter.put("/reset-password", ResetPassword);
+AuthRouter.get("/logout", LogoutUser);
 export default AuthRouter;

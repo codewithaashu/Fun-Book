@@ -14,8 +14,8 @@ const Authentication = (req, res, next) => {
   //if token exist, then  verify it and decode the token to get the user info.
   //we generate the jwt using user's id, so user's id is decode from jwt.
   const { id } = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  //add user data to request object
-  req.id = id;
+  //add userId to request object
+  req.userId = id;
   //go to the next middleware function
   next();
 };
