@@ -12,9 +12,10 @@ const RegisterUser = async (req, res) => {
 
     //if user is exist
     if (userExist) {
-      return res
-        .status(409)
-        .json({ success: false, message: "User is already registered" });
+      return res.status(409).json({
+        success: false,
+        message: "User is already registered",
+      });
     }
 
     //if user doesn't exist

@@ -3,10 +3,31 @@ import Logo from "./Logo";
 import InputComponent from "./InputComponent";
 import BtnComponent from "./BtnComponent";
 import { Link } from "react-router-dom";
+import { loginUser } from "../utils/APIRequest";
+import { useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 const LoginBox = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const handleLogin = () => {
-    console.log(formData);
+  const [errorFormData, setErrorFormData] = useState({
+    email: null,
+    password: null,
+  });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleLogin = async () => {
+    //login the user
+    setLoading(true);
+    const success = await loginUser(formData);
+    setLoading(false);
+    //if success true, navigate to home page
+    console.log(success);
+    if (success) {
+      setFormData({
+        email: "",
+        password: "",
+      });
+      navigate("/");
+    }
   };
   return (
     <>
@@ -21,6 +42,8 @@ const LoginBox = () => {
             field={"email"}
             formData={formData}
             setFormData={setFormData}
+            errorFormData={errorFormData}
+            setErrorFormData={setErrorFormData}
           />
           <InputComponent
             label={"Password"}
@@ -29,6 +52,8 @@ const LoginBox = () => {
             field={"password"}
             formData={formData}
             setFormData={setFormData}
+            errorFormData={errorFormData}
+            setErrorFormData={setErrorFormData}
           />
           <Link
             to="/forgot-password"
@@ -37,7 +62,14 @@ const LoginBox = () => {
             Forgot Password?
           </Link>
         </div>
-        <BtnComponent label={"Login"} handleBtn={handleLogin} />
+        <BtnComponent
+          label={"Login"}
+          handleBtn={handleLogin}
+          loading={loading}
+          active={Object.keys(errorFormData).every(
+            (curr) => errorFormData[curr] === true
+          )}
+        />
         <div className="text-[13px] text-gray-400 font-semibold pt-3 text-center">
           Create new account? {""}
           <Link to="/register" className="text-blue text-sm">
@@ -45,6 +77,7 @@ const LoginBox = () => {
           </Link>
         </div>
       </div>
+      <Toaster />
     </>
   );
 };

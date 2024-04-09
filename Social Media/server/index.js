@@ -5,6 +5,7 @@ import express from "express";
 import dotenv from "dotenv"; //to use dotenv file
 import connectDB from "./config/dbConfig.js";
 import router from "./router/index.js";
+import cors from "cors";
 //to get cookies value
 import cookieParser from "cookie-parser";
 //create an instance of express function
@@ -27,6 +28,9 @@ connectDB();
 
 //to accept data in json format
 app.use(express.json());
+
+//to accept data from frontend
+app.use(cors());
 
 //register router
 app.use(router);

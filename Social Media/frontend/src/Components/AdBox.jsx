@@ -10,7 +10,6 @@ const AdBox = () => {
   useEffect(() => {
     setPath(location.pathname);
   }, [location.pathname]);
-  console.log(location);
   return (
     <>
       <div

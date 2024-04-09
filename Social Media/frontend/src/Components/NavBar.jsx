@@ -4,7 +4,16 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { CiDark } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
+import { logoutUser } from "../utils/APIRequest";
+import { useNavigate } from "react-router-dom";
 const NavBar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const success = await logoutUser();
+    if (success) {
+      navigate("/login");
+    }
+  };
   return (
     <>
       <div className="flex justify-between bg-zinc-900 p-5 items-center">
@@ -26,7 +35,10 @@ const NavBar = () => {
           <div className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer">
             <IoMdNotificationsOutline size={"22px"} />
           </div>
-          <div className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer">
+          <div
+            className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer"
+            onClick={handleLogout}
+          >
             <IoLogOutOutline size={"22px"} />
           </div>
         </div>

@@ -19,7 +19,7 @@ const LoginUser = async (req, res) => {
     //if user is not verified
     if (!userExist.verified) {
       return res
-        .status(401)
+        .status(403)
         .json({ message: "Verify your email.", success: false });
     }
     //if user verified
@@ -36,7 +36,7 @@ const LoginUser = async (req, res) => {
     const token = GenerateToken(userExist._id);
     return res
       .cookie("access_token", token, { httpOnly: true })
-      .status(201)
+      .status(200)
       .json({ message: "Login successfully.", success: true });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });
