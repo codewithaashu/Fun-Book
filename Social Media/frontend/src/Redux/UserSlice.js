@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
-  user: null,
-};
+const initialState = { user: null };
+
 //create a slice i.e. a state which will be changed. state has their own name, initial state and function which change their state
 const UserSlice = createSlice({
   name: "user",
@@ -13,7 +12,7 @@ const UserSlice = createSlice({
       state.user = action.payload;
     },
     //at time of logout, user will be changed
-    logout(state, action) {
+    logout(state) {
       state.user = null;
     },
     //at time of update profile,user will be changed
@@ -22,4 +21,6 @@ const UserSlice = createSlice({
     },
   },
 });
+//export actions and reducers
+export const { login, logout, updateProfile } = UserSlice.actions;
 export default UserSlice.reducer;

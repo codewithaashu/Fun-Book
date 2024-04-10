@@ -7,6 +7,8 @@ import VerifiedAccount from "../controller/VerifiedAccount.js";
 import ForgotPassword from "../controller/ForgotPassword.js";
 import ResetPassword from "../controller/ResetPassword.js";
 import LogoutUser from "../controller/LogoutUser.js";
+import GetUserDetails from "../controller/GetUserDetails.js";
+import Authentication from "../middleware/Authentication.js";
 
 //create an instance of AuthRouter
 const AuthRouter = express.Router();
@@ -24,4 +26,10 @@ AuthRouter.get("/verified", VerifiedAccount);
 AuthRouter.get("/forgot-password/:email", ForgotPassword);
 AuthRouter.put("/reset-password", ResetPassword);
 AuthRouter.get("/logout", LogoutUser);
+AuthRouter.get("/user", Authentication, GetUserDetails);
+AuthRouter.get("/cookie", (req, res) => {
+  res.cookie("name", "ashish");
+  console.log(req.cookies);
+  return res.send("Check cookies");
+});
 export default AuthRouter;

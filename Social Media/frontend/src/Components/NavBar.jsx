@@ -6,11 +6,16 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { logoutUser } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../Redux/UserSlice";
+
 const NavBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = async () => {
     const success = await logoutUser();
     if (success) {
+      dispatch(logout());
       navigate("/login");
     }
   };

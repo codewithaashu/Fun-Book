@@ -34,10 +34,12 @@ const LoginUser = async (req, res) => {
     //generate token using user's id and when we will decode the token it will return user's id
     //save token in cookie for authentication and send response to client side
     const token = GenerateToken(userExist._id);
+    //fetch user details
+    const user = await Users.findById(userExist._id).select("-password");
     return res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token)
       .status(200)
-      .json({ message: "Login successfully.", success: true });
+      .json({ message: "Login successfully.", success: true, user });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });
   }

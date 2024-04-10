@@ -3,7 +3,9 @@ import { errorToast, successToast } from "./Toast";
 const baseUrl = process.env.REACT_APP_SERVER_URL;
 const RegisterUser = async (user) => {
   try {
-    const { data } = await axios.post(baseUrl + "/auth/register", user);
+    const { data } = await axios.post(baseUrl + "/auth/register", user, {
+      withCredentials: true,
+    });
     const { success, message } = data;
     if (success) {
       successToast(message);
@@ -23,26 +25,32 @@ const RegisterUser = async (user) => {
 
 const loginUser = async (formData) => {
   try {
-    const { data } = await axios.post(baseUrl + "/auth/login", formData);
-    const { success, message } = data;
+    const { data } = await axios.post(baseUrl + "/auth/login", formData, {
+      withCredentials: true,
+    });
+    const { success, message, user } = data;
+    console.log(message);
     if (success) {
       successToast(message);
     } else {
       errorToast(message);
     }
-    return success;
+    return user;
   } catch (error) {
     if (error.response) {
       errorToast(error.response?.data?.message);
     } else {
       errorToast(error.message ?? "Server Error!");
     }
-    return false;
+    return null;
   }
 };
+
 const logoutUser = async (formData) => {
   try {
-    const { data } = await axios.get(baseUrl + "/auth/logout");
+    const { data } = await axios.get(baseUrl + "/auth/logout", {
+      withCredentials: true,
+    });
     const { success, message } = data;
     if (success) {
       successToast(message);
@@ -59,4 +67,24 @@ const logoutUser = async (formData) => {
     return false;
   }
 };
-export { RegisterUser, loginUser, logoutUser };
+
+const getUser = async () => {
+  try {
+    const { data } = await axios.get(baseUrl + "/auth/user", {
+      withCredentials: true,
+    });
+    const { user } = data;
+    return user;
+  } catch (error) {
+    if (error.response) {
+      errorToast(error.response?.data?.message);
+    } else {
+      errorToast(error.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
+export { RegisterUser, loginUser, logoutUser, getUser };
+
+//{withCredentials:true} it ensures that user is authorised

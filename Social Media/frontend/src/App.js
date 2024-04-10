@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
+import { useSelector } from "react-redux";
 const App = () => {
+  const user = useSelector((state) => state?.user?.user);
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("user") === null) {
-      // navigate("/login");
+    if (user === null) {
+      navigate("/login");
     }
-  }, []);
+  });
   return <Home />;
 };
 

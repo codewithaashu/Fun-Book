@@ -6,7 +6,7 @@ const Authentication = (req, res, next) => {
   const token = req.cookies.access_token;
   //if token doesn't  exist go to login page with error message "Please Login First"
   if (!token)
-    return res.status(403).json({
+    return res.status(401).json({
       message: "You are not logged in! Please log in first",
       success: false,
     });

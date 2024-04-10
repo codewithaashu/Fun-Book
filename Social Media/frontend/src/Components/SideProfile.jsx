@@ -1,5 +1,4 @@
 import React from "react";
-import { user } from "../assests/data";
 import { SlLocationPin } from "react-icons/sl";
 import { BsBriefcase } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
@@ -72,19 +71,31 @@ const SideProfile = ({
           <h1 className="text-[15px] font-semibold">Social Profile</h1>
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold hover:text-blue">
             <FaInstagram />
-            <a href="https://www.instagram.com/ashish_2616_/" target="_blank">
+            <a
+              href="https://www.instagram.com/ashish_2616_/"
+              target="_blank"
+              rel="noreferrer"
+            >
               Instagram
             </a>
           </div>
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold hover:text-blue">
             <FaSquareXTwitter />
-            <a href="https://twitter.com/?lang=en" target="_blank">
+            <a
+              href="https://twitter.com/?lang=en"
+              target="_blank"
+              rel="noreferrer"
+            >
               Twitter
             </a>
           </div>
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold hover:text-blue">
             <FaSquareFacebook />
-            <a href="https://www.facebook.com/" target="_blank">
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
               Facebook
             </a>
           </div>

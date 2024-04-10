@@ -7,8 +7,8 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import ForgotPassword from "./Pages/ForgotPassword";
 import { Provider } from "react-redux";
-import store from "./Redux/Store";
 import ResetPassword from "./Pages/ResetPassword";
+import store from "./Redux/Store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   {

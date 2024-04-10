@@ -3,9 +3,11 @@ import Logo from "./Logo";
 import InputComponent from "./InputComponent";
 import BtnComponent from "./BtnComponent";
 import { Link } from "react-router-dom";
-import { loginUser } from "../utils/APIRequest";
+import { getUser, loginUser } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { login } from "../Redux/UserSlice";
 const LoginBox = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorFormData, setErrorFormData] = useState({
@@ -14,18 +16,19 @@ const LoginBox = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogin = async () => {
     //login the user
     setLoading(true);
-    const success = await loginUser(formData);
+    const user = await loginUser(formData);
     setLoading(false);
-    //if success true, navigate to home page
-    console.log(success);
-    if (success) {
+    //if success true, navigate to home page and fetch user info
+    if (user) {
       setFormData({
         email: "",
         password: "",
       });
+      dispatch(login(user));
       navigate("/");
     }
   };
