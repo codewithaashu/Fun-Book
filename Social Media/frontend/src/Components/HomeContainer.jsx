@@ -9,6 +9,7 @@ import { posts, requests, suggest, user } from "../assests/data";
 import { useSelector } from "react-redux";
 const HomeContainer = () => {
   const [user, setUser] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   //to get the state from the global store we use useSelector hook
   const val = useSelector((state) => state?.user?.user);
   useEffect(() => {
@@ -24,8 +25,12 @@ const HomeContainer = () => {
             <FriendsBox friends={user.friends} />
           </div>
           <div className="col-span-5 flex flex-col gap-[10px]">
-            <CreatePostBox user={user} />
-            <PostContainer posts={posts} />
+            <CreatePostBox
+              user={user}
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
+            <PostContainer refresh={refresh} setRefresh={setRefresh} />
           </div>
           <div className="col-span-2 flex flex-col gap-4">
             <FriendsRequestBox requests={requests} />

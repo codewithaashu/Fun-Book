@@ -5,13 +5,13 @@ const DeletePost = async (req, res) => {
     //get the post id from params
     const { postId } = req.params;
     //delete the post
-    const deletedPost = await Posts.findByIdAndDelete(postId, { new: true });
-    console.log(deletedPost);
-    return res
-      .status(201)
-      .json({ message: "Post deleted successfully.", data: deletedPost });
+    await Posts.findByIdAndDelete(postId, { new: true });
+    return res.status(200).json({
+      message: "Post deleted successfully.",
+      success: true,
+    });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message, success: false });
   }
 };
 export default DeletePost;

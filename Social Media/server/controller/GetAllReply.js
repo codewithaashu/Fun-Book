@@ -12,7 +12,7 @@ const GetAllReply = async (req, res) => {
     return res.status(200).json({
       message: "Fetch Replies Successfully!",
       success: true,
-      data: replies,
+      replies,
     });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });

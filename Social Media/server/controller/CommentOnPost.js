@@ -1,4 +1,5 @@
 import Comments from "../models/Comments.js";
+import Posts from "../models/Posts.js";
 
 const CommentOnPost = async (req, res) => {
   try {
@@ -8,15 +9,21 @@ const CommentOnPost = async (req, res) => {
     const { userId } = req;
 
     //create the comment
-    const Comment = await Comments.create({
+    const newComment = await Comments.create({
       comment,
       postId,
       userId,
     });
+
+    //push comment id into comments array of post
+    const post = await Posts.findById(postId);
+    post.comments.push(newComment._id);
+    const newp = await post.save();
+    console.log(newp);
+
     return res.status(201).json({
       message: "Post comment successfully.",
       success: true,
-      data: Comment,
     });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });

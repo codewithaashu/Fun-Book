@@ -12,11 +12,13 @@ const CreatePost = async (req, res) => {
       mediaSrc,
       userId,
     });
-    return res
-      .status(201)
-      .json({ message: "Post Created Successfully.", data: post });
+    return res.status(201).json({
+      message: "Post Created Successfully.",
+      success: true,
+      post,
+    });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message, success: false });
   }
 };
 export default CreatePost;

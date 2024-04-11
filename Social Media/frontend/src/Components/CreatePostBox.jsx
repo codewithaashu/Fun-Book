@@ -1,8 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaImage } from "react-icons/fa6";
 import { IoVideocam } from "react-icons/io5";
 import { AiOutlineFileGif } from "react-icons/ai";
-const CreatePostBox = ({ user: { profileUrl } }) => {
+import { errorToast } from "../utils/Toast";
+import { Toaster } from "react-hot-toast";
+import { createPost, uploadMedia } from "../utils/APIRequest";
+const CreatePostBox = ({ user: { profileUrl }, setRefresh, refresh }) => {
+  const [formData, setFormData] = useState({ description: "", mediaSrc: "" });
+  const [loading, setLoading] = useState(false);
+  const [mediaUpload, setMediaUpload] = useState(false);
+
+  const handleUploadMedia = async (e) => {
+    //upload image
+    setMediaUpload(true); //media upload to be true
+    const mediaSrc = await uploadMedia(e.target.files[0]);
+    //after upload image, media upload to be false
+    setMediaUpload(false); //media upload to be false
+    setFormData({ ...formData, mediaSrc });
+  };
+
+  const handleCreatePost = async () => {
+    //if there is no description
+    if (!formData.description) {
+      return errorToast("Description is required.");
+    }
+    //if post has description, then create post
+    setLoading(true); //button loading to be true
+    const success = await createPost(formData);
+    setLoading(false); //button loading to be false
+    if (success) {
+      //if post is created successfully, then clear the form
+      setFormData({ description: "", mediaSrc: "" });
+      //refresh the page
+      setRefresh(!refresh);
+      return;
+    }
+  };
+
   return (
     <>
       <div className="bg-zinc-950 rounded-sm shadow-xl p-4 flex flex-col gap-4">
@@ -14,29 +48,65 @@ const CreatePostBox = ({ user: { profileUrl } }) => {
           />
           <textarea
             type="text"
+            value={formData.description}
             placeholder="What's in your mind"
             className="flex-1 text-sm font-medium outline-none p-3 bg-black rounded-2xl placeholder:text-gray-500 text-gray-300 w-full border-0 resize-none max-h-12 overflow-y-auto"
             style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
           ></textarea>
         </div>
+        {mediaUpload ? (
+          <div className="w-full min-h-28 flex justify-center items-center">
+            <div className="mediaUploadLoader"></div>
+          </div>
+        ) : (
+          formData.mediaSrc && (
+            <img src={formData.mediaSrc} alt="Upload Media" />
+          )
+        )}
         <div className="flex flex-row justify-between items-center">
-          <div className="flex flex-row gap-1 items-center text-ascent-2 text-sm font-semibold hover:text-blue cursor-pointer">
+          <label className="flex flex-row gap-1 items-center text-ascent-2 text-sm font-semibold hover:text-blue cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => handleUploadMedia(e)}
+              accept=".jpg, .jpeg, .png,.avif"
+            />
             <FaImage />
             <p>Photo</p>
-          </div>
-          <div className="flex flex-row gap-1 items-center text-ascent-2 text-sm font-semibold hover:text-blue cursor-pointer">
+          </label>
+          <label className="flex flex-row gap-1 items-center text-ascent-2 text-sm font-semibold hover:text-blue cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => handleUploadMedia(e)}
+              accept=".mp4,.mkv"
+            />
             <IoVideocam className="text-base" />
             <p>Video</p>
-          </div>
-          <div className="flex flex-row gap-1 items-center text-ascent-2 text-sm font-semibold hover:text-blue cursor-pointer">
+          </label>
+          <label className="flex flex-row gap-1 items-center text-ascent-2 text-sm font-semibold hover:text-blue cursor-pointer">
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => handleUploadMedia(e)}
+              accept=".gif"
+            />
             <AiOutlineFileGif className="text-base" />
             <p>GIF</p>
-          </div>
-          <button className="text-sm font-semibold bg-blue w-16 py-1 rounded-lg">
-            Post
+          </label>
+          <button
+            className="text-sm font-semibold bg-blue w-16 py-1 rounded-lg"
+            onClick={handleCreatePost}
+            disabled={loading ? "disabled" : ""}
+          >
+            {loading ? <div className="loader"></div> : "Post"}
           </button>
         </div>
       </div>
+      <Toaster />
     </>
   );
 };

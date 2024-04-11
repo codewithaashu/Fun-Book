@@ -11,11 +11,11 @@ const GetAllPosts = async (req, res) => {
     const query = { userId: { $in: [userId, friends] } }; //it return the array of id of user and their friends
     //get the user's and their friends post
     const posts = await Posts.find(query)
-      .sort("createdAt")
+      .sort("-createdAt")
       .populate("userId", "email profileUrl firstName lastName");
     return res
       .status(200)
-      .json({ message: "Post fetch successfully", success: true, data: posts });
+      .json({ message: "Post fetch successfully", success: true, posts });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });
   }

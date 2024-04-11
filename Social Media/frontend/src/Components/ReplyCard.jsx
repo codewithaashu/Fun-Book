@@ -1,8 +1,9 @@
 import React from "react";
 import NoProfilePic from "../assests/userprofile.png";
 import { AiOutlineLike } from "react-icons/ai";
+import moment from "moment";
 const ReplyCard = ({
-  reply: { userId, comment, from, likes },
+  replied: { userId, reply, createdAt, likes },
   index,
   lastIndex,
 }) => {
@@ -20,9 +21,13 @@ const ReplyCard = ({
           className="w-8 h-8 rounded-full object-cover"
         />
         <div className="flex flex-col gap-0">
-          <h1 className="text-sm font-semibold">{from}</h1>
-          <p className="text-xs font-semibold text-ascent-2">4 days ago</p>
-          <p className="text-sm font-medium text-gray-300 py-1">{comment}</p>
+          <h1 className="text-sm font-semibold">
+            {userId.firstName + " " + userId.lastName}
+          </h1>
+          <p className="text-xs font-semibold text-ascent-2">
+            {moment(createdAt).fromNow()}
+          </p>
+          <p className="text-sm font-medium text-gray-300 py-1">{reply}</p>
           <div className="flex flex-row gap-3">
             <div
               className="flex flex-row gap-1 items-center text-ascent-2 text-[13px] font-semibold cursor-pointer"
