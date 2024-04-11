@@ -35,7 +35,10 @@ const LoginUser = async (req, res) => {
     //save token in cookie for authentication and send response to client side
     const token = GenerateToken(userExist._id);
     //fetch user details
-    const user = await Users.findById(userExist._id).select("-password");
+    const user = await Users.findById(userExist._id)
+      .select("-password")
+      .populate("friends", "firstName lastName profileUrl profession");
+    console.log(user);
     return res
       .cookie("access_token", token)
       .status(200)

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
-import NoProfilePic from "../assests/userprofile.png";
 import ReplyCard from "./ReplyCard";
 import {
   getCommentReplies,
@@ -128,7 +127,7 @@ const CommentsCard = ({
                 >
                   Show Replies({replies.length})
                 </h1>
-                {showReplies && (
+                {showReplies === _id && (
                   <div className="px-2">
                     {allReplies?.map((curr, index) => {
                       return (

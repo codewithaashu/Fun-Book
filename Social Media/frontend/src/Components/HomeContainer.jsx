@@ -5,7 +5,6 @@ import FriendsSuggestionBox from "./FriendsSuggestionBox";
 import FriendsBox from "./FriendsBox";
 import CreatePostBox from "./CreatePostBox";
 import PostContainer from "./PostContainer";
-import { posts, requests, suggest, user } from "../assests/data";
 import { useSelector } from "react-redux";
 const HomeContainer = () => {
   const [user, setUser] = useState(null);
@@ -15,7 +14,7 @@ const HomeContainer = () => {
   useEffect(() => {
     //set user
     setUser(val);
-  }, []);
+  }, [refresh]);
   return (
     <>
       {user && (
@@ -33,8 +32,8 @@ const HomeContainer = () => {
             <PostContainer refresh={refresh} setRefresh={setRefresh} />
           </div>
           <div className="col-span-2 flex flex-col gap-4">
-            <FriendsRequestBox requests={requests} />
-            <FriendsSuggestionBox suggestFriends={suggest} />
+            <FriendsRequestBox refresh={refresh} setRefresh={setRefresh} />
+            <FriendsSuggestionBox />
           </div>
         </div>
       )}

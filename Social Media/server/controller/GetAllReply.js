@@ -4,10 +4,9 @@ const GetAllReply = async (req, res) => {
   try {
     //get commentId from params
     const { commentId } = req.params;
-    const replies = await Replies.find({ commentId }).populate(
-      "userId",
-      "firstName lastName profileUrl"
-    );
+    const replies = await Replies.find({ commentId })
+      .populate("userId", "firstName lastName profileUrl")
+      .sort("-createdAt");
     console.log(replies);
     return res.status(200).json({
       message: "Fetch Replies Successfully!",

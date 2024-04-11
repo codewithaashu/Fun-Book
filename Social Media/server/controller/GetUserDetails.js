@@ -7,6 +7,7 @@ const GetUserDetails = async (req, res) => {
     //get the user
     const user = await Users.findById(userId).select("-password");
     //return back as a response
+    console.log(user);
     return res
       .status(200)
       .json({ message: "User fetch successfully", success: true, user });

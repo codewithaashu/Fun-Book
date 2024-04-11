@@ -5,14 +5,14 @@ const GetFriendRequest = async (req, res) => {
     //get the user's id from request
     const { userId } = req;
     //get the friend request from Requests model  using the userId as a parameter
-    const requests = await Requests.find({ requestTo: userId }).populate(
-      "requestFrom",
-      "firstName lastName profileUrl"
-    );
+    const requests = await Requests.find({ requestTo: userId })
+      .populate("requestFrom", "firstName lastName profileUrl profession")
+      .sort("-createdAt");
+    console.log(requests);
     return res.status(200).json({
       message: "Friend request fetched successfully",
       success: true,
-      data: requests,
+      requests,
     });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });

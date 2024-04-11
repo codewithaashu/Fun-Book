@@ -10,14 +10,14 @@ const SuggestedFriends = async (req, res) => {
     //write the query for suggested peoples
     const query = { _id: { $nin: [friends, userId] } };
     //fetch users who is not user's friend and user's itself.
-    const suggestedPeople = await Users.find(query).select(
-      "profileUrl firstName lastName"
-    );
-    console.log(suggestedPeople);
+    const suggestedFriends = await Users.find(query)
+      .select("profileUrl firstName lastName")
+      .limit(10);
+    console.log(suggestedFriends);
     return res.status(200).json({
       message: "Suggested friends fetched successfully",
       success: true,
-      data: suggestedPeople,
+      suggestedFriends,
     });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });

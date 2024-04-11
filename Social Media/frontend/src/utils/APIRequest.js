@@ -277,6 +277,78 @@ const getCommentReplies = async (commentId) => {
   }
 };
 
+const getFriendSuggestList = async () => {
+  try {
+    const { data } = await AxiosInstance.get("/friend/suggested");
+    const { suggestedFriends } = data;
+    return suggestedFriends;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response?.data?.message);
+    } else {
+      errorToast(err.message ?? "Network error!");
+    }
+    return null;
+  }
+};
+
+const sendFriendRequest = async (formData) => {
+  try {
+    const { data } = await AxiosInstance.post("/friend/request-send", formData);
+    const { success, message } = data;
+    if (success) {
+      successToast(message);
+    } else {
+      errorToast(message);
+    }
+    return success;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response?.data?.message);
+    } else {
+      errorToast(err.message ?? "Network error!");
+    }
+    return false;
+  }
+};
+
+const getFriendRequestList = async () => {
+  try {
+    const { data } = await AxiosInstance.get("/friend/request");
+    const { requests } = data;
+    return requests;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response?.data?.message);
+    } else {
+      errorToast(err.message ?? "Network error!");
+    }
+    return null;
+  }
+};
+
+const acceptRequest = async (requestId, requestStatus) => {
+  try {
+    const { data } = await AxiosInstance.put(
+      "/friend/request-accept/" + requestId + "/" + requestStatus
+    );
+    const { message, success } = data;
+    if (success) {
+      successToast(message);
+    } else {
+      errorToast(message);
+    }
+    return success;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response?.data?.message);
+    } else {
+      errorToast(err.message ?? "Network error!");
+    }
+    return false;
+  }
+};
+
 export {
   RegisterUser,
   loginUser,
@@ -292,6 +364,10 @@ export {
   likeComment,
   repliedComment,
   getCommentReplies,
+  getFriendSuggestList,
+  sendFriendRequest,
+  getFriendRequestList,
+  acceptRequest,
 };
 
 //{withCredentials:true} it ensures that user is authorised
