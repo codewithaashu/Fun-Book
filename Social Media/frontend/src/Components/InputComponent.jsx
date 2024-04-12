@@ -8,6 +8,7 @@ const InputComponent = ({
   field,
   formData,
   setFormData,
+  isValidate = false,
   errorFormData,
   setErrorFormData,
 }) => {
@@ -23,7 +24,7 @@ const InputComponent = ({
           onChange={(e) => {
             setErrorFormData({
               ...errorFormData,
-              [field]: ValidateField(e.target.value, field),
+              [field]: isValidate ? true : ValidateField(e.target.value, field),
             });
             setFormData({ ...formData, [field]: e.target.value });
           }}

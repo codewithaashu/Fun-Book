@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "./Logo";
 import InputComponent from "./InputComponent";
 import BtnComponent from "./BtnComponent";
 import { Link } from "react-router-dom";
-import { getUser, loginUser } from "../utils/APIRequest";
+import { loginUser } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { login } from "../Redux/UserSlice";
 const LoginBox = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorFormData, setErrorFormData] = useState({
@@ -16,22 +14,21 @@ const LoginBox = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleLogin = async () => {
     //login the user
     setLoading(true);
-    const user = await loginUser(formData);
+    const success = await loginUser(formData);
     setLoading(false);
     //if success true, navigate to home page and fetch user info
-    if (user) {
+    if (success) {
       setFormData({
         email: "",
         password: "",
       });
-      dispatch(login(user));
       navigate("/");
     }
   };
+
   return (
     <>
       <div className="px-5 md:px-8 py-20 bg-zinc-900 rounded-l-md shadow-md w-[320px] md:w-[360px]">

@@ -34,18 +34,23 @@ const UserSchema = new mongoose.Schema(
     },
     profession: {
       type: String,
+      default: "",
     },
     location: {
       type: String,
+      default: "",
     },
     instagramURL: {
       type: String,
+      default: "",
     },
     twitterURL: {
       type: String,
+      default: "",
     },
     facebookURL: {
       type: String,
+      default: "",
     },
     friends: {
       //friends are the collection of users. it contains the entities of users model

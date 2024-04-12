@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { SlLocationPin } from "react-icons/sl";
 import { BsBriefcase } from "react-icons/bs";
 import { FaInstagram } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareFacebook } from "react-icons/fa6";
 import moment from "moment";
-const SideProfile = ({
-  user: {
+import { useSelector } from "react-redux";
+import EditModalContainer from "./EditModalContainer";
+const SideProfile = ({ refresh, setRefresh }) => {
+  //fetch user
+  const user = useSelector((state) => state?.user?.user);
+  //destructure the field of user
+  const {
     profileUrl,
     firstName,
     lastName,
@@ -14,8 +19,19 @@ const SideProfile = ({
     friends,
     createdAt,
     views,
-  },
-}) => {
+    instagramURL,
+    twitterURL,
+    facebookURL,
+    location,
+    profession,
+  } = user;
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleEditModal = () => {
+    setOpenModal(true);
+  };
+
   return (
     <>
       <div className="bg-zinc-950 rounded-lg shadow-xl p-4 py-3">
@@ -31,22 +47,25 @@ const SideProfile = ({
                 {firstName + " " + lastName}
               </h1>
               <h1 className="text-sm font-semibold text-ascent-2">
-                No Profession
+                {profession ? profession : "No Profession"}
               </h1>
             </div>
           </div>
-          <button className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer shadow-lg w-fit h-fit text-ascent-2 text-sm font-semibold">
+          <button
+            className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer shadow-lg w-fit h-fit text-ascent-2 text-sm font-semibold"
+            onClick={handleEditModal}
+          >
             Edit
           </button>
         </div>
         <div className="flex flex-col gap-2 py-3 border-b-[1px] border-zinc-900">
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold">
             <SlLocationPin />
-            <p>Add Location</p>
+            <p>{location ? location : "Add Location"}</p>
           </div>
           <div className="flex flex-row gap-[5px] items-center text-ascent-2 text-sm font-semibold">
             <BsBriefcase />
-            <p>Add Profession</p>
+            <p>{profession ? profession : "Add Profession"}</p>
           </div>
         </div>
         <div className="flex flex-col py-3 border-b-[1px] border-zinc-900 gap-1">
@@ -72,7 +91,9 @@ const SideProfile = ({
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold hover:text-blue">
             <FaInstagram />
             <a
-              href="https://www.instagram.com/ashish_2616_/"
+              href={
+                instagramURL === "" ? "https://www.instagram.com" : instagramURL
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -82,7 +103,7 @@ const SideProfile = ({
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold hover:text-blue">
             <FaSquareXTwitter />
             <a
-              href="https://twitter.com/?lang=en"
+              href={twitterURL === "" ? "https://twitter.com/" : twitterURL}
               target="_blank"
               rel="noreferrer"
             >
@@ -92,7 +113,9 @@ const SideProfile = ({
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold hover:text-blue">
             <FaSquareFacebook />
             <a
-              href="https://www.facebook.com/"
+              href={
+                facebookURL === "" ? "https://www.facebook.com/" : facebookURL
+              }
               target="_blank"
               rel="noreferrer"
             >
@@ -101,6 +124,12 @@ const SideProfile = ({
           </div>
         </div>
       </div>
+      <EditModalContainer
+        refresh={refresh}
+        setRefresh={setRefresh}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
     </>
   );
 };

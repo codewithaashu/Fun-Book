@@ -6,16 +6,13 @@ const LikeReplies = async (req, res) => {
     const { replyId } = req.params;
     //get the userId from request object
     const { userId } = req;
-    console.log(replyId);
     //get replies info
     const replies = await Replies.findOne({ _id: replyId });
-    console.log(replies);
     //add the user's id  to likes array in replies collection
     //if user's id doesn't exist in likes then add the user's id in it. i.e. like replies
     if (!replies.likes.includes(userId)) {
       replies.likes.push(userId);
       const updatedReplies = await replies.save();
-      console.log(updatedReplies);
       return res.status(201).json({
         message: "Replies Liked Successfully!",
         likeCount: updatedReplies.likes.length,
@@ -29,7 +26,6 @@ const LikeReplies = async (req, res) => {
       return curr != userId; //remove userId from likes if already present
     });
     const updatedReplies = await replies.save();
-    console.log(updatedReplies);
     return res.status(201).json({
       message: "Replies Disliked Successfully!",
       likeCount: updatedReplies.likes.length,

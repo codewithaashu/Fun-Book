@@ -18,8 +18,7 @@ const CommentOnPost = async (req, res) => {
     //push comment id into comments array of post
     const post = await Posts.findById(postId);
     post.comments.push(newComment._id);
-    const newp = await post.save();
-    console.log(newp);
+    await post.save();
 
     return res.status(201).json({
       message: "Post comment successfully.",

@@ -12,7 +12,6 @@ const PostSlice = createSlice({
       state.post = action.payload;
     },
     postAdded(state, action) {
-      console.log(action.payload);
       state.isPostAdded = action.payload;
     },
   },

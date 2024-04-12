@@ -9,13 +9,11 @@ const LikePost = async (req, res) => {
 
     //get post info
     const post = await Posts.findOne({ _id: postId });
-    console.log(post);
     //add the user's id  to likes array in posts collection
     //if user's id doesn't exist in likes then add the user's id in it. i.e. like post
     if (!post.likes.includes(userId)) {
       post.likes.push(userId);
       const updatedPost = await post.save();
-      console.log(updatedPost);
       return res.status(201).json({
         message: "Post Liked Successfully!",
         likeCount: updatedPost.likes.length,
@@ -29,7 +27,6 @@ const LikePost = async (req, res) => {
       return curr != userId; //remove userId from likes if already present
     });
     const updatedPost = await post.save();
-    console.log(updatedPost);
     return res.status(201).json({
       message: "Post Disliked Successfully!",
       likeCount: updatedPost.likes.length,

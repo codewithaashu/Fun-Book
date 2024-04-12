@@ -30,7 +30,6 @@ const PostCard = ({
     const { likeCount, likes } = await likePost(post._id);
     setLike({ likeCount, likes });
   };
-  console.log(post);
   const handleDelete = () => {
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -132,13 +131,15 @@ const PostCard = ({
                 : post.comments.length + " Comments"}
             </p>
           </div>
-          <div
-            className="flex flex-row gap-1 items-center text-ascent-2 text-[13px] font-semibold cursor-pointer"
-            onClick={handleDelete}
-          >
-            <MdDelete className="text-sm" />
-            <p>Delete</p>
-          </div>
+          {post.userId._id === user._id && (
+            <div
+              className="flex flex-row gap-1 items-center text-ascent-2 text-[13px] font-semibold cursor-pointer"
+              onClick={handleDelete}
+            >
+              <MdDelete className="text-sm" />
+              <p>Delete</p>
+            </div>
+          )}
         </div>
         {postComment === post._id && (
           <CommentBox

@@ -8,11 +8,18 @@ const GetAllPosts = async (req, res) => {
     //get the friends of users
     const { friends } = await Users.findById(userId);
     //write the query
-    const query = { userId: { $in: [userId, friends] } }; //it return the array of id of user and their friends
+    const query = { userId: { $in: [userId, ...friends] } }; //it return the array of id of user and their friends
     //get the user's and their friends post
-    const posts = await Posts.find(query)
+    let posts = await Posts.find(query)
       .sort("-createdAt")
       .populate("userId", "email profileUrl firstName lastName");
+    //if user and his/her friends post is not found
+    if (posts.length === 0) {
+      posts = await Posts.find({})
+        .sort("-createdAt")
+        .populate("userId", "email profileUrl firstName lastName")
+        .limit(10);
+    }
     return res
       .status(200)
       .json({ message: "Post fetch successfully", success: true, posts });

@@ -9,9 +9,7 @@ const ForgotPassword = async (req, res) => {
     //if user doesn't exist
     const userExist = await Users.findOne({ email, verified: true });
     if (!userExist) {
-      return res
-        .status(401)
-        .json({ message: "User doesn't exist.", success: false });
+      return res.status(401).json({ message: "Invalid Email", success: false });
     }
     //send OTP  on email
     await SendOTP(userExist, res);

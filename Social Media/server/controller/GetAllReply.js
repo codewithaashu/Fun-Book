@@ -7,7 +7,6 @@ const GetAllReply = async (req, res) => {
     const replies = await Replies.find({ commentId })
       .populate("userId", "firstName lastName profileUrl")
       .sort("-createdAt");
-    console.log(replies);
     return res.status(200).json({
       message: "Fetch Replies Successfully!",
       success: true,

@@ -20,7 +20,6 @@ const ReplyComment = async (req, res) => {
     //add the replies id in comment's array field
     comment.replies.push(replies._id);
     const updatedComment = await comment.save();
-    console.log(updatedComment);
     return res
       .status(201)
       .json({ message: "Reply on comment successfully", success: true });

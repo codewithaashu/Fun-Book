@@ -25,7 +25,6 @@ const CommentsCard = ({
     likeCount: likes.length,
   });
   const [formData, setFormData] = useState({ reply: "", commentId: _id });
-  console.log(replies);
   const [allReplies, setAllReplies] = useState(null);
   const handleLike = async () => {
     //like post
@@ -44,7 +43,6 @@ const CommentsCard = ({
   const handleGetReplies = async (id) => {
     setShowReplies(showReplies === _id ? null : _id);
     const resp = await getCommentReplies(id);
-    console.log(resp);
     setAllReplies(resp);
   };
   return (

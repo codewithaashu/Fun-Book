@@ -5,19 +5,11 @@ import { CiDark } from "react-icons/ci";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { logoutUser } from "../utils/APIRequest";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../Redux/UserSlice";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleLogout = async () => {
     const success = await logoutUser();
-    if (success) {
-      dispatch(logout());
-      navigate("/login");
-    }
   };
   return (
     <>
@@ -40,12 +32,13 @@ const NavBar = () => {
           <div className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer">
             <IoMdNotificationsOutline size={"22px"} />
           </div>
-          <div
+          <Link
             className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer"
+            to="/login"
             onClick={handleLogout}
           >
             <IoLogOutOutline size={"22px"} />
-          </div>
+          </Link>
         </div>
       </div>
     </>

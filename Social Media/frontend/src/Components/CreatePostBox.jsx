@@ -11,9 +11,18 @@ const CreatePostBox = ({ user: { profileUrl }, setRefresh, refresh }) => {
   const [mediaUpload, setMediaUpload] = useState(false);
 
   const handleUploadMedia = async (e) => {
+    const file = e.target.files[0];
     //upload image
+
+    //if file is larger
+    if (file.size > 10485760) {
+      errorToast("File is too large");
+      return;
+    }
+
+    //if file is smaller, upload file
     setMediaUpload(true); //media upload to be true
-    const mediaSrc = await uploadMedia(e.target.files[0]);
+    const mediaSrc = await uploadMedia(file);
     //after upload image, media upload to be false
     setMediaUpload(false); //media upload to be false
     setFormData({ ...formData, mediaSrc });

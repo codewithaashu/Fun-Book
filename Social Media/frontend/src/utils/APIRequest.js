@@ -26,10 +26,9 @@ const RegisterUser = async (user) => {
     return false;
   }
 };
-
-const loginUser = async (formData) => {
+const UpdateUser = async (formData) => {
   try {
-    const { data } = await AxiosInstance.post("/auth/login", formData);
+    const { data } = await AxiosInstance.put("/auth/update-user", formData);
     const { success, message, user } = data;
     if (success) {
       successToast(message);
@@ -44,6 +43,26 @@ const loginUser = async (formData) => {
       errorToast(error.message ?? "Server Error!");
     }
     return null;
+  }
+};
+
+const loginUser = async (formData) => {
+  try {
+    const { data } = await AxiosInstance.post("/auth/login", formData);
+    const { success, message } = data;
+    if (success) {
+      successToast(message);
+    } else {
+      errorToast(message);
+    }
+    return success;
+  } catch (error) {
+    if (error.response) {
+      errorToast(error.response?.data?.message);
+    } else {
+      errorToast(error.message ?? "Server Error!");
+    }
+    return false;
   }
 };
 
@@ -102,7 +121,7 @@ const createPost = async (formData) => {
 
 const fetchAllPosts = async () => {
   try {
-    const { data } = await AxiosInstance.get("/post/");
+    const { data } = await AxiosInstance.get("/post");
     const { posts } = data;
     return posts;
   } catch (err) {
@@ -126,7 +145,6 @@ const uploadMedia = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "Social_Media");
-    console.log(formData);
     const { data } = await axios.post(
       "https://api.cloudinary.com/v1_1/dycobmjyk/image/upload",
       formData,
@@ -249,7 +267,6 @@ const repliedComment = async (formData) => {
     } else {
       errorToast(message);
     }
-    console.log(data);
     return data;
   } catch (error) {
     if (error.response) {
@@ -265,7 +282,6 @@ const getCommentReplies = async (commentId) => {
   try {
     const { data } = await AxiosInstance.get("/comment/replies/" + commentId);
     const { replies } = data;
-    console.log(replies);
     return replies;
   } catch (error) {
     if (error.response) {
@@ -349,6 +365,46 @@ const acceptRequest = async (requestId, requestStatus) => {
   }
 };
 
+const sendPasswordResetOTP = async (email) => {
+  try {
+    const { data } = await AxiosInstance.get("/auth/forgot-password/" + email);
+    const { success, message } = data;
+    if (success) {
+      successToast(message);
+    } else {
+      errorToast(message);
+    }
+    return success;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Network error!");
+    }
+    return false;
+  }
+};
+
+const resetPassword = async (formData) => {
+  try {
+    const { data } = await AxiosInstance.put("/auth/reset-password", formData);
+    const { success, message } = data;
+    if (success) {
+      successToast(message);
+    } else {
+      errorToast(message);
+    }
+    return success;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Network error!");
+    }
+    return false;
+  }
+};
+
 export {
   RegisterUser,
   loginUser,
@@ -368,6 +424,9 @@ export {
   sendFriendRequest,
   getFriendRequestList,
   acceptRequest,
+  UpdateUser,
+  sendPasswordResetOTP,
+  resetPassword,
 };
 
 //{withCredentials:true} it ensures that user is authorised

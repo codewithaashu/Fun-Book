@@ -9,13 +9,11 @@ const LikeComment = async (req, res) => {
 
     //get comment info
     const comment = await Comments.findOne({ _id: commentId });
-    console.log(comment);
     //add the user's id  to likes array in comments collection
     //if user's id doesn't exist in likes then add the user's id in it. i.e. like comment
     if (!comment.likes.includes(userId)) {
       comment.likes.push(userId);
       const updatedComment = await comment.save();
-      console.log(updatedComment);
       return res.status(201).json({
         message: "Comment Liked Successfully!",
         likeCount: updatedComment.likes.length,
@@ -29,7 +27,6 @@ const LikeComment = async (req, res) => {
       return curr != userId; //remove userId from likes if already present
     });
     const updatedComment = await comment.save();
-    console.log(updatedComment);
     return res.status(201).json({
       message: "Comment Disliked Successfully!",
       likeCount: updatedComment.likes.length,

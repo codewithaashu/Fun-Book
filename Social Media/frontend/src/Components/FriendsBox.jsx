@@ -9,28 +9,36 @@ const FriendsBox = ({ friends }) => {
           <p className="text-sm">{friends.length}</p>
         </div>
         <div className="flex flex-col gap-4 py-3">
-          {friends.map((curr, index) => {
-            const { firstName, lastName, profileUrl, profession } = curr;
-            return (
-              <div
-                to={profileUrl}
-                className="flex flex-row gap-[6px]"
-                key={index}
-              >
-                <img
-                  src={profileUrl ?? NoProfilePic}
-                  alt="Friend Avatar"
-                  className="w-9 h-9 rounded-full object-cover"
-                />
-                <div className="flex flex-col font-semibold text-sm">
-                  <h1>{firstName + " " + lastName}</h1>
-                  <p className="text-ascent-2 text-xs">
-                    {profession ?? "No Profession"}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+          {friends.length === 0 ? (
+            <h1 className="text-sm font-semibold text-gray-200 text-center">
+              0 Friends. Connect with people to see their posts.
+            </h1>
+          ) : (
+            <>
+              {friends.map((curr, index) => {
+                const { firstName, lastName, profileUrl, profession } = curr;
+                return (
+                  <div
+                    to={profileUrl}
+                    className="flex flex-row gap-[6px]"
+                    key={index}
+                  >
+                    <img
+                      src={profileUrl ?? NoProfilePic}
+                      alt="Friend Avatar"
+                      className="w-9 h-9 rounded-full object-cover"
+                    />
+                    <div className="flex flex-col font-semibold text-sm">
+                      <h1>{firstName + " " + lastName}</h1>
+                      <p className="text-ascent-2 text-xs">
+                        {profession === "" ? "No Profession" : profession}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
     </>

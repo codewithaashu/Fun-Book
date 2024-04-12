@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
 import InputComponent from "../Components/InputComponent";
 import BtnComponent from "../Components/BtnComponent";
-
+import { sendPasswordResetOTP } from "../utils/APIRequest";
+import { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
   const [formData, setFormData] = useState({ email: "" });
+  const [errorFormData, setErrorFormData] = useState({
+    email: null,
+  });
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     document.title = "Reset Password | FunBook";
   }, []);
-  const handleReset = () => {
-    console.log(formData);
+  const handleForgot = async () => {
+    setLoading(true);
+    const success = await sendPasswordResetOTP(formData.email);
+    setLoading(false);
+    if (success) {
+      navigate(`/reset-password/${formData.email}`);
+      setFormData({ email: "" });
+    }
   };
   return (
     <>
@@ -26,11 +39,23 @@ const ForgotPassword = () => {
               inputType={"email"}
               formData={formData}
               setFormData={setFormData}
+              errorFormData={errorFormData}
+              setErrorFormData={setErrorFormData}
             />
           </div>
-          <BtnComponent label={"Submit"} handleBtn={handleReset} />
+          <div className="mt-3">
+            <BtnComponent
+              label={"Submit"}
+              handleBtn={handleForgot}
+              loading={loading}
+              active={Object.keys(errorFormData).every(
+                (curr) => errorFormData[curr] === true
+              )}
+            />
+          </div>
         </div>
       </div>
+      <Toaster />
     </>
   );
 };

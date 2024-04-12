@@ -8,7 +8,6 @@ const GetFriendRequest = async (req, res) => {
     const requests = await Requests.find({ requestTo: userId })
       .populate("requestFrom", "firstName lastName profileUrl profession")
       .sort("-createdAt");
-    console.log(requests);
     return res.status(200).json({
       message: "Friend request fetched successfully",
       success: true,

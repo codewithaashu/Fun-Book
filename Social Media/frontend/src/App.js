@@ -2,15 +2,19 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import Login from "./Pages/Login";
 const App = () => {
-  const user = useSelector((state) => state?.user?.user);
+  const access_token = Cookies.get("access_token");
   const navigate = useNavigate();
   useEffect(() => {
-    if (user === null) {
+    //if user doesn't have access_token
+    if (!access_token) {
       navigate("/login");
+      return;
     }
-  });
-  return <Home />;
+  }, []);
+  return access_token ? <Home /> : <Login />;
 };
 
 export default App;

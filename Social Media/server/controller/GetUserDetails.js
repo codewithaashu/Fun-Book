@@ -5,9 +5,10 @@ const GetUserDetails = async (req, res) => {
     //get the user id from request
     const { userId } = req;
     //get the user
-    const user = await Users.findById(userId).select("-password");
+    const user = await Users.findById(userId)
+      .select("-password")
+      .populate("friends", "firstName lastName profileUrl profession");
     //return back as a response
-    console.log(user);
     return res
       .status(200)
       .json({ message: "User fetch successfully", success: true, user });

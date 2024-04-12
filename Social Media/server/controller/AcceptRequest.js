@@ -24,16 +24,12 @@ const AcceptRequest = async (req, res) => {
     if (status === "Accept") {
       //push the user's id in friends array of sender
       const sender = await Users.findById(friendRequest.requestFrom); //get the sender
-      console.log(sender);
       sender.friends.push(userId);
       await sender.save();
-      console.log(sender);
       //push the sender user's id in friends array of users
       const users = await Users.findById(userId); //get the user
-      console.log(users);
       users.friends.push(friendRequest.requestFrom);
       await users.save();
-      console.log(users);
     }
 
     //delete the request

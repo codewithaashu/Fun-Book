@@ -3,6 +3,7 @@ const regex = {
   email:
     /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
   password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+  OTP: /^\d{6}$/,
 };
 const ValidateField = (value, field) => {
   if (field === "firstName" || field === "lastName") {
@@ -19,6 +20,9 @@ const ValidateField = (value, field) => {
     return isValid
       ? true
       : "Minimum eight characters, at least one letter, one number and one special character.";
+  } else if (field === "OTP") {
+    const isValid = regex.OTP.test(value);
+    return isValid ? true : "OTP must be 6 digits";
   }
 };
 export default ValidateField;

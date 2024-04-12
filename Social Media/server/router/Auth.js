@@ -9,6 +9,7 @@ import ResetPassword from "../controller/ResetPassword.js";
 import LogoutUser from "../controller/LogoutUser.js";
 import GetUserDetails from "../controller/GetUserDetails.js";
 import Authentication from "../middleware/Authentication.js";
+import UpdateUser from "../controller/UpdateUser.js";
 
 //create an instance of AuthRouter
 const AuthRouter = express.Router();
@@ -27,9 +28,8 @@ AuthRouter.get("/forgot-password/:email", ForgotPassword);
 AuthRouter.put("/reset-password", ResetPassword);
 AuthRouter.get("/logout", LogoutUser);
 AuthRouter.get("/user", Authentication, GetUserDetails);
-AuthRouter.get("/cookie", (req, res) => {
-  res.cookie("name", "ashish");
-  console.log(req.cookies);
-  return res.send("Check cookies");
-});
+AuthRouter.put("/update-user", Authentication, UpdateUser);
+
+//export the AuthRouter
+
 export default AuthRouter;
