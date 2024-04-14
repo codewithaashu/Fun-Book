@@ -3,13 +3,20 @@ import { FaImage } from "react-icons/fa6";
 import { IoVideocam } from "react-icons/io5";
 import { AiOutlineFileGif } from "react-icons/ai";
 import { errorToast } from "../utils/Toast";
-import { Toaster } from "react-hot-toast";
 import { createPost, uploadMedia } from "../utils/APIRequest";
-const CreatePostBox = ({ user: { profileUrl }, setRefresh, refresh }) => {
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setRefresh } from "../Redux/RefreshSlice";
+const CreatePostBox = ({
+  user: { profileUrl, _id },
+  // setRefresh, refresh
+}) => {
   const [formData, setFormData] = useState({ description: "", mediaSrc: "" });
   const [loading, setLoading] = useState(false);
   const [mediaUpload, setMediaUpload] = useState(false);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { refresh } = useSelector((state) => state.refresh);
   const handleUploadMedia = async (e) => {
     const file = e.target.files[0];
     //upload image
@@ -41,7 +48,8 @@ const CreatePostBox = ({ user: { profileUrl }, setRefresh, refresh }) => {
       //if post is created successfully, then clear the form
       setFormData({ description: "", mediaSrc: "" });
       //refresh the page
-      setRefresh(!refresh);
+      // setRefresh(!refresh);
+      dispatch(setRefresh(!refresh));
       return;
     }
   };
@@ -53,13 +61,14 @@ const CreatePostBox = ({ user: { profileUrl }, setRefresh, refresh }) => {
           <img
             src={profileUrl}
             alt="User Avatar"
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-12 h-12 rounded-full object-cover cursor-pointer"
+            onClick={() => navigate(`/profile/${_id}`)}
           />
           <textarea
             type="text"
             value={formData.description}
             placeholder="What's in your mind"
-            className="flex-1 text-sm font-medium outline-none p-3 bg-black rounded-2xl placeholder:text-gray-500 text-gray-300 w-full border-0 resize-none max-h-12 overflow-y-auto"
+            className="flex-1 text-sm font-medium outline-none p-3 bg-black rounded-2xl placeholder:text-gray-500 text-gray-300 w-full border-0 resize-none max-h-16 overflow-y-auto"
             style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -115,7 +124,6 @@ const CreatePostBox = ({ user: { profileUrl }, setRefresh, refresh }) => {
           </button>
         </div>
       </div>
-      <Toaster />
     </>
   );
 };

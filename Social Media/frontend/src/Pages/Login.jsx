@@ -5,6 +5,7 @@ import AdBox from "../Components/AdBox";
 const Login = () => {
   useEffect(() => {
     document.title = "Login | FunBook";
+    window.scrollTo(0, 0);
   }, []);
   return (
     <>

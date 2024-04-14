@@ -8,7 +8,11 @@ import Register from "./Pages/Register";
 import ForgotPassword from "./Pages/ForgotPassword";
 import { Provider } from "react-redux";
 import ResetPassword from "./Pages/ResetPassword";
-import store from "./Redux/Store";
+import store, { persistor } from "./Redux/Store";
+import Profile from "./Pages/Profile";
+import { Toaster } from "react-hot-toast";
+import { PersistGate } from "redux-persist/integration/react";
+import PostDetails from "./Pages/PostDetails";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   {
@@ -31,11 +35,22 @@ const router = createBrowserRouter([
     path: "/reset-password/:email",
     element: <ResetPassword />,
   },
+  {
+    path: "/profile/:id",
+    element: <Profile />,
+  },
+  {
+    path: "/post/:postId",
+    element: <PostDetails />,
+  },
 ]);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}></RouterProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router}></RouterProvider>
+        <Toaster />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

@@ -1,74 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import NoProfilePic from "../assests/userprofile.png";
 import moment from "moment";
 import CommentBox from "./CommentBox";
-import { postComments } from "../assests/data";
 import { deletePost, likePost } from "../utils/APIRequest";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { useLocation, useNavigate } from "react-router-dom";
+import ConfirmAlertModal from "./ConfirmAlertModal";
+import { setRefresh } from "../Redux/RefreshSlice";
 
-const PostCard = ({
-  post,
-  postComment,
-  setPostComment,
-  setRefresh,
-  refresh,
-}) => {
-  const user = useSelector((state) => state?.user?.user);
+const PostCard = ({ post, postComment, setPostComment }) => {
   const [fullDescription, setFullDescription] = useState(false);
+  //get the login user from global store
+  const loginUser = useSelector((state) => state?.user?.loginUser);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { refresh } = useSelector((state) => state.refresh);
   const [like, setLike] = useState({
-    likes: post.likes.includes(user._id),
+    likes: post.likes.includes(loginUser._id),
     likeCount: post.likes.length,
   });
+  const navigate = useNavigate();
 
   const handleLike = async () => {
     //like post
     const { likeCount, likes } = await likePost(post._id);
     setLike({ likeCount, likes });
   };
+
+  const handleConfirm = async (onClose) => {
+    const success = await deletePost(post._id);
+    if (success) {
+      dispatch(setRefresh(!refresh));
+      onClose();
+    }
+  };
+
   const handleDelete = () => {
     confirmAlert({
-      customUI: ({ onClose }) => {
-        return (
-          <div className="custom-ui bg-black rounded-md p-5 py-8  text-white shadow-md w-80 flex flex-col gap-1">
-            <h1 className="text-lg font-semibold">Are you sure?</h1>
-            <p className="text-sm font-medium ">
-              You want to delete this post?
-            </p>
-            <div className="flex flex-row justify-between mt-5">
-              <button
-                onClick={async () => {
-                  const success = await deletePost(post._id);
-                  if (success) {
-                    setRefresh(!refresh);
-                    onClose();
-                  }
-                }}
-                className="text-sm text-white bg-blue rounded-sm p-2 font-semibold w-16"
-              >
-                Yes
-              </button>
-              <button
-                onClick={onClose}
-                className="text-sm text-white bg-red-600 rounded-sm p-2 font-semibold w-16"
-              >
-                No
-              </button>
-            </div>
-          </div>
-        );
-      },
+      customUI: ({ onClose }) => (
+        <ConfirmAlertModal
+          heading={"Are you sure?"}
+          title={"You want to delete this post?"}
+          handleConfirm={() => handleConfirm(onClose)}
+          onClose={onClose}
+        />
+      ),
     });
   };
+
   return (
     <>
       <div className="p-4 border-b-[1px] border-zinc-900 flex flex-col gap-3 bg-zinc-950 rounded-lg shadow-xl">
         <div className="flex flex-row justify-between items-center">
-          <div className="flex flex-row gap-2 items-center">
+          <div
+            className="flex flex-row gap-2 items-center cursor-pointer"
+            onClick={() => navigate(`/profile/${post.userId._id}`)}
+          >
             <img
               src={post.userId.profileUrl ?? NoProfilePic}
               alt="User Avatar"
@@ -82,30 +74,39 @@ const PostCard = ({
             {moment(post.createdAt).fromNow()}
           </h1>
         </div>
-        <div className="text-ascent-2 text-sm font-medium">
-          {post.description.length > 250 ? (
-            <>
-              {fullDescription !== post._id ? (
-                <p>
-                  {post.description.slice(0, 250)}
-                  <span
-                    className="text-[13px] font-semibold text-blue px-1 cursor-pointer"
-                    onClick={() => setFullDescription(post._id)}
-                  >
-                    Show More
-                  </span>
-                </p>
-              ) : (
-                post.description
-              )}
-            </>
-          ) : (
-            post.description
+        <div
+          onClick={() => navigate(`/post/${post._id}`, { state: post })}
+          className="cursor-pointer flex flex-col gap-3"
+        >
+          <div className="text-ascent-2 text-sm font-medium ">
+            {post.description.length > 250 ? (
+              <>
+                {fullDescription !== post._id ? (
+                  <p>
+                    {post.description.slice(0, 250)}
+                    <span
+                      className="text-[13px] font-semibold text-blue px-1 cursor-pointer"
+                      onClick={() => setFullDescription(post._id)}
+                    >
+                      Show More
+                    </span>
+                  </p>
+                ) : (
+                  post.description
+                )}
+              </>
+            ) : (
+              post.description
+            )}
+          </div>
+          {post.mediaSrc && (
+            <img
+              src={post.mediaSrc}
+              alt="Post"
+              className="rounded-lg w-full "
+            />
           )}
         </div>
-        {post.mediaSrc && (
-          <img src={post.mediaSrc} alt="Post" className="w-full rounded-sm" />
-        )}
         <div className="flex flex-row justify-between mt-2">
           <div
             className="flex flex-row gap-1 items-center text-ascent-2 text-[13px] font-semibold cursor-pointer"
@@ -131,7 +132,7 @@ const PostCard = ({
                 : post.comments.length + " Comments"}
             </p>
           </div>
-          {post.userId._id === user._id && (
+          {post.userId._id === loginUser._id && (
             <div
               className="flex flex-row gap-1 items-center text-ascent-2 text-[13px] font-semibold cursor-pointer"
               onClick={handleDelete}
@@ -141,12 +142,12 @@ const PostCard = ({
             </div>
           )}
         </div>
-        {postComment === post._id && (
-          <CommentBox
-            postId={post._id}
-            refresh={refresh}
-            setRefresh={setRefresh}
-          />
+        {location.pathname.includes("/post") ? (
+          <CommentBox postId={post._id} setPostComment={setPostComment} />
+        ) : (
+          postComment === post._id && (
+            <CommentBox postId={post._id} setPostComment={setPostComment} />
+          )
         )}
       </div>
     </>

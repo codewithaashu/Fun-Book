@@ -10,6 +10,7 @@ import LogoutUser from "../controller/LogoutUser.js";
 import GetUserDetails from "../controller/GetUserDetails.js";
 import Authentication from "../middleware/Authentication.js";
 import UpdateUser from "../controller/UpdateUser.js";
+import GetProfileDetails from "../controller/GetProfileDetails.js";
 
 //create an instance of AuthRouter
 const AuthRouter = express.Router();
@@ -28,6 +29,7 @@ AuthRouter.get("/forgot-password/:email", ForgotPassword);
 AuthRouter.put("/reset-password", ResetPassword);
 AuthRouter.get("/logout", LogoutUser);
 AuthRouter.get("/user", Authentication, GetUserDetails);
+AuthRouter.get("/profile/:userId", Authentication, GetProfileDetails);
 AuthRouter.put("/update-user", Authentication, UpdateUser);
 
 //export the AuthRouter

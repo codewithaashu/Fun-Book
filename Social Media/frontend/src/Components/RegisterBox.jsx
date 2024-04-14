@@ -4,7 +4,6 @@ import InputComponent from "./InputComponent";
 import BtnComponent from "./BtnComponent";
 import { Link } from "react-router-dom";
 import { errorToast } from "../utils/Toast";
-import { Toaster } from "react-hot-toast";
 import { RegisterUser } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
 const RegisterBox = () => {
@@ -123,7 +122,6 @@ const RegisterBox = () => {
           </Link>
         </div>
       </div>
-      <Toaster />
     </>
   );
 };

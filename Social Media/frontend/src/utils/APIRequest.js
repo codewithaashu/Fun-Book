@@ -46,7 +46,7 @@ const UpdateUser = async (formData) => {
   }
 };
 
-const loginUser = async (formData) => {
+const loggedInUser = async (formData) => {
   try {
     const { data } = await AxiosInstance.post("/auth/login", formData);
     const { success, message } = data;
@@ -405,9 +405,94 @@ const resetPassword = async (formData) => {
   }
 };
 
+const profileDetails = async (profileId) => {
+  try {
+    const { data } = await AxiosInstance.get("/auth/profile/" + profileId);
+    const { message, success, userDetails } = data;
+    if (!success) {
+      errorToast(message);
+    }
+    return userDetails;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Network error");
+    }
+    return null;
+  }
+};
+
+const likeCommentReply = async (replyId) => {
+  try {
+    const { data } = await AxiosInstance.put(
+      "/comment/replies/like/" + replyId
+    );
+    const { success, message } = data;
+    if (success) {
+      successToast(message);
+    } else {
+      errorToast(message);
+    }
+    return data;
+  } catch (error) {
+    if (error.response) {
+      errorToast(error.response?.data?.message);
+    } else {
+      errorToast(error.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
+const getPostDetails = async (postId) => {
+  try {
+    const { data } = await AxiosInstance.get("/post/details/" + postId);
+    const { post } = data;
+    return post;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
+const getUserPost = async (userId) => {
+  try {
+    const { data } = await AxiosInstance.get("/post/" + userId);
+    const { posts } = data;
+    return posts;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
+const getRequestList = async () => {
+  try {
+    const { data } = await AxiosInstance.get("/friend/requests");
+    const { requests } = data;
+    return requests;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
 export {
   RegisterUser,
-  loginUser,
+  loggedInUser,
   logoutUser,
   getUser,
   createPost,
@@ -427,6 +512,11 @@ export {
   UpdateUser,
   sendPasswordResetOTP,
   resetPassword,
+  profileDetails,
+  likeCommentReply,
+  getPostDetails,
+  getUserPost,
+  getRequestList,
 };
 
 //{withCredentials:true} it ensures that user is authorised

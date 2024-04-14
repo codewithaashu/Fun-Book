@@ -3,7 +3,6 @@ import BtnComponent from "../Components/BtnComponent";
 import InputComponent from "../Components/InputComponent";
 import { Link, useParams } from "react-router-dom";
 import { errorToast } from "../utils/Toast";
-import { Toaster } from "react-hot-toast";
 import { resetPassword } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
 const ResetPassword = () => {
@@ -36,7 +35,6 @@ const ResetPassword = () => {
         <div className="bg-zinc-900 py-8 px-4 flex flex-col gap-2 w-[320px] md:w-[360px]">
           <h1 className="text-xl font-bold">Reset Password</h1>
           <div className="pt-4 flex flex-col gap-4">
-            {console.log(errorFormData)}
             <InputComponent
               label={"One Time Password(OTP)"}
               placeholder={"Enter OTP here..."}
@@ -84,7 +82,6 @@ const ResetPassword = () => {
           </Link>
         </div>
       </div>
-      <Toaster />
     </>
   );
 };

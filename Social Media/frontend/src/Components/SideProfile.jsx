@@ -6,10 +6,10 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareFacebook } from "react-icons/fa6";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import EditModalContainer from "./EditModalContainer";
-const SideProfile = ({ refresh, setRefresh }) => {
+import { useNavigate } from "react-router-dom";
+const SideProfile = () => {
   //fetch user
-  const user = useSelector((state) => state?.user?.user);
+  const loginUser = useSelector((state) => state?.user?.loginUser);
   //destructure the field of user
   const {
     profileUrl,
@@ -24,19 +24,18 @@ const SideProfile = ({ refresh, setRefresh }) => {
     facebookURL,
     location,
     profession,
-  } = user;
+  } = loginUser;
 
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleEditModal = () => {
-    setOpenModal(true);
-  };
+  const navigate = useNavigate();
 
   return (
     <>
       <div className="bg-zinc-950 rounded-lg shadow-xl p-4 py-3">
         <div className="flex flex-row justify-between items-center pb-3 border-b-[1px] border-zinc-900">
-          <div className="flex flex-row items-center gap-[6px]">
+          <div
+            className="flex flex-row items-center gap-[6px] cursor-pointer"
+            onClick={() => navigate(`/profile/${loginUser._id}`)}
+          >
             <img
               src={profileUrl}
               alt="User Avatar"
@@ -51,12 +50,6 @@ const SideProfile = ({ refresh, setRefresh }) => {
               </h1>
             </div>
           </div>
-          <button
-            className="border-[1px] px-3 py-1 border-gray-800 rounded-lg bg-black cursor-pointer shadow-lg w-fit h-fit text-ascent-2 text-sm font-semibold"
-            onClick={handleEditModal}
-          >
-            Edit
-          </button>
         </div>
         <div className="flex flex-col gap-2 py-3 border-b-[1px] border-zinc-900">
           <div className="flex flex-row gap-[3px] items-center text-ascent-2 text-sm font-semibold">
@@ -124,12 +117,6 @@ const SideProfile = ({ refresh, setRefresh }) => {
           </div>
         </div>
       </div>
-      <EditModalContainer
-        refresh={refresh}
-        setRefresh={setRefresh}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      />
     </>
   );
 };

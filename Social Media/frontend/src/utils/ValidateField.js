@@ -23,6 +23,11 @@ const ValidateField = (value, field) => {
   } else if (field === "OTP") {
     const isValid = regex.OTP.test(value);
     return isValid ? true : "OTP must be 6 digits";
+  } else if (field === "about") {
+    if (value.length <= 30 || value.length >= 300) {
+      return "About must be between 30 to 300 characters";
+    }
+    return true;
   }
 };
 export default ValidateField;

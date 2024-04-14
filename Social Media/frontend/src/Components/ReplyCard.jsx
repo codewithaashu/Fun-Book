@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import NoProfilePic from "../assests/userprofile.png";
-import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import moment from "moment";
+import { likeCommentReply } from "../utils/APIRequest";
+import { useSelector } from "react-redux";
 const ReplyCard = ({
-  replied: { userId, reply, createdAt, likes },
+  replied: { userId, reply, createdAt, likes, _id },
   index,
   lastIndex,
 }) => {
-  const handleLike = () => {};
+  const { loginUser } = useSelector((state) => state?.user);
+  const [like, setLike] = useState({
+    likes: likes.includes(loginUser._id),
+    likeCount: likes.length,
+  });
+  const handleLike = async () => {
+    const { likeCount, likes } = await likeCommentReply(_id);
+    setLike({ likeCount, likes });
+  };
   return (
     <>
       <div
@@ -33,8 +43,14 @@ const ReplyCard = ({
               className="flex flex-row gap-1 items-center text-ascent-2 text-[13px] font-semibold cursor-pointer"
               onClick={handleLike}
             >
-              <AiOutlineLike className="text-[15px]" />
-              <p>{likes.length === 0 ? "0 Like" : likes.length + " Likes"}</p>
+              {like.likes ? (
+                <AiFillLike className="text-[15px] text-blue" />
+              ) : (
+                <AiOutlineLike className="text-[15px]" />
+              )}
+              <p>
+                {like.likeCount === 0 ? "0 Like" : like.likeCount + " Likes"}
+              </p>
             </div>
           </div>
         </div>

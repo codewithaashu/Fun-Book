@@ -32,6 +32,15 @@ const UserSchema = new mongoose.Schema(
       default:
         "https://res.cloudinary.com/dycobmjyk/image/upload/v1711939908/Social%20Media/userprofile_ikl880.png",
     },
+    coverPhoto: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dycobmjyk/image/upload/v1713039461/eya0bt7n2km0ewx42zv0.jpg",
+    },
+    about: {
+      type: String,
+      default: "",
+    },
     profession: {
       type: String,
       default: "",

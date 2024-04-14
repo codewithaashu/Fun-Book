@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
 import CommentsCard from "./CommentsCard";
 import { commentPost, getPostComments } from "../utils/APIRequest";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { setRefresh } from "../Redux/RefreshSlice";
 
-const CommentBox = ({ postId, refresh, setRefresh }) => {
+const CommentBox = ({ postId, setPostComment }) => {
   const [replyComment, setReplyComment] = useState(null);
   const [showReplies, setShowReplies] = useState(null);
   const [formData, setFormData] = useState({ comment: "", postId });
   const [postComments, setPostComments] = useState(null);
-  const user = useSelector((state) => state?.user?.user);
+
+  //get the state from global store
+  const loginUser = useSelector((state) => state?.user?.loginUser);
+  const dispatch = useDispatch();
+  const { refresh } = useSelector((state) => state.refresh);
+
+  const params = useParams();
+
   useEffect(
     () => async () => {
-      //get all comments
-      const comments = await getPostComments(postId);
-      setPostComments(comments);
+      if (params?.postId) {
+        //get all comments
+        const comments = await getPostComments(postId);
+        setPostComments(comments);
+      }
     },
     [formData, refresh]
   );
@@ -21,18 +32,20 @@ const CommentBox = ({ postId, refresh, setRefresh }) => {
   const handleCommentPost = async () => {
     const success = await commentPost(formData);
     if (success) {
-      setRefresh(!refresh);
+      dispatch(setRefresh(!refresh));
       setFormData({ comment: "", postId });
+      setPostComment(null);
     }
   };
 
   return (
     <>
       <div className="mt-5 flex flex-col">
+        {/* Create new comment input box */}
         <div className="flex flex-col gap-3">
           <div className="flex flex-row gap-3 items-center">
             <img
-              src={user.profileUrl}
+              src={loginUser.profileUrl}
               alt="User Avatar"
               className="w-8 h-8 rounded-full object-cover"
             />
@@ -53,24 +66,33 @@ const CommentBox = ({ postId, refresh, setRefresh }) => {
             Submit
           </button>
         </div>
-        <div className="flex flex-col gap-2">
-          {postComments?.map((curr, index) => {
-            return (
-              <CommentsCard
-                comment={curr}
-                key={index}
-                index={index}
-                lastIndex={postComments.length - 1}
-                replyComment={replyComment}
-                setReplyComment={setReplyComment}
-                showReplies={showReplies}
-                setShowReplies={setShowReplies}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
-            );
-          })}
-        </div>
+        {/* Comments Box */}
+        {params?.postId && (
+          <div className="flex flex-col gap-2">
+            {postComments?.length === 0 ? (
+              <h1 className="text-sm font-semibold text-gray-400 px-3 py-3">
+                No Comments yet. Be the first to comment.
+              </h1>
+            ) : (
+              <>
+                {postComments?.map((curr, index) => {
+                  return (
+                    <CommentsCard
+                      comment={curr}
+                      key={index}
+                      index={index}
+                      lastIndex={postComments.length - 1}
+                      replyComment={replyComment}
+                      setReplyComment={setReplyComment}
+                      showReplies={showReplies}
+                      setShowReplies={setShowReplies}
+                    />
+                  );
+                })}
+              </>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

@@ -6,8 +6,9 @@ import {
   likeComment,
   repliedComment,
 } from "../utils/APIRequest";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { setRefresh } from "../Redux/RefreshSlice";
 const CommentsCard = ({
   comment: { userId, comment, likes, replies, _id, createdAt },
   index,
@@ -16,16 +17,22 @@ const CommentsCard = ({
   setReplyComment,
   showReplies,
   setShowReplies,
-  refresh,
-  setRefresh,
 }) => {
-  const user = useSelector((state) => state?.user?.user);
+  //get loginUser from redux global store
+  const loginUser = useSelector((state) => state?.user?.loginUser);
+
+  //get refresh value from redux global store
+  const { refresh } = useSelector((state) => state?.refresh);
+  const dispatch = useDispatch();
+
   const [like, setLike] = useState({
-    likes: likes.includes(user._id),
+    likes: likes.includes(loginUser._id),
     likeCount: likes.length,
   });
-  const [formData, setFormData] = useState({ reply: "", commentId: _id });
+
+  const [formData, setFormData] = useState({ reply: "", commentId: "" });
   const [allReplies, setAllReplies] = useState(null);
+
   const handleLike = async () => {
     //like post
     const { likeCount, likes } = await likeComment(_id);
@@ -35,8 +42,10 @@ const CommentsCard = ({
   const handleReply = async () => {
     const success = await repliedComment(formData);
     if (success) {
-      setRefresh(!refresh);
+      dispatch(setRefresh(!refresh));
       setFormData({ reply: "", commentId: _id });
+      //to close the reply comment card
+      setReplyComment(null);
     }
   };
 
@@ -83,6 +92,7 @@ const CommentsCard = ({
               className="text-xs text-blue"
               onClick={() => {
                 setReplyComment(replyComment === _id ? null : _id);
+                setFormData({ ...formData, commentId: _id });
               }}
             >
               Reply

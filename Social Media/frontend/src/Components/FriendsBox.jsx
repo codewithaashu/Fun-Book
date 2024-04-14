@@ -1,6 +1,11 @@
 import React from "react";
 import NoProfilePic from "../assests/userprofile.png";
-const FriendsBox = ({ friends }) => {
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+const FriendsBox = () => {
+  const navigate = useNavigate();
+  const { loginUser } = useSelector((state) => state?.user);
+  const { _id, friends } = loginUser;
   return (
     <>
       <div className="bg-zinc-950 rounded-lg shadow-xl p-4 py-3">
@@ -15,13 +20,15 @@ const FriendsBox = ({ friends }) => {
             </h1>
           ) : (
             <>
-              {friends.map((curr, index) => {
-                const { firstName, lastName, profileUrl, profession } = curr;
+              {friends.slice(0, 10).map((curr, index) => {
+                const { firstName, lastName, profileUrl, profession, _id } =
+                  curr;
                 return (
                   <div
                     to={profileUrl}
-                    className="flex flex-row gap-[6px]"
+                    className="flex flex-row gap-[6px] cursor-pointer"
                     key={index}
+                    onClick={() => navigate(`/profile/${_id}`)}
                   >
                     <img
                       src={profileUrl ?? NoProfilePic}
@@ -37,6 +44,14 @@ const FriendsBox = ({ friends }) => {
                   </div>
                 );
               })}
+              {friends.length >= 10 && (
+                <Link
+                  to={`/profile/${_id}`}
+                  className="text-[13px] font-semibold text-blue hover:underline"
+                >
+                  See More
+                </Link>
+              )}
             </>
           )}
         </div>

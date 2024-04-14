@@ -28,7 +28,11 @@ const AdBox = () => {
               <p className="text-[10px] font-semibold">Bookmark</p>
             </div>
           </div>
-          <img src={AdImage} alt="AdImage" className="w-36 rounded-full h-36" />
+          <img
+            src={AdImage}
+            alt="AdImage"
+            className="w-36 rounded-full h-36 object-cover"
+          />
           <div className="bg-white text-gray-900 px-3 py-1 rounded-lg flex items-center gap-1 justify-center w-fit h-fit">
             <IoShareSocial />
             <p className="text-[10px] font-semibold">Share</p>

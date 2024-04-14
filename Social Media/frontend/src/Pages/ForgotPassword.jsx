@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import InputComponent from "../Components/InputComponent";
 import BtnComponent from "../Components/BtnComponent";
 import { sendPasswordResetOTP } from "../utils/APIRequest";
-import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
   const [formData, setFormData] = useState({ email: "" });
@@ -55,7 +54,6 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-      <Toaster />
     </>
   );
 };

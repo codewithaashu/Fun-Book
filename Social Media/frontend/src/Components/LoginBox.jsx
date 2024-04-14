@@ -3,9 +3,8 @@ import Logo from "./Logo";
 import InputComponent from "./InputComponent";
 import BtnComponent from "./BtnComponent";
 import { Link } from "react-router-dom";
-import { loginUser } from "../utils/APIRequest";
+import { loggedInUser } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 const LoginBox = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorFormData, setErrorFormData] = useState({
@@ -17,7 +16,7 @@ const LoginBox = () => {
   const handleLogin = async () => {
     //login the user
     setLoading(true);
-    const success = await loginUser(formData);
+    const success = await loggedInUser(formData);
     setLoading(false);
     //if success true, navigate to home page and fetch user info
     if (success) {
@@ -77,7 +76,6 @@ const LoginBox = () => {
           </Link>
         </div>
       </div>
-      <Toaster />
     </>
   );
 };

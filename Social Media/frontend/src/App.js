@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Home from "./Pages/Home";
-import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import Login from "./Pages/Login";
 const App = () => {
