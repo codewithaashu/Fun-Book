@@ -84,7 +84,7 @@ const EditModalContainer = ({ openModal, setOpenModal }) => {
         className={`bg-[#000000c1]  absolute top-0 left-0 w-full h-full 
        ${
          !openModal ? "hidden" : "flex"
-       }  justify-center px-[10px] md:px-16 py-5`}
+       }  justify-center px-[10px] md:px-16 py-5 z-10`}
       >
         <div
           className=" bg-black  px-[10px] md:px-5 py-8 w-full md:w-1/2 rounded-md max-h-screen overflow-y-scroll scroll-smooth"

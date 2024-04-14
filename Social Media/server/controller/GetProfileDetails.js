@@ -15,14 +15,11 @@ const GetProfileDetails = async (req, res) => {
         .status(404)
         .json({ message: "User not found", success: false, userDetails: null });
     }
-    //return the user
-    console.log(user);
     //return the post of user
     const posts = await Posts.find({ userId })
       .populate("comments", "comment")
       .populate("userId", "firstName lastName profileUrl profession")
       .sort("-createdAt");
-    console.log(posts);
     return res.status(200).json({
       message: "User fetch successfully",
       success: true,

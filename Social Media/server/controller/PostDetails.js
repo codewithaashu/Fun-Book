@@ -4,7 +4,6 @@ const PostDetails = async (req, res) => {
   try {
     //get postId from params
     const { postId } = req.params;
-    console.log(postId);
     //get post
     const post = await Posts.findById(postId)
       .sort("-createdAt")

@@ -4,7 +4,6 @@ const RequestList = async (req, res) => {
   try {
     //get userId from request object
     const { userId } = req;
-    console.log(userId);
     //get all request that is send by user
     const requests = await Requests.find({ requestFrom: userId });
     return res.status(200).json({
