@@ -7,6 +7,8 @@ import { createPost, uploadMedia } from "../utils/APIRequest";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setRefresh } from "../Redux/RefreshSlice";
+import EmojiPicker from "emoji-picker-react";
+import { MdEmojiEmotions } from "react-icons/md";
 const CreatePostBox = ({
   user: { profileUrl, _id },
   // setRefresh, refresh
@@ -16,6 +18,7 @@ const CreatePostBox = ({
   const [mediaUpload, setMediaUpload] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [emojiOpen, setEmojiOpen] = useState(false);
   const { refresh } = useSelector((state) => state.refresh);
   const handleUploadMedia = async (e) => {
     const file = e.target.files[0];
@@ -33,6 +36,13 @@ const CreatePostBox = ({
     //after upload image, media upload to be false
     setMediaUpload(false); //media upload to be false
     setFormData({ ...formData, mediaSrc });
+  };
+
+  const handleEmojiSelect = (emoji) => {
+    setFormData({
+      ...formData,
+      description: formData.description + emoji.emoji,
+    });
   };
 
   const handleCreatePost = async () => {
@@ -56,24 +66,41 @@ const CreatePostBox = ({
 
   return (
     <>
-      <div className="bg-zinc-950 rounded-sm shadow-xl p-4 flex flex-col gap-4">
-        <div className="flex flex-row gap-2 items-center">
+      <div className="bg-zinc-950 rounded-sm shadow-xl p-4 flex flex-col gap-4 ">
+        <div className="flex flex-row gap-2 items-center ">
           <img
             src={profileUrl}
             alt="User Avatar"
             className="w-12 h-12 rounded-full object-cover cursor-pointer"
             onClick={() => navigate(`/profile/${_id}`)}
           />
-          <textarea
-            type="text"
-            value={formData.description}
-            placeholder="What's in your mind"
-            className="flex-1 text-sm font-medium outline-none p-3 bg-black rounded-2xl placeholder:text-gray-500 text-gray-300 w-full border-0 resize-none max-h-16 overflow-y-auto"
-            style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-          ></textarea>
+          <div className="flex flex-row justify-between bg-black rounded-2xl w-full items-center p-3 relative">
+            <textarea
+              type="text"
+              value={formData.description}
+              placeholder="What's in your mind"
+              className="flex-1 text-sm font-medium outline-none  border-none rounded-2xl bg-black  placeholder:text-gray-500 text-gray-300 w-full border-0 resize-none max-h-16 overflow-y-auto"
+              style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+            ></textarea>
+            <MdEmojiEmotions
+              className="text-xl md:text-2xl cursor-pointer "
+              onClick={() => setEmojiOpen(!emojiOpen)}
+            />
+            <div className="absolute  top-[50px] right-3">
+              <EmojiPicker
+                open={emojiOpen}
+                rows={2}
+                perRow={8}
+                onEmojiClick={handleEmojiSelect}
+                emojiSize={32}
+                width={300}
+                height={350}
+              />
+            </div>
+          </div>
         </div>
         {mediaUpload ? (
           <div className="w-full min-h-28 flex justify-center items-center">

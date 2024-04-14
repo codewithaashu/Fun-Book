@@ -9,6 +9,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { setRefresh } from "../Redux/RefreshSlice";
+import EmojiPicker from "emoji-picker-react";
+import { MdEmojiEmotions } from "react-icons/md";
 const CommentsCard = ({
   comment: { userId, comment, likes, replies, _id, createdAt },
   index,
@@ -32,6 +34,7 @@ const CommentsCard = ({
 
   const [formData, setFormData] = useState({ reply: "", commentId: "" });
   const [allReplies, setAllReplies] = useState(null);
+  const [emojiOpen, setEmojiOpen] = useState(false);
 
   const handleLike = async () => {
     //like post
@@ -54,6 +57,14 @@ const CommentsCard = ({
     const resp = await getCommentReplies(id);
     setAllReplies(resp);
   };
+
+  const handleEmojiSelect = (emoji) => {
+    setFormData({
+      ...formData,
+      reply: formData.reply + emoji.emoji,
+    });
+  };
+
   return (
     <>
       <div
@@ -106,17 +117,35 @@ const CommentsCard = ({
                   alt="User Avatar"
                   className="w-8 h-8 rounded-full object-cover"
                 />
-                <input
-                  type="text"
-                  value={formData.reply}
-                  placeholder={`Reply ${
-                    userId.firstName + " " + userId.lastName
-                  }`}
-                  className="flex-1 text-sm font-medium outline-none p-2 px-3 bg-black rounded-xl placeholder:text-gray-500 text-gray-300 w-full border-0 "
-                  onChange={(e) =>
-                    setFormData({ ...formData, reply: e.target.value })
-                  }
-                />
+                <div className="flex flex-row justify-between p-2 px-3 bg-black  rounded-xl relative w-full items-center">
+                  <textarea
+                    type="text"
+                    value={formData.reply}
+                    placeholder={`Reply ${
+                      userId.firstName + " " + userId.lastName
+                    }`}
+                    className="flex-1 text-sm font-medium outline-none  bg-black rounded-xl placeholder:text-gray-500 text-gray-300 w-full border-0 resize-none  overflow-y-scroll"
+                    onChange={(e) =>
+                      setFormData({ ...formData, reply: e.target.value })
+                    }
+                    style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }}
+                  ></textarea>
+                  <MdEmojiEmotions
+                    className="text-xl md:text-2xl cursor-pointer "
+                    onClick={() => setEmojiOpen(!emojiOpen)}
+                  />
+                  <div className="absolute  bottom-11  right-6 z-10">
+                    <EmojiPicker
+                      open={emojiOpen}
+                      rows={2}
+                      perRow={8}
+                      onEmojiClick={handleEmojiSelect}
+                      emojiSize={32}
+                      width={300}
+                      height={350}
+                    />
+                  </div>
+                </div>
               </div>
               <button
                 className="self-end px-2 py-[2px] bg-blue rounded-xl text-[13px] font-semibold opacity-85"

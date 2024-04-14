@@ -1,4 +1,4 @@
-import { Tuple, applyMiddleware, configureStore } from "@reduxjs/toolkit";
+import { Tuple, configureStore } from "@reduxjs/toolkit";
 import Reducer from "./Reducer";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -16,7 +16,6 @@ const persistConfig = {
   ],
 };
 
-// const middleware = ;
 //create the persistedReducer
 const persistedReducer = persistReducer(persistConfig, Reducer);
 //create a Redux store and contain the reducer in it
