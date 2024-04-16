@@ -13,6 +13,7 @@ import Profile from "./Pages/Profile";
 import { Toaster } from "react-hot-toast";
 import { PersistGate } from "redux-persist/integration/react";
 import PostDetails from "./Pages/PostDetails";
+import Chats from "./Pages/Chats";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/post/:postId",
     element: <PostDetails />,
+  },
+  {
+    path: "/chats",
+    element: <Chats />,
   },
 ]);
 root.render(
