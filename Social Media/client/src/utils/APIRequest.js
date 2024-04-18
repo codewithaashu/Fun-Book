@@ -490,6 +490,39 @@ const getRequestList = async () => {
   }
 };
 
+const sendMessage = async (formData) => {
+  try {
+    const { data } = await AxiosInstance.post("/chat/message", formData);
+    const { message, success } = data;
+    if (!success) {
+      errorToast(message);
+    }
+    return success;
+  } catch (err) {
+    if (err.response) {
+      errorToast(err.response.data.message);
+    } else {
+      errorToast(err.message ?? "Server Error!");
+    }
+    return false;
+  }
+};
+
+const getAllMessages = async (id) => {
+  try {
+    const { data } = await AxiosInstance.get("/chat/message/" + id);
+    const { messages } = data;
+    return messages;
+  } catch (err) {
+    if (err.response) {
+      return [];
+    } else {
+      errorToast(err.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
 export {
   RegisterUser,
   loggedInUser,
@@ -517,6 +550,8 @@ export {
   getPostDetails,
   getUserPost,
   getRequestList,
+  sendMessage,
+  getAllMessages,
 };
 
 //{withCredentials:true} it ensures that user is authorised

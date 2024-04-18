@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosSettings } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
-const ChatsLeftHeader = () => {
+const ChatsLeftHeader = ({ setSearchText }) => {
   return (
     <>
       <div className="bg-zinc-950 text-white w-full rounded-lg shadow-xl p-4 py-3 flex flex-col gap-2">
@@ -15,6 +15,7 @@ const ChatsLeftHeader = () => {
             type="text"
             placeholder="Search your friend"
             className="text-sm font-medium outline-none  bg-zinc-950 rounded-l-lg placeholder:text-gray-500 text-gray-400 w-full border-0"
+            onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
       </div>

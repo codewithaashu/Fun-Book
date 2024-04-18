@@ -3,6 +3,7 @@ import PostSlice from "./PostSlice";
 import ThemeSlice from "./ThemeSlice";
 import UserSlice from "./UserSlice";
 import RefreshSlice from "./RefreshSlice";
+import ChatSlice from "./ChatSlice";
 
 //contain all the slice in a reducer
 const Reducer = combineReducers({
@@ -10,5 +11,6 @@ const Reducer = combineReducers({
   post: PostSlice,
   user: UserSlice,
   refresh: RefreshSlice,
+  chat: ChatSlice,
 });
 export default Reducer;

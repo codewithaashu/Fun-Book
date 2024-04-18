@@ -5,6 +5,7 @@ import AuthRouter from "./Auth.js";
 import PostRouter from "./Post.js";
 import CommentRouter from "./Comment.js";
 import FriendRouter from "./Friend.js";
+import ChatRouter from "./Chat.js";
 
 //create an instance of router
 const router = express.Router();
@@ -14,4 +15,5 @@ router.use("/auth", AuthRouter);
 router.use("/post", PostRouter);
 router.use("/comment", CommentRouter);
 router.use("/friend", FriendRouter);
+router.use("/chat", ChatRouter);
 export default router;
