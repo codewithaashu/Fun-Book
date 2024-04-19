@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 const ChatBox = ({ setSentMessage, recievedMessage }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(null);
-  const scroll = useRef();
+  const messagesEndRef = useRef();
   const arr = [0, 1, 2, 3, 4, 5, 6];
   //get selected chat user details
   const { chat } = useSelector((state) => state.chat);
@@ -43,7 +43,7 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
   }, [chat]);
 
   useEffect(() => {
-    scroll.current?.scrollIntoView(true, { behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   useEffect(() => {
@@ -59,10 +59,7 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
 
   return (
     <>
-      <div
-        id="chatBox"
-        className="bg-zinc-950 rounded-b-lg shadow-xl h-[75vh] flex flex-col justify-between"
-      >
+      <div className="bg-zinc-950 rounded-b-lg shadow-xl h-[75vh] flex flex-col justify-between">
         {/* Chat Box */}
         {messages ? (
           messages.length === 0 ? (
@@ -77,7 +74,6 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
           ) : (
             <div
               className="py-4 px-3 flex flex-col gap-2 max-h-[65vh] overflow-y-scroll"
-              ref={scroll}
               style={{ scrollbarWidth: "none", scrollBehavior: "smooth" }}
             >
               {messages?.map(({ message, sender, createdAt }, index) => {
@@ -95,6 +91,7 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
                   />
                 );
               })}
+              <div ref={messagesEndRef} />
             </div>
           )
         ) : (
