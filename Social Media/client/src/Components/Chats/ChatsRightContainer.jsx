@@ -3,16 +3,18 @@ import ChatsRightHeader from "./ChatsRightHeader";
 import ChatBox from "./ChatBox";
 import { useSelector } from "react-redux";
 
-const ChatsRightContainer = () => {
+const ChatsRightContainer = ({ setSentMessage, recievedMessage }) => {
   const { chat } = useSelector((state) => state.chat);
-  console.log(chat);
   return (
     <>
       <div className="w-3/4">
         {chat ? (
           <>
             <ChatsRightHeader />
-            <ChatBox />
+            <ChatBox
+              setSentMessage={setSentMessage}
+              recievedMessage={recievedMessage}
+            />
           </>
         ) : (
           <div className="bg-zinc-950 w-full h-[85vh] rounded-md flex justify-center items-center">

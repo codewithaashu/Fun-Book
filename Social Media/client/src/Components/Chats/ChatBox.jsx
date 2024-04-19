@@ -7,7 +7,7 @@ import { IoVideocam } from "react-icons/io5";
 import { errorToast } from "../../utils/Toast";
 import { getAllMessages, sendMessage } from "../../utils/APIRequest";
 import { useSelector } from "react-redux";
-const ChatBox = () => {
+const ChatBox = ({ setSentMessage, recievedMessage }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(null);
   const scroll = useRef();
@@ -18,7 +18,6 @@ const ChatBox = () => {
   const { loginUser } = useSelector((state) => state?.user);
   //send message
   const handleOnEnter = async (message) => {
-    console.log(message);
     //if message is empty
     if (!message) {
       errorToast("Please write something...");
@@ -26,8 +25,9 @@ const ChatBox = () => {
     }
     //if message is not empty then sent message
     const formData = { message, recieverId: chat._id };
-    const success = await sendMessage(formData);
-    if (success) {
+    const newMessage = await sendMessage(formData);
+    if (newMessage) {
+      setSentMessage(newMessage);
       setMessage("");
     }
   };
@@ -35,23 +35,33 @@ const ChatBox = () => {
   const handleApi = async () => {
     //get all the conversations/messages between two users
     const res = await getAllMessages(chat._id);
-    console.log(res);
     setMessages(res);
   };
 
   useEffect(() => {
-    document.getElementById("chatBox").scrollIntoView(false);
-    // scroll.current?.scrollIntoView({ scollBehaviour: "smooth" });
     handleApi();
   }, [chat]);
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView(true, { behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    const isValidUser =
+      (recievedMessage?.recieverId === chat?._id &&
+        recievedMessage?.sender === loginUser?._id) ||
+      (recievedMessage?.recieverId === loginUser?._id &&
+        recievedMessage?.sender === chat?._id);
+    if (recievedMessage !== null && isValidUser) {
+      setMessages([...messages, recievedMessage]);
+    }
+  }, [recievedMessage]);
 
   return (
     <>
       <div
         id="chatBox"
-        className="bg-zinc-950 rounded-b-lg shadow-xl h-[75vh] overflow-y-scroll"
-        style={{ scrollbarWidth: "none", scrollBehavior: "smooth" }}
-        ref={scroll}
+        className="bg-zinc-950 rounded-b-lg shadow-xl h-[75vh] flex flex-col justify-between"
       >
         {/* Chat Box */}
         {messages ? (
@@ -65,8 +75,12 @@ const ChatBox = () => {
               </h1>
             </div>
           ) : (
-            <div className="py-4 px-3 flex flex-col gap-2">
-              {messages.map(({ message, sender, createdAt }, index) => {
+            <div
+              className="py-4 px-3 flex flex-col gap-2 max-h-[65vh] overflow-y-scroll"
+              ref={scroll}
+              style={{ scrollbarWidth: "none", scrollBehavior: "smooth" }}
+            >
+              {messages?.map(({ message, sender, createdAt }, index) => {
                 return (
                   <ChatBubble
                     imgSrc={

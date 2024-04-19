@@ -19,7 +19,6 @@ const GetAllMessages = async (req, res) => {
         messages: [],
       });
     }
-    console.log(chatId);
     //get all messages corresponding to the chatId
     const messages = await Messages.find({ chatId });
     return res.status(200).json({

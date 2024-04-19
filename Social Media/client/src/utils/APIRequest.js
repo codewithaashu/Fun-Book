@@ -493,18 +493,18 @@ const getRequestList = async () => {
 const sendMessage = async (formData) => {
   try {
     const { data } = await AxiosInstance.post("/chat/message", formData);
-    const { message, success } = data;
+    const { message, success, newMessage } = data;
     if (!success) {
       errorToast(message);
     }
-    return success;
+    return newMessage;
   } catch (err) {
     if (err.response) {
       errorToast(err.response.data.message);
     } else {
       errorToast(err.message ?? "Server Error!");
     }
-    return false;
+    return null;
   }
 };
 

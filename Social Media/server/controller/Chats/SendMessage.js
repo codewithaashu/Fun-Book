@@ -22,16 +22,18 @@ const SendMessage = async (req, res) => {
     }
 
     //create message
-    await Messages.create({
+    const newMessage = await Messages.create({
       message,
       mediaSrc,
       chatId,
       sender: userId,
     });
 
-    return res
-      .status(201)
-      .json({ message: "Message sent successfully", success: true });
+    return res.status(201).json({
+      message: "Message sent successfully",
+      success: true,
+      newMessage,
+    });
   } catch (err) {
     return res.status(500).json({ message: err.message, success: false });
   }

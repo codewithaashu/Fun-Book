@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const ChatsRightHeader = () => {
   const navigate = useNavigate("");
+  //get onlineUsers list
+  const { onlineUser } = useSelector((state) => state.chat);
   //get selected chat user  details
   const { firstName, lastName, profileUrl, _id } = useSelector(
     (state) => state?.chat?.chat
@@ -20,7 +22,13 @@ const ChatsRightHeader = () => {
                 className="w-11 h-11 rounded-full object-cover cursor-pointer"
                 onClick={() => navigate("/profile/" + _id)}
               />
-              <p className="w-[10px] h-[10px] bg-green-600 rounded-full absolute bottom-0 right-0"></p>
+              <p
+                className={`w-[10px] h-[10px] ${
+                  onlineUser.some((curr) => curr.userId === _id)
+                    ? "bg-green-600"
+                    : "bg-gray-500"
+                } rounded-full absolute bottom-0 right-0`}
+              ></p>
             </div>
             <div className="flex flex-col gap-[1px] text-gray-100">
               <h1
@@ -29,7 +37,11 @@ const ChatsRightHeader = () => {
               >
                 {firstName + " " + lastName}
               </h1>
-              <p className="text-xs text-ascent-2 font-semibold">Online</p>
+              <p className="text-xs text-ascent-2 font-semibold">
+                {onlineUser.some((curr) => curr.userId === _id)
+                  ? "Online"
+                  : "Offline"}
+              </p>
             </div>
           </div>
           <div className="flex flex-row gap-5 text-2xl text-gray-200">

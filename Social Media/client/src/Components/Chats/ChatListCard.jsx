@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 
 const ChatListCard = ({ friend }) => {
   const { chat } = useSelector((state) => state.chat);
-  console.log(chat, friend);
+  //get online user
+  const { onlineUser } = useSelector((state) => state.chat);
   return (
     <>
       <div
@@ -17,7 +18,13 @@ const ChatListCard = ({ friend }) => {
             alt="User"
             className="w-9 h-9 rounded-full object-cover"
           />
-          <p className="w-[10px] h-[10px] bg-green-600 rounded-full absolute bottom-0 right-0"></p>
+          <p
+            className={`w-[10px] h-[10px] ${
+              onlineUser.some((curr) => curr.userId === friend._id)
+                ? "bg-green-600"
+                : "bg-gray-500"
+            } rounded-full absolute bottom-0 right-0`}
+          ></p>
         </div>
         <div className="flex flex-col gap-[1px]">
           <h1 className="text-sm font-semibold text-gray-200">
