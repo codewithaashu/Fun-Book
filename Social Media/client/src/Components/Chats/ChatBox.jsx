@@ -7,15 +7,21 @@ import { IoVideocam } from "react-icons/io5";
 import { errorToast } from "../../utils/Toast";
 import { getAllMessages, sendMessage } from "../../utils/APIRequest";
 import { useSelector } from "react-redux";
+import MediaModalContainer from "./MediaModalContainer";
 const ChatBox = ({ setSentMessage, recievedMessage }) => {
+  const messagesEndRef = useRef();
+  const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState(null);
-  const messagesEndRef = useRef();
-  const arr = [0, 1, 2, 3, 4, 5, 6];
+  const [loading, setLoding] = useState(false);
+  const [uploadFile, setUplodadFile] = useState("");
+  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //array used for skeleton
+
   //get selected chat user details
   const { chat } = useSelector((state) => state.chat);
   //get login user id details
   const { loginUser } = useSelector((state) => state?.user);
+
   //send message
   const handleOnEnter = async (message) => {
     //if message is empty
@@ -23,17 +29,22 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
       errorToast("Please write something...");
       return;
     }
+    //set loading to e true
+    setLoding(true);
     //if message is not empty then sent message
     const formData = { message, recieverId: chat._id };
     const newMessage = await sendMessage(formData);
+    //set loading to be false
+    setLoding(false);
     if (newMessage) {
+      setMessages([...messages, newMessage]);
       setSentMessage(newMessage);
       setMessage("");
     }
   };
 
+  //get all the conversations/messages between two users
   const handleApi = async () => {
-    //get all the conversations/messages between two users
     const res = await getAllMessages(chat._id);
     setMessages(res);
   };
@@ -47,15 +58,22 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
   }, [messages]);
 
   useEffect(() => {
-    const isValidUser =
-      (recievedMessage?.recieverId === chat?._id &&
-        recievedMessage?.sender === loginUser?._id) ||
-      (recievedMessage?.recieverId === loginUser?._id &&
-        recievedMessage?.sender === chat?._id);
-    if (recievedMessage !== null && isValidUser) {
+    if (recievedMessage !== null) {
       setMessages([...messages, recievedMessage]);
     }
   }, [recievedMessage]);
+
+  //uploadMedia
+  const handleUploadMedia = async (file) => {
+    //if file size is larger
+    if (file?.size > 10485760) {
+      return errorToast("File is too large");
+    }
+    //set upload file
+    setUplodadFile(file);
+    //open modal
+    setOpenModal(true);
+  };
 
   return (
     <>
@@ -73,24 +91,27 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
             </div>
           ) : (
             <div
-              className="py-4 px-3 flex flex-col gap-2 max-h-[65vh] overflow-y-scroll"
+              className="py-4 px-3 flex flex-col gap-2 max-h-[65vh] overflow-y-scroll "
               style={{ scrollbarWidth: "none", scrollBehavior: "smooth" }}
             >
-              {messages?.map(({ message, sender, createdAt }, index) => {
-                return (
-                  <ChatBubble
-                    imgSrc={
-                      loginUser._id !== sender
-                        ? chat.profileUrl
-                        : loginUser.profileUrl
-                    }
-                    message={message}
-                    reciever={loginUser._id !== sender}
-                    key={index}
-                    createdAt={createdAt}
-                  />
-                );
-              })}
+              {messages?.map(
+                ({ message, sender, createdAt, mediaSrc }, index) => {
+                  return (
+                    <ChatBubble
+                      imgSrc={
+                        loginUser._id !== sender
+                          ? chat.profileUrl
+                          : loginUser.profileUrl
+                      }
+                      message={message}
+                      reciever={loginUser._id !== sender}
+                      key={index}
+                      mediaSrc={mediaSrc}
+                      createdAt={createdAt}
+                    />
+                  );
+                }
+              )}
               <div ref={messagesEndRef} />
             </div>
           )
@@ -118,16 +139,13 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
         <div className="flex flex-row items-center gap-3 w-full p-3">
           <div className="flex flex-row gap-3 text-xl">
             <label>
-              <input type="file" accept=".jpg,.png,.jpeg,.heif,.avif" hidden />
-              <IoImages className="cursor-pointer" />
-            </label>
-            <label>
               <input
                 type="file"
-                accept=".mp4, .3gp,.webm,.hevc,.mkv,.avi,.mov"
+                accept=".jpg,.png,.jpeg,.heif,.avif"
                 hidden
+                onChange={(e) => handleUploadMedia(e.target.files[0])}
               />
-              <IoVideocam className="cursor-pointer" />
+              <IoImages className="cursor-pointer" />
             </label>
           </div>
           <div className="w-full">
@@ -145,11 +163,26 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
           <button
             className="p-[10px] rounded-lg bg-blue w-fit"
             onClick={() => handleOnEnter(message)}
+            disabled={loading}
           >
-            <FiSend className="text-xl" />
+            {loading ? (
+              <div className="loader max-w-6 h-6"></div>
+            ) : (
+              <FiSend className="text-xl" />
+            )}
           </button>
         </div>
       </div>
+
+      <MediaModalContainer
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        uploadFile={uploadFile}
+        setUploadFile={setUplodadFile}
+        messages={messages}
+        setMessages={setMessages}
+        setSentMessage={setSentMessage}
+      />
     </>
   );
 };

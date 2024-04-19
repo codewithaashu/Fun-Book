@@ -9,10 +9,10 @@ import { setOnlineUser } from "../Redux/ChatSlice";
 
 const Chats = () => {
   const dispatch = useDispatch();
+  //create a variable of socket so that we can use in different block
   const socket = useRef();
   const { _id } = useSelector((state) => state?.user?.loginUser);
   const { chat } = useSelector((state) => state.chat);
-  // const [onlineUsers, setOnlineUsers] = useState([]);
   const [sentMessage, setSentMessage] = useState(null);
   const [recievedMessage, setRecievedMessage] = useState(null);
 
@@ -20,12 +20,12 @@ const Chats = () => {
     //change the title
     document.title = "Chats | FunBook";
     //scroll page to top
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     //create a socket on io circuit
-    socket.current = io("ws://localhost:8800");
+    socket.current = io("ws://localhost:8800"); //initialise the socket variable
     //add user to active user list by trigged an event "add-me-active-users-list"
     socket.current.emit("add-me-active-users-list", _id);
-    //add active users to active users
+    //get active users and add in onlineUsers list.
     socket.current.on("get-active-users-list", (activeUsers) => {
       dispatch(setOnlineUser(activeUsers));
     });

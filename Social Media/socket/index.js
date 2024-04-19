@@ -48,14 +48,15 @@ io.on("connection", (socket) => {
 
   //when user send a message, then it triggered an event i.e. send message with a message
   socket.on("send-message", (data) => {
-    //data contains reciverId and message
-    const { recieverId, message } = data;
+    //data contains reciverId
+    const { recieverId } = data;
 
     //check reciever is in active users or not. if it it then trigged and event to that user
-    const userExist = activeUsers.some((user) => user.userId === recieverId);
+    const userExist = activeUsers.find((user) => user.userId === recieverId);
+    console.log(activeUsers, userExist);
     if (userExist) {
       //triggered an event to that user
-      io.emit("recieve-message", data);
+      io.to(userExist.socketId).emit("recieve-message", data);
     }
   });
 });
