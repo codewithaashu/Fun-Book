@@ -523,6 +523,21 @@ const getAllMessages = async (id) => {
   }
 };
 
+const getAllChats = async (id) => {
+  try {
+    const { data } = await AxiosInstance.get("/chat");
+    const { chats } = data;
+    return chats;
+  } catch (err) {
+    if (err.response) {
+      return [];
+    } else {
+      errorToast(err.message ?? "Server Error!");
+    }
+    return null;
+  }
+};
+
 export {
   RegisterUser,
   loggedInUser,
@@ -552,6 +567,7 @@ export {
   getRequestList,
   sendMessage,
   getAllMessages,
+  getAllChats,
 };
 
 //{withCredentials:true} it ensures that user is authorised

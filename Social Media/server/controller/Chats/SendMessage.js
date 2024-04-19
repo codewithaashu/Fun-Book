@@ -29,6 +29,11 @@ const SendMessage = async (req, res) => {
       sender: userId,
     });
 
+    //update last message
+    await Chats.findByIdAndUpdate(chatId, {
+      lastMessage: newMessage._id,
+    });
+
     return res.status(201).json({
       message: "Message sent successfully",
       success: true,

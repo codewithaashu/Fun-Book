@@ -15,7 +15,7 @@ const Chats = () => {
   const { chat } = useSelector((state) => state.chat);
   const [sentMessage, setSentMessage] = useState(null);
   const [recievedMessage, setRecievedMessage] = useState(null);
-
+  const [screen, setScreen] = useState("Left");
   useEffect(() => {
     //change the title
     document.title = "Chats | FunBook";
@@ -50,15 +50,21 @@ const Chats = () => {
 
   return (
     <>
-      <div className="w-full px-2 md:px-16 bg-black text-white grid grid-rows-7 max-h-[100vh] overflow-y-hidden">
-        <div className="row-span-1">
+      <div className="w-full px-2 md:px-16 bg-black text-white flex flex-col gap-2 md:gap-4">
+        <div className="">
           <NavBar />
         </div>
-        <div className="flex flex-row gap-5 w-full row-span-6">
-          <ChatsLeftContainer />
+        <div className="flex flex-row gap-5 w-full ">
+          <ChatsLeftContainer
+            screen={screen}
+            setScreen={setScreen}
+            sentMessage={sentMessage}
+          />
           <ChatsRightContainer
             setSentMessage={setSentMessage}
             recievedMessage={recievedMessage}
+            screen={screen}
+            setScreen={setScreen}
           />
         </div>
       </div>

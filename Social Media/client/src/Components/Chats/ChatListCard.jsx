@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const ChatListCard = ({ friend }) => {
+const ChatListCard = ({ friend, chats }) => {
   const { chat } = useSelector((state) => state.chat);
   //get online user
   const { onlineUser } = useSelector((state) => state.chat);
@@ -30,7 +30,10 @@ const ChatListCard = ({ friend }) => {
           <h1 className="text-sm font-semibold text-gray-200">
             {friend?.firstName + " " + friend?.lastName}
           </h1>
-          <p className="text-xs text-gray-500 font-semibold ">Kaise ho</p>
+          <p className="text-xs text-gray-500 font-semibold ">
+            {chats?.find((curr) => curr?.members?.includes(friend._id))
+              ?.lastMessage?.message ?? "Tap to chat"}
+          </p>
         </div>
       </div>
     </>

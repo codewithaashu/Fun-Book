@@ -50,10 +50,8 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     //data contains reciverId
     const { recieverId } = data;
-
     //check reciever is in active users or not. if it it then trigged and event to that user
     const userExist = activeUsers.find((user) => user.userId === recieverId);
-    console.log(activeUsers, userExist);
     if (userExist) {
       //triggered an event to that user
       io.to(userExist.socketId).emit("recieve-message", data);

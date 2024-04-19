@@ -3,14 +3,23 @@ import ChatsRightHeader from "./ChatsRightHeader";
 import ChatBox from "./ChatBox";
 import { useSelector } from "react-redux";
 
-const ChatsRightContainer = ({ setSentMessage, recievedMessage }) => {
+const ChatsRightContainer = ({
+  setSentMessage,
+  recievedMessage,
+  screen,
+  setScreen,
+}) => {
   const { chat } = useSelector((state) => state.chat);
   return (
     <>
-      <div className="w-3/4">
+      <div
+        className={`md:w-3/4 w-full ${
+          screen === "Right" ? "block" : "hidden"
+        } md:block relative`}
+      >
         {chat ? (
           <>
-            <ChatsRightHeader />
+            <ChatsRightHeader setScreen={setScreen} />
             <ChatBox
               setSentMessage={setSentMessage}
               recievedMessage={recievedMessage}

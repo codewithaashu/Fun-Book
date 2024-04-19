@@ -7,7 +7,7 @@ const GetAllChats = async (req, res) => {
 
     //get all chats of user
     const query = { members: { $in: [userId] } }; //get a data in which members array contain userId
-    const chats = await Chats.find(query);
+    const chats = await Chats.find(query).populate("lastMessage", "message");
     return res
       .status(200)
       .json({ message: "Chats successfully fetched.", chats });

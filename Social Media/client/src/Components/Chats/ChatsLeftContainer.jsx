@@ -3,7 +3,7 @@ import ChatsLeftHeader from "./ChatsLeftHeader";
 import ChatMembersList from "./ChatMembersList";
 import { useSelector } from "react-redux";
 
-const ChatsLeftContainer = () => {
+const ChatsLeftContainer = ({ screen, setScreen, sentMessage }) => {
   //get user friends
   const { loginUser } = useSelector((state) => state?.user);
   //set friends as chat member list
@@ -27,9 +27,17 @@ const ChatsLeftContainer = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-[6px] w-1/4 h-[85vh]">
+      <div
+        className={`md:flex md:flex-col gap-[6px] w-full md:w-1/4 h-[85vh] ${
+          screen === "Left" ? "flex flex-col" : "hidden"
+        }`}
+      >
         <ChatsLeftHeader setSearchText={setSearchText} />
-        <ChatMembersList friends={friends} />
+        <ChatMembersList
+          friends={friends}
+          setScreen={setScreen}
+          sentMessage={sentMessage}
+        />
       </div>
     </>
   );

@@ -82,7 +82,7 @@ const ChatBox = ({ setSentMessage, recievedMessage }) => {
         {messages ? (
           messages.length === 0 ? (
             <div className="w-full py-10 flex justify-center items-center">
-              <h1 className="text-base font-semibold text-gray-300">
+              <h1 className="text-base font-semibold text-gray-300 text-center">
                 No messages yet. Start conversation with{" "}
                 <span className="text-gray-200">
                   {chat.firstName + " " + chat.lastName}
